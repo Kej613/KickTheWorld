@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>stayPage</title>
+    <link th:href="@{/css/stay.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/moment.min.js" integrity="sha384-dmOsgfnlZq1S2F9J6fB6z21EP0mSuCMEzMbMAU8EyzfHPFUgM2FtKiTEc7hptFKA" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/daterangepicker.min.js" integrity="sha384-6F91TQ+lBUdSW1U3VF3vV+8ZSjWQmTXbSTvuTAC7t6Op6W6oofJb0BJhFgJ4eEA9" crossorigin="anonymous"></script>
+
+
+    <script th:inline="javascript">
+        $(document).ready(function(){
+
+            calculateToalPrice();
+
+            $("#count").change( function(){
+                calculateToalPrice();
+            });
+        });
+
+        //전체 결제 금액
+        function calculateToalPrice(){
+            var count = $("#count").val();
+            var price = $("#price").val();
+            var totalPrice = price*count;
+            $("#totalPrice").html(totalPrice + '원');
+        }
+
+        //예약
+        function order(){
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var url = "/order";
+            var paramData = {
+                stay_id : $("#stay_id").val(),
+                count : $("#count").val()
+            };
+
+            var param = JSON.stringify(paramData);
+
+            console.log("///////////////Sending Ajax request with data:", paramData);
+
+            $.ajax({
+                url      : url,
+                type     : "POST",
+                contentType : "application/json",
+                data     : param,
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType : "json",
+                cache   : false,
+                success  : function(result, status){
+                    alert("예약이 완료 되었습니다.");
+                    location.href='/';
+                },
+                error : function(jqXHR, status, error){
+
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/members/login';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+
+                }
+            });
+        }
+        function calculateDays(startDate, endDate) {
+            var start = new Date(startDate);
+            var end = new Date(endDate);
+            var timeDifference = Math.abs(end.getTime() - start.getTime());
+            var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+            return daysDifference;
+        }
+
+        function calculateAndDisplay() {
+            var startDate = document.getElementById('startdate').value;
+            var endDate = document.getElementById('enddate').value;
+
+            if (startDate && endDate) {
+                var days = calculateDays(startDate, endDate);
+                document.getElementById('count').textContent = days;
+            } else {
+                alert('시작일과 종료일을 선택하세요.');
+            }
+        }
+        // function addCart(){
+        //   var token = $("meta[name='_csrf']").attr("content");
+        //   var header = $("meta[name='_csrf_header']").attr("content");
+        //
+        //   var url = "/cart";
+        //   var paramData = {
+        //     itemId : $("#itemId").val(),
+        //     count : $("#count").val()
+        //   };
+        //
+        //   var param = JSON.stringify(paramData);
+        //
+        //   $.ajax({
+        //     url      : url,
+        //     type     : "POST",
+        //     contentType : "application/json",
+        //     data     : param,
+        //     beforeSend : function(xhr){
+        //       /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+        //       xhr.setRequestHeader(header, token);
+        //     },
+        //     dataType : "json",
+        //     cache   : false,
+        //     success  : function(result, status){
+        //       alert("상품을 장바구니에 담았습니다.");
+        //       location.href='/';
+        //     },
+        //     error : function(jqXHR, status, error){
+        //
+        //       if(jqXHR.status == '401'){
+        //         alert('로그인 후 이용해주세요');
+        //         location.href='/members/login';
+        //       } else{
+        //         alert(jqXHR.responseText);
+        //       }
+        //
+        //     }
+        //   });
+        // }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        body{
+            font-family: 'Pretendard-Regular';
+        }
+        .mgb-15{
+            margin-bottom:15px;
+        }
+
+        .mgt-50{
+            margin-top:50px;
+        }
+
+        .wd50{
+            font-family: 'Pretendard-Regular';
+            height:auto;
+            width:70%;
+            margin-left:10px;
+        }
+    </style>
+</head>
+<header>
+    <a href="/"><img class="logo" src="/images/Logo.png" alt="Logo Image" /></a>
+    <nav>
+        <ul>
+            <li class="main_list"><a class="main" href="/">여행지 추천</a></li>
+            <li class="main_list dropdown">
+                <a class="main" href="#">여행 정보</a>
+                <div class="dropdown-content">
+                    <a th:href="@{/main/trips}">여행지</a>
+                    <a th:href="@{/stays}">숙소</a>
+                    <a th:href="@{/eaterys}">맛집</a>
+                </div>
+            </li>
+            <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
+            <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
+            <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">관리자페이지</a></li>
+            <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">로그인</a>
+            <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">로그아웃</a>
+        </ul>
+    </nav>
+    <hr>
+</header>
+<body>
+
+<div class="content" style="margin-left:25%;margin-right:25%">
+    <input type="hidden" id="stay_id" th:value="${stay.stay_id}">
+    <div class="d-flex">
+        <div class="img_div">
+            <img class="image3" th:src="@{/images/신라스테이.webp}" style="width:300px; height:400px;">
+        </div><br><br>
+        <div class="wd50">
+            <span th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="badge badge-primary mgb-15" >
+                예약가능
+            </span>
+            <span th:unless="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="badge btn-danger mgb-15" >
+                예약마감
+            </span>
+            <div class="stay_name">
+               <b><p th:text="${stay.name}"></p></b></div>
+            <hr class="my-4">
+            <p id="detail" th:text="${stay.detail}">
+            <hr class="my-4">
+            <div class="text-right">
+<!--                <div class="input-group w-50">-->
+<!--                    <div class="input-group-prepend">-->
+<!--                        <span class="input-group-text">숙박일</span>-->
+<!--                    </div>-->
+<!--                    <input type="number" name="count" id="count" class="form-control" value="1" min="1">-->
+<!--            </div>-->
+<!--                <div class="input-group w-50">-->
+<!--                    <div class="input-group-prepend">-->
+<!--                        <span class="input-group-text">숙박일</span>-->
+<!--                    </div>-->
+<!--                    <input type="date" name="startdate" id="startdate" class="form-control" required>-->
+<!--                    <span class="input-group-text">~</span>-->
+<!--                    <input type="date" name="enddate" id="enddate" class="form-control" required>-->
+<!--                </div>-->
+
+                <div class="input-group w-50">
+                    <div class="input-group-prepend">
+                        <span>숙박날짜</span>
+                    </div>
+                    <input type="date" name="startdate" id="startdate">
+                    <span >~</span>
+                    <input type="date" name="enddate" id="enddate">
+                    <button onclick="calculateAndDisplay()">선택</button>
+                </div>
+
+                <p id="count"></p>
+
+            <hr class="my-4">
+            <div class="text-right mgt-50">
+                <div style="text-align:right;">
+                    <input type="hidden" th:value="${stay.price}" id="price" name="price">
+                    <p>숙박 15:00~ <span th:text="${stay.price}" style="text-align:right;"></span>원</p>
+                </div>
+                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+            </div>
+            <div th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="text-right">
+                <!--        <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>-->
+                <button type="button" class="btn btn-outline-dark" onclick="order()" style="text-align:right;">숙소 예약</button>
+                <button type="button" class="btn btn-outline-dark" style="text-align:right;">♥</button>
+            </div>
+            <div th:unless="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="text-right">
+                <button type="button" class="btn btn-danger btn-lg">예약마감</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<hr><br><br>
+
+<div class="stay-details">
+    <div class="detail-item">
+        [위치]<span th:text="${stay.address}"></span>
+        <div id="map" style="width:80%;height:300px; border-radius:10px; margin-left:auto; margin-right:auto;"></div>
+    </div>
+    <hr class="my-4">
+    <div class="detail-item">
+        <strong>[이용안내]</strong><br>
+        <span id="use_guideElement" th:text="${stay.use_guide}"></span>
+    </div>
+    <hr class="my-4">
+
+    <div class="detail-item">
+        <strong>[시설 및 서비스]</strong><br>
+        <span id="serviceElement" th:text="${stay.service}"></span>
+    </div>
+    <hr class="my-4">
+    <div class="detail-item">
+        <strong>[예약공지]</strong><br>
+        <span id="amenityElement" th:text="${stay.amenity}"></span>
+    </div>
+
+<!--    <div class="detail-item">-->
+<!--        <strong>숙소 이미지:</strong>-->
+<!--        <img th:src="@{'/getImage?name=' + ${stay.imageFileName}}" alt="Stay Image"/>-->
+<!--    </div>-->
+<!--  -->
+</div>
+
+<div class="button" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+<button type="button" id="stay-modify-btn" th:onclick="|location.href='/stays/edit/{stay_id}'|" th:attr="data-stayid=${stay.stay_id}" >수정</button>
+<form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" id="deleteStayForm" th:action="@{'/stays/delete/' + ${stay.stay_id}}" method="post">
+<button type="submit" >삭제</button>
+</form>
+</div>
+
+<script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=c2e5cdc145feeac77effa91283d46a6e&libraries=services'"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function addLineBreaksAndDisplay(text, elementId) {
+        var paragraphsWithBreaks1 = text.split('.').join('<br>');
+        document.getElementById(elementId).innerHTML = paragraphsWithBreaks1;
+
+    }
+    addLineBreaksAndDisplay('[[${stay.detail}]]','detail') //숙소 상세설명
+    addLineBreaksAndDisplay('[[${stay.use_guide}]]','use_guideElement'); //이용안내
+    addLineBreaksAndDisplay('[[${stay.service}]]', 'serviceElement');  // 시설 및 서비스
+    addLineBreaksAndDisplay('[[${stay.amenity}]]', 'amenityElement');  // 편의시설
+    /*]]>*/
+
+</script>
+<script th:inline="javascript">
+    //카카오맵 API
+    /*<![CDATA[*/
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.addressSearch('[[${stay.address}]]', function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords
+            });
+            var infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">위치</div>'
+            });
+            infowindow.open(map, marker);
+            map.setCenter(coords);
+        }
+    });
+    /*]]>*/
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/stay.js"></script>
+</body>
+</html>
