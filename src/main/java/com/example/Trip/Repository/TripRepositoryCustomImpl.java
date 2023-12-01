@@ -6,7 +6,6 @@ import com.example.Trip.Dto.QMainItemDto;
 import com.example.Trip.Dto.TripSearchDto;
 import com.example.Trip.Entity.QTrip;
 import com.example.Trip.Entity.QTripImg;
-import com.example.Trip.Entity.Trip;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

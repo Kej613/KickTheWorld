@@ -1,14 +1,14 @@
 package com.example.Security.controller;
 
 
+import com.example.Security.dto.KakaoDTO;
 import com.example.Security.entity.MsgEntity;
 import com.example.Security.service.KakaoLoginService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import jakarta.servlet.http.HttpServletRequest;
-import com.example.Security.dto.KakaoDTO;
+import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class KakaoLoginProcessController {

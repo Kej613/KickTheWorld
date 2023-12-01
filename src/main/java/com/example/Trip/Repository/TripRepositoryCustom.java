@@ -2,7 +2,6 @@ package com.example.Trip.Repository;
 
 import com.example.Trip.Dto.MainItemDto;
 import com.example.Trip.Dto.TripSearchDto;
-import com.example.Trip.Entity.Trip;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

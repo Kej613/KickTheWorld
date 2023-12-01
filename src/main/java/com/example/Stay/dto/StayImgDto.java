@@ -1,4 +1,4 @@
-//package com.example.Stay.dto;
+package com.example.Stay.dto;//package com.example.Stay.dto;
 //
 //
 //import com.example.Stay.Entity.StayImg;

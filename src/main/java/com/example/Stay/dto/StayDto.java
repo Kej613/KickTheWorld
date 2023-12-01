@@ -3,13 +3,11 @@ package com.example.Stay.dto;
 import com.example.Stay.Constant.StaySellStatus;
 import com.example.Stay.Entity.Stay;
 import jakarta.validation.constraints.NotBlank;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @NoArgsConstructor
 @Getter

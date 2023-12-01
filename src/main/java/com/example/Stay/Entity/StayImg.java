@@ -1,4 +1,4 @@
-//package com.example.Stay.Entity;
+package com.example.Stay.Entity;//package com.example.Stay.Entity;
 //
 //
 //import jakarta.persistence.*;
