@@ -8,6 +8,8 @@ import com.example.Security.service.KakaoLoginService;
 import com.example.Security.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,6 @@ public class MemberController {
     private final KakaoLoginService kakaoLoginService;
 
     private final MemberService memberService;
-//    private final BoardService boardService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -33,7 +34,6 @@ public class MemberController {
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "member/Signup";
     }
-
     @PostMapping(value = "/new")
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
 
@@ -53,7 +53,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    //로그인폼
+    //로그인
     @GetMapping(value = "/login")
     public String loginMember(Model model){
         model.addAttribute("kakaoUrl", kakaoLoginService.getKakaoLogin());
@@ -68,33 +68,14 @@ public class MemberController {
         return "member/LoginForm";
     }
 
-    //마이페이지 접근
-//    @GetMapping("/myPage/{category}")
-//    public String myPage(@PathVariable String category, Authentication auth, Model model) {
-////        model.addAttribute("boards", boardService.findMyBoard(category, auth.getName()));
-//        model.addAttribute("category", category);
-//        model.addAttribute("member", memberService.myInfo(auth.getName()));
-//        return "member/myPage";
-//    }
+
 
     //회원수정
+
 
     //회원삭제
 
 
-    //관리자페이지
-//    @GetMapping("/admin")
-//    public String adminPage(@RequestParam(required = false, defaultValue = "1") int page,
-//                            @RequestParam(required = false, defaultValue = "") String keyword,
-//                            Model model) {
-//        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("id").descending());
-//        Page<Member> members = memberService.findAllByMemId(keyword, pageRequest);
-//
-//        model.addAttribute("members", members);
-//        model.addAttribute("keyword", keyword);
-//
-//        return "adminPage";
-//    }
 
 
 
