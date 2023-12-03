@@ -1,19 +1,29 @@
 package com.example.Stay.Controller;
 
 import com.example.Stay.Entity.Stay;
+import com.example.Stay.Repository.StayImgRepository;
+import com.example.Stay.Repository.StayRepository;
 import com.example.Stay.Service.StayService;
-import com.example.Stay.dto.StayDto;
+import com.example.Stay.dto.SearchResult;
+import com.example.Stay.dto.StayFormDto;
+import com.example.Stay.dto.StayItemDto;
 import com.example.Stay.dto.StaySearchDto;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.Trip.Entity.Trip;
+import com.example.Trip.Service.TripService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,32 +31,65 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 public class StayController {
+    private final TripService tripService;
     private final StayService stayService;
-    @Autowired
-    private HttpServletRequest request;
+    private final StayRepository stayRepository;
+    private final StayImgRepository stayImgRepository;
 
-    //숙소 전체 리스트
-    @GetMapping("/stays")
-    public String getStays(Model model) {
-        List<StayDto> stays = stayService.findAll()
-                .stream()
-                .map(StayDto::new)
-                .toList();
-        model.addAttribute("stays", stays);
 
-        return "stay/stayPage";
+//    //숙소 전체 리스트
+//    @GetMapping("/stays")
+//    public String getStays(Model model) {
+//        List<StayDto> stays = stayService.findAll()
+//                .stream()
+//                .map(StayDto::new)
+//                .toList();
+//        model.addAttribute("stays", stays);
+//
+//        return "stay/stayPage";
+//    }
+
+//    //카테고리별로 숙소 조회
+//    @GetMapping("/stays/category")
+//    public String getStaysByCategory(@RequestParam(value = "category", required = false) String category,
+//                                     @RequestParam(value = "address", required = false) String address,
+//                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+//                                     Model model) {
+//        Page<Stay> staysByCategory = stayService.findByCategory(category, address, pageable);
+//        model.addAttribute("stays", staysByCategory);
+//        return "recommendPage";
+//    }
+
+
+//    // 통합 검색 쿼리
+//    @GetMapping("/search")
+//    public String search(@RequestParam(value = "query", required = false) String query,
+//                         @PageableDefault(page = 0, size = 10) Pageable pageable,
+//                         Model model) {
+//        Page<Trip> tripsByAddress = tripService.findByAddress(query, pageable);
+//        model.addAttribute("trips", tripsByAddress);
+//
+//        Page<Stay> staysByCategory = stayService.findByCategory(null, query, pageable);
+//        model.addAttribute("stays", staysByCategory);
+//
+//        return "recommendPage";
+//    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "address", required = false) String address,
+                         @RequestParam(value = "category", required = false) String category,
+                         @PageableDefault(page = 0, size = 10) Pageable pageable,
+                         Model model) {
+        Page<Stay> stays = stayService.findByCategory(category, address, pageable);
+        Page<Trip> trips = tripService.findByAddress(address, pageable);
+
+        SearchResult result = new SearchResult(stays, trips);
+        model.addAttribute("result", result);
+
+        return "recommendPage";
     }
 
-    //카테고리별로 숙소 조회
-    @GetMapping("/stays/category")
-    public String getStaysByCategory(@RequestParam(value = "category", required = false) String category,
-                                     @RequestParam(value = "address", required = false) String address,
-                                     @PageableDefault(page=0, size=10) Pageable pageable,
-                                     Model model) {
-        Page<Stay> staysByCategory = stayService.findByCategory(category, address, pageable);
-        model.addAttribute("stays", staysByCategory);
-        return "stay/stayPage";
-    }
+
 
 //    @GetMapping("/stays/category")
 //    public String getStaysByCategory(@RequestParam(value = "category", required = false) String category,
@@ -59,69 +102,152 @@ public class StayController {
 //        return "stay/stayPage";
 //    }
 
-    //숙소 상세조회
-    @GetMapping("/stays/{stay_id}")
-    public String getStay(@PathVariable Long stay_id, Model model) {
-        Stay stay = stayService.findById(stay_id);
-        model.addAttribute("stay", new StayDto(stay));
 
-        return "stay/stay";
-    }
+    //조건별로 숙소 페이징처리
+    @GetMapping(value = {"/main/stays", "/main/stays/{page}"})
+    public String stayManage(StaySearchDto staySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 
-    //숙소 등록
-    @GetMapping("/stays/create")
-    public String showCreateStayForm(Model model) {
-        model.addAttribute("stay", new Stay());
-        return "stay/createStay";
-    }
+        Page<StayItemDto> stays = stayService.getStayPage(staySearchDto, pageable);
+        model.addAttribute("stays", stays);
+        model.addAttribute("staySearchDto", staySearchDto);
+        model.addAttribute("maxPage", 5);
 
-    @PostMapping("/stays/create")
-    public String createStay(@ModelAttribute Stay stay) {
-        stayService.save(stay);
-        return "redirect:/stays";
-    }
-
-    //숙소 수정
-    @GetMapping("/stays/edit/{stay_id}")
-    public String showEditStayForm(@PathVariable Long stay_id, Model model) {
-        Stay stay = stayService.findById(stay_id);
-        model.addAttribute("stay", stay);
-        return "stay/editStay";
-    }
-
-    @PostMapping("/stays/edit/{stay_id}")
-    public String editStay(@PathVariable Long stay_id, @ModelAttribute Stay updatedStay) {
-        stayService.update(stay_id, updatedStay);
-        return "redirect:/stays";
-    }
-
-    //숙소 삭제
-    @PostMapping("/stays/delete/{stay_id}")
-    public String deleteStay(@PathVariable Long stay_id) {
-        stayService.deleteById(stay_id);
-        return "redirect:/stays";
-
-    }
-    @GetMapping("/stays/delete/{stay_id}")
-    public String showDeleteConfirmation(@PathVariable Long stay_id, Model model) {
-        Stay stay = stayService.findById(stay_id);
-        model.addAttribute("stay", stay);
         return "stay/stayPage";
     }
 
 
-    //관리자-숙소관리
-    @GetMapping(value={"/admin/stays", "/admin/stays/{page}"}) // 숙소관리화면 페이지 진입시 페이지 번호가 있는경우와 없는경우
-    public String stayManage(StaySearchDto staySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,10);
-        Page<Stay> stays =
-                stayService.getAdminStayPage(staySearchDto, pageable);
-                    model.addAttribute("stays", stays);
-                    model.addAttribute("staySearchDto", staySearchDto);
-                    model.addAttribute("maxPage", 5);
-                    return "stay/stayMng";
-
+    //숙소 상세보기
+    @GetMapping(value="/stay/{id}")
+    public String stayDtl(Model model, @PathVariable("id") Long id) {
+        StayFormDto stayFormDto = stayService.getStayDtl(id);
+        model.addAttribute("stay", stayFormDto);
+        return "stay/stay";
     }
+
+    // 여행지 상세 보기
+//    @GetMapping(value = "/admin/stay/{id}")
+//    public String stayDtl(@PathVariable("id") Long id, Model model) {
+//        try {
+//            StayFormDto stayFormDto = stayService.getStayDtl(id);
+//            model.addAttribute("stay", stayFormDto);
+//
+//        } catch (EntityNotFoundException e) {
+//            model.addAttribute("errorMessage", "존재하지 않는 여행지 입니다.");
+//            model.addAttribute("stayFormDto", new StayFormDto());
+//
+//            return "stay/stay";
+//        }
+//        return "stay/stay";
+//    }
+
+    //숙소 등록
+    @GetMapping("/admin/stay/new")
+    public String StayForm(Model model) {
+        model.addAttribute("stayFormDto", new StayFormDto());
+        return "stay/createStay";
+    }
+
+    @PostMapping("/admin/stay/new")
+    public String StayNew(@Valid StayFormDto stayFormDto, BindingResult bindingResult, Model model,
+                             @RequestParam("stayImgFile") List<MultipartFile> stayImgFileList) {
+        if(bindingResult.hasErrors()) {
+            return "stay/createStay";
+        }
+
+        //첫번째 이미지를 등록하지 않았을 때
+        if(stayImgFileList.get(0).isEmpty() && stayFormDto.getId() ==null) {
+            model.addAttribute("errorMessage", "첫번째 이미지는 필수 입력 값입니다.");
+            return "stay/createStay";
+        }
+        try {
+            stayService.saveStay(stayFormDto, stayImgFileList);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "여행지 등록중 에러 발생") ;
+            return "stay/createStay";
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping(value="/admin/stay/{id}")
+    public String stayDtl(@PathVariable("id") Long id, Model model) {
+        try{
+            StayFormDto stayFormDto = stayService.getStayDtl(id);
+            model.addAttribute("stayFormDto" , stayFormDto);
+
+        }catch(EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 여행지 입니다.");
+            model.addAttribute("stayFormDto", new StayFormDto());
+
+            return "stay/createStay";
+        }
+        return "stay/createStay";
+    }
+
+    // 숙소수정
+    @PostMapping(value = "/admin/stay/{id}")
+    public String stayUpdate(@Valid StayFormDto stayFormDto, BindingResult bindingResult, @RequestParam("stayImgFile") List<MultipartFile> stayImgFileList, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "stay/createStay";
+        }
+        if (stayImgFileList.get(0).isEmpty() && stayFormDto.getId() == null) {
+            model.addAttribute("errorMessage", "첫번째 이미지는 필수 입력값입니다.");
+            return "stay/createStay";
+        }
+        try {
+            stayService.updateStay(stayFormDto, stayImgFileList);
+
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "수정 중 에러가 발생");
+            return "stay/createStay";
+        }
+        return "redirect:/";
+    }
+
+
+
+
+//    //숙소 수정
+//    @GetMapping("/stays/edit/{id}")
+//    public String showEditStayForm(@PathVariable Long id, Model model) {
+//        Stay stay = stayService.findById(id);
+//        model.addAttribute("stay", stay);
+//        return "stay/editStay";
+//    }
+//
+//    @PostMapping("/stays/edit/{id}")
+//    public String editStay(@PathVariable Long id, @ModelAttribute Stay updatedStay) {
+//        stayService.update(id, updatedStay);
+//        return "redirect:/stays";
+//    }
+
+
+    //숙소 삭제
+    @Transactional
+    @RequestMapping(value = {"/stay/delete/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteById(@PathVariable Long id) {
+        Stay Stay = stayRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        stayImgRepository.deleteByStay(Stay);
+        stayRepository.deleteById(id);
+
+        return "redirect:/";
+    }
+
+
+//    //관리자-숙소관리
+//    @GetMapping(value={"/admin/stays", "/admin/stays/{page}"}) // 숙소관리화면 페이지 진입시 페이지 번호가 있는경우와 없는경우
+//    public String stayManage(StaySearchDto staySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+//        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,10);
+//        Page<Stay> stays =
+//                stayService.getAdminStayPage(staySearchDto, pageable);
+//                    model.addAttribute("stays", stays);
+//                    model.addAttribute("staySearchDto", staySearchDto);
+//                    model.addAttribute("maxPage", 5);
+//                    return "stay/stayMng";
+//
+//    }
 
 
 
