@@ -43,12 +43,18 @@ public class Order {
         orderItem.setOrder(this);
     }
 
+//    // Helper method to remove an order item
+//    public void removeOrderItem(OrderItem orderItem) {
+//        this.orderItems.remove(orderItem);
+//        orderItem.setOrder(null);
+//    }
+
     //숙소를 예약한 회원정보 세팅
     public static Order createOrder(Member member, List<OrderItem> orderItemList) {
         Order order = new Order();
         order.setMember(member);
 
-        for(OrderItem orderItem : orderItemList) {
+        for(OrderItem orderItem : orderItemList) {      // 찜에는 여러 개의 상품을 담을 수 있음
             order.addOrderItem(orderItem);
         }
 
@@ -57,12 +63,20 @@ public class Order {
         return order;
     }
 
-    public int getTotalPrice() {
+    public int getTotalPrice() {            //총 예약금액을 설정하는 메소드
         int totalPrice = 0;
         for(OrderItem orderItem : orderItems){
             totalPrice += orderItem.getTotalPrice();
         }
         return totalPrice;
+    }
+
+    public void cancelOrder() {
+        this.orderStatus = OrderStatus.CANCLE;
+
+        for(OrderItem orderItem: orderItems) {
+            orderItem.cancel();
+        }
     }
 
 }

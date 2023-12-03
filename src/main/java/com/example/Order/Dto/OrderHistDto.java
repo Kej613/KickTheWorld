@@ -23,6 +23,7 @@ public class OrderHistDto {
     private String orderDate; //예약날짜
     private OrderStatus orderStatus; //예약 상태
 
+    //예약 상품
     private List<OrderItemDto> orderItemDtoList = new ArrayList<>();
 
     //숙소 예약리스트
