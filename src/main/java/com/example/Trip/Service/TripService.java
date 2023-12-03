@@ -1,5 +1,6 @@
 package com.example.Trip.Service;
 
+import com.example.Stay.Entity.Stay;
 import com.example.Trip.Dto.MainItemDto;
 import com.example.Trip.Dto.TripFormDto;
 import com.example.Trip.Dto.TripImgDto;
@@ -55,13 +56,14 @@ public class TripService {
         return tripRepository.findAll();
     }
 
+    //여행지 상세보기
     public Trip findById(long id) {
         return tripRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
 
-//여행지 상세 조회
+    //여행지 상세 조회
     @Transactional
     public TripFormDto getTripDtl(Long id){
         List<TripImg> tripImgList = tripImgRepository.findByTrip_IdOrderByIdAsc(id);
@@ -80,13 +82,7 @@ public class TripService {
         return tripFormDto;
     }
 
-
-    // main/trips/
-//    @Transactional
-//    public Page<Trip> getMainTripPage(TripSearchDto tripSearchDto, Pageable pageable) {
-//        return tripRepository.getMainTripPage(tripSearchDto, pageable) ;
-//    }
-
+    //여행지 페이지 (페이징처리)
     @Transactional
     public Page<MainItemDto> getTripPage(TripSearchDto tripSearchDto, Pageable pageable) {
         return tripRepository.getTripPage(tripSearchDto, pageable);
@@ -106,4 +102,17 @@ public class TripService {
         }
         return trip.getId();
     }
+
+    public Page<Trip> findByAddress(String address, Pageable pageable) {
+        return tripRepository.findByAddress(address, pageable);
+    }
+
+
+    //여행지 삭제
+    public void deleteById(Long id) {
+        tripRepository.deleteById(id);
+    }
+
+
+
 }

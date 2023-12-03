@@ -6,7 +6,6 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <title>TripDetail</title>
     <link th:href="@{/css/stay.css}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
@@ -38,7 +37,18 @@
             height: 400px;
         }
 
-        button {
+        /*button {*/
+        /*    position: absolute;*/
+        /*    top: 50%;*/
+        /*    transform: translateY(-50%);*/
+        /*    background: none;*/
+        /*    border: none;*/
+        /*    font-size: 24px;*/
+        /*    cursor: pointer;*/
+        /*}*/
+
+        .prev-btn {
+            left: 10px;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -48,12 +58,15 @@
             cursor: pointer;
         }
 
-        .prev-btn {
-            left: 10px;
-        }
-
         .next-btn {
             right: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
         }
         @font-face {
             font-family: 'Pretendard-Regular';
@@ -167,8 +180,8 @@
 
         <div class="slider-container">
             <div class="slider">
-                <div th:each="tripImg: ${trip.tripImgDtoList}" class="slide">
-                    <img th:if="${not #strings.isEmpty(tripImg.imgUrl)}" th:src="@{${tripImg.imgUrl}}" alt="slide-image">
+                <div th:each="tripImg: ${trip.reversedTripImgDtoList}" class="slide">
+                    <img th:if="${not #strings.isEmpty(tripImg.imgUrl)}" th:src="@{${tripImg.imgUrl}}" alt="slide-image" class="rounded-1 repImg">
                 </div>
             </div>
             <button class="prev-btn" onclick="prevSlide()">&#8249;</button>
@@ -194,7 +207,7 @@
         <div class="row">
             <div class="col-md-6">
                 <p><b>[문의 및 전화]</b><br> <span th:text="${trip.telephone}"></span></p>
-                <p><b>[홈페이지]</b><br> <span th:text="${trip.link}"></span></p>
+                <p><b>[홈페이지]</b><br> <a th:href="${trip.link}" target="_blank" th:text="${trip.link}"></a></p>
             </div>
             <div class="col-md-6">
                 <p><b>[주차]</b><br> <span th:text="${trip.parking}"></span></p>
@@ -203,8 +216,10 @@
         </div>
         <hr class="my-4">
         <div>
-            <p><b>[근처 숙소]</b><br></p>
-            <p><b>[근처 맛집]</b><br></p>
+            <a th:href="@{/admin/trip/edit/{id}(id=${trip.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>
+            <form th:action="@{'/admin/trip/delete/' + ${trip.id}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+                <button type="submit" class="btn btn-outline-dark">삭제</button>
+            </form>
         </div>
 
     </div>

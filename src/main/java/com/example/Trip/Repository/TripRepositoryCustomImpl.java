@@ -72,7 +72,7 @@ public class TripRepositoryCustomImpl implements TripRepositoryCustom {
                 .from(tripImg)
                 .join(tripImg.trip, trip)
                 .where(tripImg.repimgYn.eq("Y"))
-                .where(nameLike(tripSearchDto.getSearchQuery()))
+                .where(searchByLike(tripSearchDto.getSearchBy(),tripSearchDto.getSearchQuery()))
                 .orderBy(trip.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
