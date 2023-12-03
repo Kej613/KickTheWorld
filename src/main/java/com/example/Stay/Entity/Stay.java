@@ -2,6 +2,7 @@ package com.example.Stay.Entity;
 
 import com.example.Order.Exception.OutOfStockException;
 import com.example.Stay.Constant.StaySellStatus;
+import com.example.Stay.dto.StayFormDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.*;
 
 @EntityListeners(AuditingEntityListener.class)
 @Table (name="stay")
@@ -23,7 +26,7 @@ public class Stay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stay_id")
-    private Long stay_id;   //숙소코드
+    private Long id;   //숙소코드
     @Column(nullable = false, length=100)
     private String name;     //숙소명
     @Column(name="category")
@@ -31,7 +34,7 @@ public class Stay {
     @Column(name="price" ,nullable = false)
     private int price;           //가격
     @Column(nullable = false)
-    private int stayday;  // 객실수
+    private int room;  // 객실수
     @Lob
     @Column(columnDefinition = "LONGTEXT")
     private String detail;          //숙소상세설명
@@ -59,12 +62,17 @@ public class Stay {
     private LocalDateTime updateTime;       //수정시간
 
 
-    public void removeStay(int stayday) {
-        int restStay = this.stayday - stayday;
+
+    public void removeStay(int room) {
+        int restStay = this.room - room;
         if(restStay<0) {
-            throw new OutOfStockException("객실이 모두 예약 마감되었습니다. (현재 객실 수: " + this.stayday + ")");
+            throw new OutOfStockException("객실이 모두 예약 마감되었습니다. (현재 객실 수: " + this.room + ")");
         }
-        this.stayday = restStay;
+        this.room = restStay;
+    }
+
+    public void addStock(int room) {
+        this.room += room;
     }
 
     @Builder
@@ -72,7 +80,7 @@ public class Stay {
             String name,
             String category,
             int price,
-            int stayday,
+            int room,
             String detail,
             String address,
             String service,
@@ -83,7 +91,7 @@ public class Stay {
         this.name = name;
         this.category = category;
         this.price = price;
-        this.stayday = stayday;
+        this.room = room;
         this.detail = detail;
         this.address = address;
         this.service = service;
@@ -91,4 +99,20 @@ public class Stay {
         this.amenity = amenity;
         this.staySellStatus = staySellStatus;
     }
+
+    public void updateStay(StayFormDto stayFormDto) {
+        this.name = stayFormDto.getName();
+        this.price = stayFormDto.getPrice();
+        this.room = stayFormDto.getRoom();
+        this.detail = stayFormDto.getDetail();
+        this.staySellStatus = stayFormDto.getStaySellStatus();
+        this.address = stayFormDto.getAddress();
+        this.service = stayFormDto.getService();
+        this.amenity = stayFormDto.getAmenity();
+        this.category = stayFormDto.getCategory();
+        this.use_guide = stayFormDto.getUse_guide();
+    }
+
+
+
 }

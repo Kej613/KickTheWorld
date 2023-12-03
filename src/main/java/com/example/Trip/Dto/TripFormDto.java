@@ -1,5 +1,6 @@
 package com.example.Trip.Dto;
 
+import com.example.Stay.dto.StayImgDto;
 import com.example.Trip.Entity.Trip;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -27,6 +29,11 @@ public class TripFormDto {   //여행지 데이터 정보를 전달하는 DTO
 
     private List<TripImgDto> tripImgDtoList = new ArrayList<>();
 
+    public List<TripImgDto> getReversedTripImgDtoList() {
+        List<TripImgDto> reversedList = new ArrayList<>(this.tripImgDtoList);
+        Collections.reverse(reversedList);
+        return reversedList;
+    }
     private List<Long> tripImgIds = new ArrayList<>();
 
     private static ModelMapper modelMapper = new ModelMapper();

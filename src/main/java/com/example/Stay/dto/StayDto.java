@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class StayDto {
 
-    private Long stay_id;  //숙소코드
+    private Long id;  //숙소코드
     @NotBlank(message = "숙소명은 필수 입력값입니다.")
     private String name;
     private String detail;
@@ -26,7 +26,7 @@ public class StayDto {
     @NotBlank(message = "주소는 필수 입력값입니다.")
     private String address;
 
-    private int stayday;  // 객실수
+    private int room;  // 객실수
     private String service;   //서비스
     private String use_guide;   //이용안내
 
@@ -51,11 +51,11 @@ public class StayDto {
 //    }
 
     public StayDto(Stay stay) {
-        this.stay_id = stay.getStay_id();
+        this.id = stay.getId();
         this.name = stay.getName();
         this.detail = stay.getDetail();
         this.category = stay.getCategory();
-        this.stayday = stay.getStayday();
+        this.room = stay.getRoom();
         this.price = stay.getPrice();
         this.address = stay.getAddress();
         this.service = stay.getService();

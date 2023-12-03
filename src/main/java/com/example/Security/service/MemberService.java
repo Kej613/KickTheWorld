@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-//    private final LikeRepository likeRepository;
-//    private final CommentRepository commentRepository;
-  //  private final BCryptPasswordEncoder encoder;
 
     //회원 등록
     public Member saveMember(Member member) {
@@ -51,23 +48,9 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
-//    public Member myInfo(String memId) {
-//        return memberRepository.findByMemId(memId);
-//    }
-//    public Page<Member> findAllByMemId(String keyword, PageRequest pageRequest) {
-//        return memberRepository.findAllByMemIdContains(keyword, pageRequest);
-//    }
 
-//
 
-//    public Member findByMember_id(long member_id) {
-//        Optional<Member> optionalMember = Optional.ofNullable(memberRepository.findByMember_id(member_id));
-//
-//        if(optionalMember.isEmpty()){
-//            throw new RuntimeException("해당하는 회원이 존재하지 않습니다.");
-//        }
-//
-//        return optionalMember.get();
-//    }
+
+
 
 }

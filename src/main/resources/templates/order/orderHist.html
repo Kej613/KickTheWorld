@@ -30,7 +30,7 @@
         dataType : "json",
         cache   : false,
         success  : function(result, status){
-          alert("주문이 취소 되었습니다.");
+          alert("예약이 취소 되었습니다.");
           location.href='/orders/' + [[${page}]];
         },
         error : function(jqXHR, status, error){
@@ -43,6 +43,29 @@
         }
       });
     }
+
+    function deleteOrder(orderId) {
+      var token = $("meta[name='_csrf']").attr("content");
+      var header = $("meta[name='_csrf_header']").attr("content");
+      var url = "/order/" + orderId;
+
+      $.ajax({
+        url: url,
+        type: "DELETE",
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        success: function(result, status) {
+          alert("삭제 되었습니다.");
+        },
+        error: function(jqXHR, status, error) {
+          alert("오류발생");
+        }
+      });
+    }
+
+
+
   </script>
 <!-- 사용자 CSS 추가 -->
   <style>
@@ -118,15 +141,15 @@
   </nav>
   <hr>
 </header>
-  <h2 class="mb-4">
-    예약현황
+  <h2>
+    MY RESERVATION
   </h2>
   <div th:each="order : ${orders.getContent()}">
-    <div class="d-flex mb-3 align-self-center">
-      <h4 th:text="${order.orderDate} + ' 예약 신청완료'"></h4>
-      <div class="ml-3">
+    <div>
+      <h4 th:text="${order.orderDate} + ' 예약대기'"></h4>
+      <div>
         <div th:if="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
-          <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">예약취소</button>
+          <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">취소</button>
         </div>
         <div th:unless="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
           <h4>(취소 완료)</h4>
@@ -134,17 +157,18 @@
        </div>
       </div>
 
-    <div class="card d-flex">
-      <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex mb-3">
-<!--        <div class="repImgDiv">-->
-<!--          <img th:src="${orderItem.imgUrl}" class = "rounded repImg" th:alt="${orderItem.itemNm}">-->
-<!--        </div>-->
-        <div class="align-self-center w-75">
-          <span th:text="${orderItem.name}" class="fs24 font-weight-bold"></span>
-          <div class="fs18 font-weight-light">
-            결제 금액: <span th:text="${orderItem.orderPrice * orderItem.count} +'원'"></span>
-          </div>
+    <div>
+      <div th:each="orderItem : ${order.orderItemDtoList}">
+        <div>
+          <img th:src="${orderItem.imgUrl}" th:alt="${orderItem.name}" style="width:300px;">
+        </div>
 
+        <div>
+          <span th:text="${orderItem.name}" ></span>
+          <div >
+            결제 예정 금액: <span th:text="${orderItem.orderPrice * orderItem.count} +'원'"></span>
+          </div>
+          <button type="button" class="btn btn-outline-dark" >결제하기</button>
         </div>
       </div>
     </div>

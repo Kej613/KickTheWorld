@@ -22,11 +22,6 @@ public class FileService {
         return savedFileName;
     }
 
-//    // 이미지 URL 안전한 형태로 변환
-//    private String encodeFileName(String fileName) throws UnsupportedEncodingException {
-//        return URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-//    }
-
     //이미지 삭제
     public void deleteFile(String filePath) throws Exception{
         File deleteFile = new File(filePath);
@@ -37,11 +32,5 @@ public class FileService {
             log.info("파일이 존재하지 않습니다.");
         }
     }
-
-//    // 이미지 URL 설정
-//    public String getImageUrl(String savedFileName, String originalFileName) throws UnsupportedEncodingException {
-//        String encodedFileName = encodeFileName(originalFileName);
-//        return "/images/trip/" + savedFileName + "?filename=" + encodedFileName;
-//    }
 
 }

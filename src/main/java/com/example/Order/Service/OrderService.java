@@ -9,6 +9,8 @@ import com.example.Order.Repository.OrderRepository;
 import com.example.Security.entity.Member;
 import com.example.Security.repository.MemberRepository;
 import com.example.Stay.Entity.Stay;
+import com.example.Stay.Entity.StayImg;
+import com.example.Stay.Repository.StayImgRepository;
 import com.example.Stay.Repository.StayRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +32,13 @@ public class OrderService {
     private final StayRepository stayRepository;
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
+    private final StayImgRepository stayImgRepository;
 
 
     // 예약
     public Long order(OrderDto orderDto, String memId) {
 
-        Stay stay = stayRepository.findById(orderDto.getStay_id())    // 예약할 숙소를 조회
+        Stay stay = stayRepository.findById(orderDto.getId())    // 예약할 숙소를 조회
                 .orElseThrow(EntityNotFoundException::new);
 
         Member member = memberRepository.findByMemId(memId);  //현재 로그인한 회원의 아이디를 이용해 회원 정보 조회
@@ -63,10 +67,10 @@ public class OrderService {
             OrderHistDto orderHistDto = new OrderHistDto(order);
             List<OrderItem> orderItems = order.getOrderItems();
             for (OrderItem orderItem : orderItems) {
-//                ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn
-//                        (orderItem.getItem().getId(), "Y");
+                StayImg stayImg = stayImgRepository.findByStay_IdAndRepimgYn
+                        (orderItem.getStay().getId(), "Y");
                 OrderItemDto orderItemDto =
-                        new OrderItemDto(orderItem);
+                        new OrderItemDto(orderItem, stayImg.getImgUrl());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
 
@@ -75,5 +79,30 @@ public class OrderService {
 
         return new PageImpl<OrderHistDto>(orderHistDtos, pageable, totalCount);
     }
+
+
+    @Transactional
+    public boolean validateOrder(Long orderId, String memId) {
+        Member curMember = memberRepository.findByMemId(memId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        Member savedMember = order.getMember();
+
+        if(!StringUtils.equals(curMember.getMemId(),savedMember.getMemId())) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        order.cancelOrder();
+    }
+
+
+
 
 }

@@ -32,17 +32,21 @@ public class OrderItem {
     private LocalDateTime updateTime;
 
     public static OrderItem createOrderItem(Stay stay, int count) {
-        OrderItem orderItem = new OrderItem(); // Fix: instantiate OrderItem here
-        orderItem.setStay(stay); // Fix: use the correct method to set Stay
+        OrderItem orderItem = new OrderItem();
+        orderItem.setStay(stay);            // 예약할 숙소와 숙박일수를 세팅
         orderItem.setCount(count);
         orderItem.setOrderPrice(stay.getPrice());
 
-        stay.removeStay(count);
+        stay.removeStay(count);     // 숙박일수 만큼 객실수 감소
         return orderItem;
     }
 
-    public int getTotalPrice(){
+    public int getTotalPrice(){             //숙박일수와 숙박가격을 곱해 총 예약금액 계산
         return orderPrice*count;
+    }
+
+    public void cancel() {
+        this.getStay().addStock(count);
     }
 
 }
