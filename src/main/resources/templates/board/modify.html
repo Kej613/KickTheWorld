@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>modify</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    h1 {
+      font-family: 'Pretendard-Regular';
+      text-align:center;
+    }
+    form {
+      font-family: 'Pretendard-Regular';
+      width:60%;
+      text-align:center;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .form-group {
+      margin-bottom: 15px; /* Add some margin between form groups */
+      text-align:left;
+    }
+
+    label {
+      margin-bottom: 5px; /* Add margin below labels */
+      text-align:left;
+
+    }
+
+  </style>
+</head>
+<body>
+<form th:action="@{/board/modify}" method="post" id="boardForm">
+<!--  //page번호 반환하기 위해 보여지지 않는 form input값 생성-->
+  <input type="hidden" name="page" th:value="${requestDTO.page}">
+  <input type="hidden" name="type" th:value="${requestDTO.type}">
+  <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+  <div class="form-group">
+    <label>게시글 번호</label>
+    <input type="text" class="form-control" name="bno" th:value="${dto.bno}" readonly>
+  </div>
+
+<!--  //수정가능이므로 readonly 제거-->
+  <div class="form-group">
+    <label>제목</label>
+    <input type="text" class="form-control" name="title" th:value="${dto.title}">
+  </div>
+
+<!--  //수정가능이므로 readonly 제거-->
+  <div class="form-group">
+    <label>내용</label>
+    <textarea class="form-control" name="content" rows="5">[[${dto.content}]]</textarea>
+  </div>
+
+  <div class="form-group">
+    <label>작성자</label>
+    <input type="text" class="form-control" name="writer" th:value="${dto.writer}" readonly>
+  </div>
+
+<!--  //regDate와 modDate는 자동 입력이므로 name값을 빼고 전달해야함-->
+  <div class="form-group">
+    <label>등록일</label>
+    <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>수정일</label>
+    <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+  </div>
+  <button type="button" class="btn btn-outline-dark modifyBtn">수정</button>
+  <button type="button" class="btn btn-outline-dark listBtn">글 목록</button>
+  <button type="button" class="btn btn-outline-dark removeBtn">삭제</button>
+</form>
+
+<script th:inline="javascript">
+  var actionForm = $("#boardForm");
+
+  $(".removeBtn").click(function(){
+    actionForm
+            .attr("action", "/board/remove")
+            .attr("method", "post");
+    actionForm.submit();
+  });
+
+
+  $(".modifyBtn").click(function() {
+    if(!confirm("수정하시겠습니까?")) {
+      return;
+    }
+    actionForm
+            .attr("action", "/board/modify")
+            .attr("method", "post");
+    actionForm.submit();
+  });
+
+  $(".listBtn").click(function() {
+    var page = $("input[name='page']");
+    var type = $("input[name='type']");
+    var keyword = $("input[name='keyword']");
+
+    actionForm.empty();
+
+    actionForm.append(page);
+    actionForm.append(type);
+    actionForm.append(keyword);
+
+    actionForm
+            .attr("action", "/board/list")
+            .attr("method", "get");
+
+    actionForm.submit();
+  })
+
+
+
+
+</script>
+</body>
+</html>

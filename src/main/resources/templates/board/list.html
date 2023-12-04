@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>boardlist</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+h1 {
+  font-family: 'Pretendard-Regular';
+  text-align:center;
+}
+
+form {
+  font-family: 'Pretendard-Regular';
+  width:60%;
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+  .table-container {
+    font-family: 'Pretendard-Regular';
+    justify-content: center;
+    align-items: center;
+    width:80%;
+    magin-left:auto;
+    margin-right:auto;
+    margin-top: 30px;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 6px; /* Adjust as needed */
+  }
+
+  .write_btn {
+    text-align:right;
+  }
+</style>
+
+</head>
+<body>
+
+<h1 class="mt-4">여행 게시판</h1>
+
+
+<!--검색 폼-->
+<form action="/board/list" method="get" id="searchForm">
+  <div class="input-group">
+    <input type="hidden" name="page" value="1">
+    <div class="input-group-prepend">
+      <select class="custom-select" name="type">
+        <option th:selected="${pageRequestDTO.type == null}">Search</option>
+        <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
+        <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
+        <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>
+        <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목+내용</option>
+        <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목+내용+작성자</option>
+      </select>
+    </div>
+    <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+    <div class="input-group-append" id="button-addon4">
+      <button class="btn btn-outline-dark btn-search" type="button">검색</button>
+      <button class="btn btn-outline-dark btn-clear" type="button">초기화</button>
+    </div>
+  </div>
+</form>
+
+<!--게시글테이블-->
+<div class="table-container">
+<table class="table custom-table">
+  <thead>
+  <tr>
+    <th scope="col">게시물번호</th>
+    <th scope="col">제목</th>
+    <th scope="col">작성자</th>
+    <th scope="col">등록일</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr th:each="dto : ${result.dtoList}">
+    <th scope="row">
+        [[${dto.bno}]]
+    </th>
+    <td><a th:href="@{/board/read(bno=${dto.bno}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+     [[${dto.title}]]</a></td>
+    <td>[[${dto.writer}]]</td>
+    <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+  </tr>
+  </tbody>
+</table>
+
+  <div class="write_btn">
+          <a th:href="@{/board/register}">
+               <button type="button" class="btn btn-outline-dark">글 쓰기</button>
+           </a>
+      </div>
+</div>
+
+<!--페이징-->
+<ul class="pagination h-100 justify-content-center align-items-center">
+  <li class="page-item" th:if="${result.prev}">
+    <a class="page-link" th:href="@{/board/list(page=${result.start - 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
+  </li>
+
+  <li th:class=" 'page-item ' + ${result.page == page ? 'active' : ''} " th:each="page: ${result.pageList}">
+    <a class="page-link" th:href="@{/board/list(page=${page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+      [[${page}]]
+    </a>
+  </li>
+
+  <li class="page-item" th:if="${result.next}">
+    <a class="page-link" th:href="@{/board/list(page=${result.end + 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
+  </li>
+</ul>
+
+<!--모달팝업창-->
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">게시글 업로드 완료</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>게시글이 업데이트 되었습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">변경내용 저장</button>
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script th:inline="javascript">
+  var msg = [[${msg}]];
+
+  console.log(msg);
+
+  const $modal = $(".modal")
+
+  if(msg) {
+    $('.modal').show();
+  }
+
+  $(".close").on("click", () => {
+    $modal.hide()
+  })
+
+  var searchForm = $("#searchForm");
+
+  $('.btn-search').click(function(e) {
+    searchForm.submit();
+  });
+
+  $('.btn-clear').click(function(e) {
+    searchForm.empty().submit();
+  });
+
+</script>
+</body>
+</html>
