@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+  <style>
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    h1 {
+      font-family: 'Pretendard-Regular';
+      text-align:center;
+    }
+    form {
+      font-family: 'Pretendard-Regular';
+      width:60%;
+      text-align:center;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .form-group {
+      margin-bottom: 15px; /* Add some margin between form groups */
+      text-align:left;
+    }
+
+    label {
+      margin-bottom: 5px; /* Add margin below labels */
+      text-align:left;
+
+    }
+
+  </style>
+</head>
+<body>
+
+<form th:action="@{/board/register}" th:method="post">
+  <div class="form-group">
+    <label>제목</label>
+    <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요">
+  </div>
+  <div class="form-group">
+    <label>내용</label>
+    <textarea class="form-control" rows="5" name="content"></textarea>
+  </div>
+  <div class="form-group">
+    <label>작성자</label>
+    <input type="text" class="form-control" name="writer" placeholder="작성자를 입력하세요">
+  </div>
+  <button type="submit" class="btn btn-outline-dark">글쓰기</button>
+</form>
+</body>
+</html>

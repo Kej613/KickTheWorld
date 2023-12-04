@@ -27,6 +27,8 @@ public class TripFormDto {   //여행지 데이터 정보를 전달하는 DTO
     private String parking ;    // 주차 정보
     private String service;  //서비스
 
+    private String theme; //테마
+
     private List<TripImgDto> tripImgDtoList = new ArrayList<>();
 
     public List<TripImgDto> getReversedTripImgDtoList() {

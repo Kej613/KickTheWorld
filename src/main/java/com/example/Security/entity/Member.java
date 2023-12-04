@@ -36,22 +36,7 @@ public class Member {
     private Role role;
 
     private LocalDateTime createdAt; //가입시간
-//    private Integer receivedLikeCnt; //사용자가 받은 좋아요 개수
-//
-//    @OneToMany(mappedBy = "member", orphanRemoval = true)
-//    private List<Board> boards; // 작성글
-//
-//    @OneToMany(mappedBy = "member", orphanRemoval = true)
-//    private List<Like> likes; //유저가 누른 좋아요
-//
-//    @OneToMany(mappedBy="member", orphanRemoval = true)
-//    private List<Comment> comments; //댓글
 
-
-//    public void edit(String newPassword, String memId) {
-//        this.password = newPassword;
-//        this.memId = memId;
-//    }
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder, Role role){
         Member member = new Member();

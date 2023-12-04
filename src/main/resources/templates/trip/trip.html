@@ -126,6 +126,46 @@
         }
 
     </style>
+<!--    여행지톡-->
+<!--    <script th:inline="javascript">-->
+<!--        $(document).ready(function() {-->
+<!--            var id = [[${dto.id}]];-->
+
+<!--            var listGroup = $(".replyList");-->
+
+<!--            //날짜 처리-->
+<!--            function formatTime(str) {-->
+<!--                var date = new Date(str);-->
+
+<!--                return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();-->
+<!--            }-->
+
+<!--            //댓글처리-->
+<!--            function loadJSONData() {-->
+<!--                $.getJSON('/replies/admin/trip/'+id, function(arr) {-->
+<!--                    console.log(arr);-->
+
+<!--                    var str="";-->
+
+<!--                    $('.replyCount').html(" 댓글 조회수:  " + arr.length);-->
+
+<!--                    $.each(arr, function(idx, reply) {-->
+<!--                        console.log(reply);-->
+
+<!--                        str += '   <div class = "card-body" data-rno = "'+reply.rno+'"><b>'+reply.rno +'</b>';-->
+<!--                        str += '   <h5 class = "card-title">'+reply.text+'</h5>';-->
+<!--                        str += '   <h6 class = "card-subtitle mb-2 text-muted">'+reply.replier+'</h6>';-->
+<!--                        str += '   <p class = "card-text">'+ formatTime(reply.regDate)+'</p>';-->
+<!--                        str += '  </div>';-->
+<!--                    })-->
+<!--                    listGroup.html(str);-->
+<!--                });-->
+<!--            }-->
+<!--            $(".replyCount").click(function() {-->
+<!--                loadJSONData();-->
+<!--            })-->
+<!--        });-->
+<!--    </script>-->
 </head>
 <body>
 <header>
@@ -221,6 +261,15 @@
                 <button type="submit" class="btn btn-outline-dark">삭제</button>
             </form>
         </div>
+
+<!--&lt;!&ndash;        댓글처리&ndash;&gt;-->
+<!--        <div>-->
+<!--            <div class="mt-4">-->
+<!--                <h5><span class="badge bg-secondary replyCount">Reply Count [[${dto.replyCount}]]</span></h5>-->
+<!--            </div>-->
+<!--            <div class="list-group replyList"></div>-->
+<!--        </div>-->
+
 
     </div>
 </div>

@@ -59,6 +59,16 @@
     </div>
     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
 
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">여행테마</span>
+        </div>
+        <input type="text" th:field="*{theme}" class="form-control" placeholder="테마를 입력해주세요">
+    </div>
+    <p th:if="${#fields.hasErrors('theme')}" th:errors="*{theme}" class="fieldError">Incorrect data</p>
+
+
     <div class="input-group">
         <div class="input-group-prepend">
             <span class="input-group-text">상세 내용</span>

@@ -13,12 +13,15 @@ public class MainItemDto {
 
     private String address;  //주소
 
+    private String theme; //테마
+
     @QueryProjection
-    public MainItemDto(Long id, String name, String address, String imgUrl) {
+    public MainItemDto(Long id, String name, String address, String theme, String imgUrl) {
         this.id= id;
         this.name = name;
         this.imgUrl = imgUrl;
         this.address = address;
+        this.theme = theme;
 
     }
 }
