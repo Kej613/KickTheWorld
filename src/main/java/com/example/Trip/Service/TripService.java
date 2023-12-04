@@ -103,10 +103,9 @@ public class TripService {
         return trip.getId();
     }
 
-    public Page<Trip> findByAddress(String address, Pageable pageable) {
-        return tripRepository.findByAddress(address, pageable);
+    public Page<Trip> findByCategory(String theme, String address, Pageable pageable) {
+        return tripRepository.findByCategory(theme,address, pageable);
     }
-
 
     //여행지 삭제
     public void deleteById(Long id) {

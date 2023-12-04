@@ -44,10 +44,14 @@ public class Trip {
     @Column
     private String service;  //서비스
 
+    @Column
+    private String theme; //여행테마
+
 
     @Builder
-    public Trip(String name, String detail, String address, String telephone, String link,
-                String parking, String service) {
+    public Trip(Long id, String name, String detail, String address, String telephone, String link,
+                String parking, String service, String theme) {
+        this.id = id;
         this.name = name;
         this.detail = detail;
         this.address = address;
@@ -55,6 +59,7 @@ public class Trip {
         this.parking = parking;
         this.service = service;
         this.link = link;
+        this.theme = theme;
 
     }
 
@@ -67,6 +72,7 @@ public class Trip {
         this.parking = tripFormDto.getParking();
         this.service = tripFormDto.getService();
         this.link = tripFormDto.getLink();
+        this.theme = tripFormDto.getTheme();
     }
 
 }

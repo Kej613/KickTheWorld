@@ -27,6 +27,7 @@ public class TripDto {
     private String service;  //서비스
 
     private String imgUrl;   //이미지 url
+    private String theme;   //여행테마
 
 
     public TripDto(Trip trip) {
@@ -38,6 +39,7 @@ public class TripDto {
         this.link = trip.getLink();
         this.parking = trip.getParking();
         this.telephone = trip.getTelephone();
+        this.theme = trip.getTheme();
     }
 
 

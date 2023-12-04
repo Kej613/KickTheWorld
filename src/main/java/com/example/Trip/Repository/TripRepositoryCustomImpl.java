@@ -67,6 +67,7 @@ public class TripRepositoryCustomImpl implements TripRepositoryCustom {
                         trip.id,
                         trip.name,
                         trip.address,
+                        trip.theme,
                         tripImg.imgUrl)
         )
                 .from(tripImg)
