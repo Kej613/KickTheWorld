@@ -26,6 +26,9 @@
           <a class="nav__link" href="/" ><b>마이페이지</b></a>
         </li>
         <li class="nav__item">
+          <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
+        </li>
+        <li class="nav__item">
           <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
         </li>
         <li class="nav__item">
@@ -47,7 +50,6 @@
       <i class="ri-function-line"></i>
     </div>
   </nav>
-
   <!--NAV CONTAINER 2-->
   <nav class="nav__container-main">
     <div class="nav__menu" id="nav-menu-main">
@@ -62,7 +64,7 @@
           <a href="/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
         </li>
         <li class="nav__item">
-          <a href="/stays/category" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+          <a href="/search" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
         </li>
 
       </ul>
@@ -78,15 +80,11 @@
 
     <div class="home__container container grid">
       <div class="home__data">
-        <!-- <span class="home__data-subtitle">Discover your place</span> -->
-<!--        <h1 class="home__data-title-eng">Collect <b>Moments,</b> <br> Not Things.</h1>-->
-<!--        <h1 class="home__data-title-eng">Kick The World</h1>-->
+
         <br><h3 class="home__data-title-kor" style="font-size:25px;">
-<!--          물건들이 아닌, <b>순간들</b>을 모으세요.<br>-->
-<!--          당신과 세상의 만남을 Kick The World가 함께합니다.-->
+
           함께하는 <b> 힐링여행, </b> 국내로 떠나볼까요 ?
         </h3>
-<!--        <a th:href="@{#trips}" class="button" >둘러보기</a>-->
       </div>
 
 

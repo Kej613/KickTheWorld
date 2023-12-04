@@ -3,71 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <title>recommendPage</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <style>
+
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Pretendard-Regular';
+            background-color: #FDFAFF;
+            width:80%;
+        }
+        header {
+            background-color: #FDFAFF;
+        }
+        h2 {
+            font-family: 'Pretendard-Regular';
+            text-align:center;
+            font-size: 28px;
+        }
+        .sidemenu1 {
+            list-style-type: none;
+            background-color:white;
+            border-radius:30px;
+            text-align:center;
+        }
+        .side_li {
+            text-decoration: none;
+            text-align:center;
+            margin-left: auto;
+            margin-right : auto;
+            padding:20px;
+            text-size: 25px;
+        }
+        /*button {*/
+        /*    font-family: 'Pretendard-Regular';*/
+        /*    font-size: 20px;*/
+        /*    font-weight:bold;*/
+        /*    background-color: white;*/
+        /*    border-radius: 5px;*/
+        /*    border: 1px solid #161616;*/
+        /*    padding:30px;*/
+        /*    margin:20px;*/
+        /*    justify-content: center;*/
+        /*    text-align:center;*/
+        /*}*/
+        .sidemenu1 .side_li button {
+            /* 일반 버튼 스타일링 */
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .sidemenu1 .side_li button.selected {
+            /* 선택된 버튼 스타일링 */
+            background-color: #007bff;
+            color: #fff;
+            /* 원하는 스타일 추가 */
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.btn.btn-outline-dark').on('click', function () {
+                $('#searchForm').submit();
+            });
+        });
+    </script>
 </head>
 <body>
+<header>
+    <a href="/"><img class="logo" src="/images/Logo.png" alt="Logo Image" /></a>
+    <nav>
+        <ul>
+            <li class="main_list"><a class="main" href="/">여행지 추천</a></li>
+            <li class="main_list dropdown">
+                <a class="main" href="#">여행 정보</a>
+                <div class="dropdown-content">
+                    <a th:href="@{/main/trips}">여행지</a>
+                    <a th:href="@{/stays}">숙소</a>
+                    <a th:href="@{/eaterys}">맛집</a>
+                </div>
+            </li>
+            <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
+            <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
+            <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                관리자페이지
+            </a></li>
+            <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
+                로그인
+            </a>
+            <a class="main" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}">
+                회원가입
+            </a>
+            <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                로그아웃
+            </a>
+        </ul>
+    </nav>
+    <hr>
+</header>
 
-<form th:action="@{/search}" method="get">
+<form th:action="@{/search}" method="get" id="searchForm">
     <div class="container">
         <div class="side">
             <ul class="sidemenu1">
                 <li class="side_li">
                     <a>여행지역</a>
-                    <select name="address">
-                        <option value="지역" >지역</option>
-                        <option value="서울" th:selected="${param.address == '서울'}">서울</option>
-                        <option value="경기" th:selected="${param.address == '경기'}">경기</option>
-                        <option value="인천" th:selected="${param.address == '인천'}">인천</option>
-                        <option value="부산" th:selected="${param.address == '부산'}">부산</option>
-                        <option value="강원" th:selected="${param.address == '강원'}">강원</option>
-                        <option value="대전" th:selected="${param.address == '대전'}">대전</option>
-                        <option value="경북" th:selected="${param.address == '경북'}">경북</option>
-                        <option value="경남" th:selected="${param.address == '경남'}">경남</option>
-                        <option value="인천" th:selected="${param.address == '인천'}">전남</option>
-                        <option value="인천" th:selected="${param.address == '인천'}">전북</option>
-                        <option value="제주" th:selected="${param.address == '제주'}">제주</option>
-                    </select>
-                </li>
+<!--                    <button type="button" name="address" value="지역" class="${param.address == '지역' ? 'selected' : ''}">지역</button>-->
+<!--                    <button type="button" name="address" value="서울" class="${param.address == '서울' ? 'selected' : ''}">서울</button>-->
+<!--                    <button type="button" name="address" value="경기" class="${param.address == '경기' ? 'selected' : ''}">경기</button>-->
+<!--                    <button type="button" name="address" value="강원" class="${param.address == '강원' ? 'selected' : ''}">강원</button>-->
+<!--                    <button type="button" name="address" value="부산" class="${param.address == '부산' ? 'selected' : ''}">부산</button>-->
+<!--                    <button type="button" name="address" value="제주" class="${param.address == '제주' ? 'selected' : ''}">제주</button>-->
+                    <label>
+                        <input type="radio" name="address" value="전체" checked>전체
+                    </label>
+                    <label>
+                        <input type="radio" name="address" value="서울" th:checked="${param.address == '서울'}">서울
+                        <input type="radio" name="address" value="경기" th:checked="${param.address == '경기'}">경기
+                        <input type="radio" name="address" value="강원" th:checked="${param.address == '강원'}">강원
+                        <input type="radio" name="address" value="부산" th:checked="${param.address == '부산'}">부산
+                        <input type="radio" name="address" value="제주" th:checked="${param.address == '제주'}">제주
+                    </label>
 
-                <li class="side_li">
-                    <a class="home">숙소유형</a>
-                    <select name="category">
-                        <option value="전체" >전체</option>
-                        <option value="호텔" th:selected="${param.address == '호텔'}">호텔</option>
-                        <option value="펜션" th:selected="${param.address == '펜션'}">펜션</option>
-                        <option value="게스트하우스" th:selected="${param.address == '게스트하우스'}">게스트하우스</option>
-                        <option value="캠핑" th:selected="${param.address == '캠핑'}">캠핑</option>
-                        <option value="기타" th:selected="${param.address == '기타'}">기타</option>
-                    </select>
-                </li>
-            </ul>
-            <button type="submit" class="btn btn-outline-dark">검색</button>
-        </div>
-    </div>
-</form>
-
-<div th:if="${result}">
-    <h2>숙소 정보</h2>
-    <div th:each="stay, status: ${result.stays.getContent()}" class="card">
-<!--        <a th:href="@{'/stay/' + ${stay.id}">-->
-            <a th:text="${stay.name}"></a>
-            <a th:text="${stay.category}" ></a>
-<!--        </a>-->
-    </div>
-
-    <h2>여행지 정보</h2>
-    <div th:each="trip, status: ${result.trips.getContent()}" class="card">
-<!--        <a th:href="@{'/trip/' + ${trip.id}">-->
-            <a th:text="${trip.name}"></a>
-<!--        </a>-->
-    </div>
-</div>
-
-
-<!--<form th:action="@{/stays/category}" method="get">-->
-<!--    <div class="container">-->
-<!--        <div class="side">-->
-<!--            <ul class="sidemenu1">-->
-<!--                <li class="side_li"><a >여행지역</a>-->
 <!--                    <select name="address">-->
 <!--                        <option value="지역" >지역</option>-->
 <!--                        <option value="서울" th:selected="${param.address == '서울'}">서울</option>-->
@@ -81,9 +143,25 @@
 <!--                        <option value="인천" th:selected="${param.address == '인천'}">전남</option>-->
 <!--                        <option value="인천" th:selected="${param.address == '인천'}">전북</option>-->
 <!--                        <option value="제주" th:selected="${param.address == '제주'}">제주</option>-->
-<!--                    </select></li>-->
+<!--                    </select>-->
+                </li>
 
-<!--                <li class="side_li"><a class="home" >숙소유형</a>-->
+                <li class="side_li">
+                    <a class="home">숙소유형</a>
+<!--                    <button type="button" name="category" value="호텔" class="${param.category == '호텔' ? 'selected' : ''}">호텔</button>-->
+<!--                    <button type="button" name="category" value="펜션" class="${param.category == '펜션' ? 'selected' : ''}">펜션</button>-->
+<!--                    <button type="button" name="category" value="게스트하우스" class="${param.category == '게스트하우스' ? 'selected' : ''}">게스트하우스</button>-->
+<!--                    <button type="button" name="category" value="기타" class="${param.category == '기타' ? 'selected' : ''}">기타</button>-->
+
+                    <label>
+                        <input type="radio" name="category" value="전체" checked>전체
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}">호텔
+                        <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}">펜션
+                        <input type="radio" name="category" value="게스트하우스" th:checked="${param.category == '게스트하우스'}">게스트하우스
+                        <input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}">캠핑
+                    </label>
 <!--                    <select name="category">-->
 <!--                        <option value="전체" >전체</option>-->
 <!--                        <option value="호텔" th:selected="${param.address == '호텔'}">호텔</option>-->
@@ -91,21 +169,55 @@
 <!--                        <option value="게스트하우스" th:selected="${param.address == '게스트하우스'}">게스트하우스</option>-->
 <!--                        <option value="캠핑" th:selected="${param.address == '캠핑'}">캠핑</option>-->
 <!--                        <option value="기타" th:selected="${param.address == '기타'}">기타</option>-->
-<!--                    </select></li>-->
+<!--                    </select>-->
+                </li>
+                <li class="side_li">
+                    <a class="home">테마</a>
+<!--                    <button type="button" name="theme" value="힐링" class="${param.theme == '힐링' ? 'selected' : ''}">힐링</button>-->
+<!--                    <button type="button" name="theme" value="역사" class="${param.theme == '역사' ? 'selected' : ''}">역사</button>-->
+<!--                    <button type="button" name="theme" value="액티비티" class="${param.theme == '액티비티' ? 'selected' : ''}">액티비티</button>-->
 
 
-<!--            </ul>-->
-<!--            <button type="submit" class="btn btn-outline-dark">검색</button>-->
-<!--        </div>-->
-<!--    </div>-->
+<!--                                        <select name="theme">-->
+<!--                        <option value="전체" >전체</option>-->
+<!--                        <option value="힐링" th:selected="${param.address == '힐링'}">힐링</option>-->
+<!--                        <option value="역사" th:selected="${param.address == '역사'}">역사</option>-->
+<!--                        <option value="액티비티" th:selected="${param.address == '액티비티'}">액티비티</option>-->
+<!--                    </select>-->
+                <li class="side_li">
+                    <label>
+                        <input type="radio" name="theme" value="전체" checked>전체
+                    </label>
+                    <label>
+                        <input type="radio" name="theme" value="힐링" th:checked="${param.theme == '힐링'}">힐링
+                        <input type="radio" name="theme" value="역사" th:checked="${param.theme == '역사'}">역사
+                        <input type="radio" name="theme" value="액티비티" th:checked="${param.theme == '액티비티'}">액티비티
+                    </label>
+                    <!-- Add other radio buttons for different options -->
+                </li>
+                </li>
+            </ul>
+            <div class="btn1" style="text-align:center;">
+            <button type="submit" class="btn btn-outline-dark">검색</button></div>
+        </div>
+    </div>
+</form>
 
-<!--    <div th:each="stay, status: ${stays.getContent()}" class="card" >-->
-<!--        <a th:href="@{'/stay/' + ${stay.id}}">-->
-<!--            <a th:text="${stay.name}"></a>-->
-<!--            <a th:text="${stay.category}" ></a>-->
+<div th:if="${result}">
+    <div th:each="trip, status: ${result.trips.getContent()}" class="card">
+<!--        <img th:src="${trip.imgUrl}" th:alt="${trip.name}" class="rounded-1 repImg">-->
+        <!--        <a th:href="@{'/trip/' + ${trip.id}">-->
+        <a th:text="${trip.name}"></a>
+        <!--        </a>-->
+    </div>
+
+    <div th:each="stay, status: ${result.stays.getContent()}" class="card">
+<!--        <a th:href="@{'/stay/' + ${stay.id}">-->
+            <a th:text="${stay.name}"></a>
+            <a th:text="${stay.category}" ></a>
 <!--        </a>-->
-<!--    </div>-->
-<!--</form>-->
-
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

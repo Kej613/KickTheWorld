@@ -61,27 +61,14 @@ public class StayController {
 //    }
 
 
-//    // 통합 검색 쿼리
-//    @GetMapping("/search")
-//    public String search(@RequestParam(value = "query", required = false) String query,
-//                         @PageableDefault(page = 0, size = 10) Pageable pageable,
-//                         Model model) {
-//        Page<Trip> tripsByAddress = tripService.findByAddress(query, pageable);
-//        model.addAttribute("trips", tripsByAddress);
-//
-//        Page<Stay> staysByCategory = stayService.findByCategory(null, query, pageable);
-//        model.addAttribute("stays", staysByCategory);
-//
-//        return "recommendPage";
-//    }
-
     @GetMapping("/search")
     public String search(@RequestParam(value = "address", required = false) String address,
                          @RequestParam(value = "category", required = false) String category,
+                         @RequestParam(value = "theme", required = false) String theme,
                          @PageableDefault(page = 0, size = 10) Pageable pageable,
                          Model model) {
         Page<Stay> stays = stayService.findByCategory(category, address, pageable);
-        Page<Trip> trips = tripService.findByAddress(address, pageable);
+        Page<Trip> trips = tripService.findByCategory(theme, address, pageable);
 
         SearchResult result = new SearchResult(stays, trips);
         model.addAttribute("result", result);

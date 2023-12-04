@@ -11,8 +11,9 @@
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/main_test.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-<!--    <link th:href="@{/css/stay.css}" rel="stylesheet">-->
 
+<!--    <link th:href="@{/css/stay.css}" rel="stylesheet">-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script th:inline="javascript">
         $(document).ready(function(){
             $("#searchBtn").on("click",function(e) {
@@ -200,10 +201,7 @@
 <!--                    <option value="name">숙소명</option>-->
 <!--                    <option value="address">지역</option>-->
 <!--                </select>-->
-
             </div>
-
-
             <!--        <div class="container">-->
             <!--            <div class="side">-->
             <!--            <ul class="sidemenu1">-->
@@ -241,9 +239,7 @@
                     <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>
                 </a>
             </div>
-
             <!--        </div>-->
-
             <!--        페이징처리-->
             <div class="paging" style="margin-top:300px;" >
                 <div th:with="start=${(stays.number/maxPage)*maxPage + 1}, end=(${(stays.totalPages == 0) ? 1 : (start + (maxPage - 1) < stays.totalPages ? start + (maxPage - 1) : stays.totalPages)})" >
@@ -306,7 +302,6 @@
         </div>
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- SWIPER JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <!-- MAIN JS -->
