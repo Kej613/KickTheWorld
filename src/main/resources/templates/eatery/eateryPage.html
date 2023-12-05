@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>EateryPage</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- REMIX ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <!-- SWIPER CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/main_test.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
+
+
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $("#searchBtn").on("click",function(e) {
+                e.preventDefault();
+                page(0);  //조회할때 페이지 번호를 0으로 설정해서 조회해야 함
+            });
+        });
+
+        function page(page){
+            var searchBy = $("#searchBy").val();
+            var searchQuery = $("#searchQuery").val();
+
+            location.href="/main/eaterys/" + page + "?searchBy=" + searchBy + "&searchQuery=" + searchQuery ;
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        a{
+            text-decoration: none;
+        }
+        body{
+            font-family: 'Pretendard-Regular';
+            background-color: #FDFAFF;
+        }
+        h2{
+            font-family: 'Pretendard-Regular';
+            font-size: 23px;
+            text-align:center;
+        }
+        input {
+            width:600px;
+            height:30px;
+            margin-left:auto;
+            margin-right:auto;
+            border-radius:10px;
+            border: 1px solid #ccc;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .trip-card {
+            width: 18%;
+            margin-bottom: 20px;
+        }
+
+        .repImg {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .trip-name {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header" id="header">
+    <!--NAV CONTAINER 1-->
+    <nav class="nav container">
+        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
+
+        <!--NAV MENU-->
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="/" ><b>마이페이지</b></a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+                </li>
+
+                <i class="ri-close-line nav__close" id="nav-close"></i>
+            </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-function-line"></i>
+        </div>
+    </nav>
+
+    <!--NAV CONTAINER 2-->
+    <nav class="nav__container-main">
+        <div class="nav__menu" id="nav-menu-main">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/search" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+    <!-- HOME -->
+    <section class="home" id="home">
+        <img th:src="@{/images/main/Eatery.jpg}" alt="home main image" class="home__img">
+        <div class="home__container container grid">
+        </div>
+    </section>
+
+    <div>
+        <br><h2>근처 맛집을 찾아볼까요 ?  </h2><br>
+        <form th:action="@{'/main/eaterys/' + ${eaterys.number}}" role="form" method="get" th:object="${eaterys}">
+            <div th:object="${eaterySearchDto}" style="text-align: center;">
+                <select th:field="*{searchBy}" style="width:auto;">
+                    <option value="address">지역</option>
+                    <option value="name">음식점명</option>
+                </select>
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:60%; margin-left:auto; margin-right:auto; border-radius:10px;">
+                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>
+            </div>
+
+            <div class="card-container" style="margin-top:50px;">
+                <div th:each="eatery, status: ${eaterys.getContent()}" class="trip-card">
+                    <a th:href="'/admin/eatery/'+${eatery.id}">
+                        <img th:src="${eatery.imgUrl}" th:alt="${eatery.name}" class="rounded-1 repImg">
+                        <p th:text="${eatery.name}" class="trip-name"></p>
+                    </a>
+                </div>
+            </div>
+
+            <!--        페이징처리-->
+            <div class="paging" style="margin-top:300px;" >
+                <div th:with="start=${(eaterys.number/maxPage)*maxPage + 1}, end=(${(eaterys.totalPages == 0) ? 1 : (start + (maxPage - 1) < eaterys.totalPages ? start + (maxPage - 1) : eaterys.totalPages)})" >
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${eaterys.first}?'disabled'">
+                            <a th:onclick="'javascript:page(' + ${eaterys.number - 1} + ')'" aria-label='Previous' class="page-link">
+                                <span aria-hidden='true'><<</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${eaterys.number eq page-1}?'active':''">
+                            <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${eaterys.last}?'disabled'">
+                            <a th:onclick="'javascript:page(' + ${eaterys.number + 1} + ')'" aria-label='Next' class="page-link">
+                                <span aria-hidden='true'>>></span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+    </section>
+</main>
+
+
+<!-- FOOTER -->
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content grid">
+            <div class="footer__data">
+                <h3 class="footer__title">Developer</h3>
+                <div>
+                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="footer__data">
+                <h3 class="footer__subtitle">Company</h3>
+                <ul>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Team</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Plan y Pricing</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Become a member</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__rights">
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- SWIPER JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- MAIN JS -->
+<script th:src="@{/js/main_test.js}"></script>
+</body>
+</html>
