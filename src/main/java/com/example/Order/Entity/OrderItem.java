@@ -15,15 +15,15 @@ public class OrderItem {
     @Id
     @GeneratedValue
     @Column(name="order_stay_id")
-    private Long id;
+    private Long id;            //예약한 숙소 아이디
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="stay_id")
-    private Stay stay;
+    private Stay stay;              //숙소아이디
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="order_id")
-    private Order order;
+    private Order order;            //예약아이디
 
     private int orderPrice;  //예약가격
 

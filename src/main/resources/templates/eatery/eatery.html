@@ -7,7 +7,7 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <title>TripDetail</title>
+    <title>EateryDetail</title>
     <link th:href="@{/css/stay.css}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <style>
@@ -37,16 +37,6 @@
             width: 600px;
             height: 400px;
         }
-
-        /*button {*/
-        /*    position: absolute;*/
-        /*    top: 50%;*/
-        /*    transform: translateY(-50%);*/
-        /*    background: none;*/
-        /*    border: none;*/
-        /*    font-size: 24px;*/
-        /*    cursor: pointer;*/
-        /*}*/
 
         .prev-btn {
             left: 10px;
@@ -127,7 +117,6 @@
         }
 
     </style>
-
 </head>
 <body>
 <header>
@@ -143,10 +132,10 @@
                     <a th:href="@{/eaterys}">음식점 & 카페</a>
                 </div>
             </li>
-            <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
+            <li class="main_list"><a class="main" href="/board/list">메인게시판</a></li>
 
             <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-            <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <li class="main_list"><a class="main" href="/admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                 관리자페이지
             </a></li>
             <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
@@ -161,29 +150,23 @@
 </header>
 <div>
     <div class="main_content">
-    <input type="hidden" id="id" th:value="${trip.id}">
-<!--        대표이미지-->
+        <input type="hidden" id="id" th:value="${eatery.id}">
+        <!--        대표이미지-->
         <div class="d-flex">
             <div class="repImgDiv" >
-<!--                <img th:src="${trip.tripImgDtoList[0].imgUrl}" class = "rounded repImg" th:alt="${trip.name}" style=" width: 500px;-->
-<!--            height: 400px;-->
-<!--            margin-left:auto;-->
-<!--            margin-right:auto;-->
-<!--            justify-content: center;-->
-<!--            text-align:center;">-->
-                <b><h2 th:text="${trip.name}" style="text-align:center;"></h2></b>
+                <b><h2 th:text="${eatery.name}" style="text-align:center;"></h2></b>
                 <hr class="my-4">
-                <h2>여행지 소개</h2><hr class="my-4">
+                <h2>맛집 소개</h2><hr class="my-4">
                 <div>
-                <p th:text="${trip.detail}" ></p>
+                    <p th:text="${eatery.detail}" ></p>
                 </div>
             </div>
         </div>
 
         <div class="slider-container">
             <div class="slider">
-                <div th:each="tripImg: ${trip.reversedTripImgDtoList}" class="slide">
-                    <img th:if="${not #strings.isEmpty(tripImg.imgUrl)}" th:src="@{${tripImg.imgUrl}}" alt="slide-image" class="rounded-1 repImg">
+                <div th:each="eateryImg: ${eatery.reversedEateryImgDtoList}" class="slide">
+                    <img th:if="${not #strings.isEmpty(eateryImg.imgUrl)}" th:src="@{${eateryImg.imgUrl}}" alt="slide-image" class="rounded-1 repImg">
                 </div>
             </div>
             <button class="prev-btn" onclick="prevSlide()">&#8249;</button>
@@ -193,28 +176,28 @@
         <hr class="my-4">
 
         <div class="text-center">
-        <h2><b>위치 </b></h2>
+            <h2><b>위치 </b></h2>
             <hr class="my-4">
             <div id="map" style="width:80%;height:300px; border-radius:10px; margin-left:auto; margin-right:auto;"></div>
-            <span th:text="${trip.address}"></span>
+            <span th:text="${eatery.address}"></span>
         </div>
         <hr class="my-4">
         <h2>이용안내</h2>
         <hr class="my-4">
         <div class="row">
             <div class="col-md-6">
-                <p><b>[문의 및 전화]</b><br> <span th:text="${trip.telephone}"></span></p>
-                <p><b>[홈페이지]</b><br> <a th:href="${trip.link}" target="_blank" th:text="${trip.link}"></a></p>
+                <p><b>[문의 및 전화]</b><br> <span th:text="${eatery.telephone}"></span></p>
+                <p><b>[서비스]</b><br> <span th:text="${eatery.service}"></span></p>
             </div>
             <div class="col-md-6">
-                <p><b>[주차]</b><br> <span th:text="${trip.parking}"></span></p>
-                <p><b>[이용시간]</b><br> <span th:text="${trip.service}"></span></p>
+                <p><b>[주차]</b><br> <span th:text="${eatery.parking}"></span></p>
+                <p><b>[이용안내]</b><br> <span th:text="${eatery.guide}"></span></p>
             </div>
         </div>
         <hr class="my-4">
         <div>
-            <a th:href="@{/admin/trip/edit/{id}(id=${trip.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>
-            <form th:action="@{'/admin/trip/delete/' + ${trip.id}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+            <a th:href="@{/admin/eatery/edit/{id}(id=${eatery.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>
+            <form th:action="@{'/admin/eatery/delete/' + ${eatery.id}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
                 <button type="submit" class="btn btn-outline-dark">삭제</button>
             </form>
         </div>
@@ -266,8 +249,6 @@
     });
 
 </script>
-
-
 <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=c2e5cdc145feeac77effa91283d46a6e&libraries=services'"></script>
 
 <!--   카카오맵 api-->
@@ -281,7 +262,7 @@
     var map = new kakao.maps.Map(mapContainer, mapOption);
     var geocoder = new kakao.maps.services.Geocoder();
 
-    geocoder.addressSearch('[[${trip .address}]]', function(result, status) {
+    geocoder.addressSearch('[[${eatery .address}]]', function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
             var marker = new kakao.maps.Marker({

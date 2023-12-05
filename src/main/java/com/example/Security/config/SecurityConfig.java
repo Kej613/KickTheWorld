@@ -26,6 +26,7 @@ public class SecurityConfig {
 
         //authorization
         http
+                .csrf().and()
                 .authorizeHttpRequests()
                 .requestMatchers("/members/login").anonymous()
                 .requestMatchers("/members/signup").anonymous()

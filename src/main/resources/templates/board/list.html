@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <title>boardlist</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -17,7 +18,13 @@ h1 {
   font-family: 'Pretendard-Regular';
   text-align:center;
 }
-
+  body {
+    background-color: #FDFAFF;
+  }
+a {
+  text-display: none;
+  color:black;
+}
 form {
   font-family: 'Pretendard-Regular';
   width:60%;
@@ -26,6 +33,10 @@ form {
   margin-right:auto;
 }
 
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
   .table-container {
     font-family: 'Pretendard-Regular';
     justify-content: center;
@@ -49,16 +60,16 @@ form {
 </head>
 <body>
 
-<h1 class="mt-4">여행 게시판</h1>
+<h1>Trip Board</h1>
 
 
 <!--검색 폼-->
 <form action="/board/list" method="get" id="searchForm">
   <div class="input-group">
     <input type="hidden" name="page" value="1">
-    <div class="input-group-prepend">
+    <div class="input-group-prepend" style="padding: 10px; border-radius: 10px;">
       <select class="custom-select" name="type">
-        <option th:selected="${pageRequestDTO.type == null}">Search</option>
+        <option th:selected="${pageRequestDTO.type == null}">검색</option>
         <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
         <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
         <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>
@@ -67,7 +78,7 @@ form {
       </select>
     </div>
     <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
-    <div class="input-group-append" id="button-addon4">
+    <div class="input-group-append" id="button-addon4" style="padding:10px;">
       <button class="btn btn-outline-dark btn-search" type="button">검색</button>
       <button class="btn btn-outline-dark btn-clear" type="button">초기화</button>
     </div>

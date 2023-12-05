@@ -51,7 +51,10 @@ public class Stay {
     private String amenity;         //편의시설
 
     @Enumerated(EnumType.STRING)
-    private StaySellStatus staySellStatus;
+    private StaySellStatus staySellStatus;      //숙소 예약상태
+
+    @Column
+    private int people;     //최대수용가능인원수
 
     @CreatedDate
     @Column(name = "reg_time", updatable = false)
@@ -81,6 +84,7 @@ public class Stay {
             String category,
             int price,
             int room,
+            int people,
             String detail,
             String address,
             String service,
@@ -92,6 +96,7 @@ public class Stay {
         this.category = category;
         this.price = price;
         this.room = room;
+        this.people = people;
         this.detail = detail;
         this.address = address;
         this.service = service;
@@ -104,6 +109,7 @@ public class Stay {
         this.name = stayFormDto.getName();
         this.price = stayFormDto.getPrice();
         this.room = stayFormDto.getRoom();
+        this.people = stayFormDto.getPeople();
         this.detail = stayFormDto.getDetail();
         this.staySellStatus = stayFormDto.getStaySellStatus();
         this.address = stayFormDto.getAddress();

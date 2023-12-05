@@ -1,10 +1,8 @@
 package com.example.Security.controller;
 
-
 import com.example.Security.constant.Role;
 import com.example.Security.dto.MemberFormDto;
 import com.example.Security.entity.Member;
-import com.example.Security.service.KakaoLoginService;
 import com.example.Security.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final KakaoLoginService kakaoLoginService;
+//    private final KakaoLoginService kakaoLoginService;
 
     private final MemberService memberService;
-
     private final PasswordEncoder passwordEncoder;
 
     //회원가입
@@ -56,7 +53,7 @@ public class MemberController {
     //로그인
     @GetMapping(value = "/login")
     public String loginMember(Model model){
-        model.addAttribute("kakaoUrl", kakaoLoginService.getKakaoLogin());
+//        model.addAttribute("kakaoUrl", kakaoLoginService.getKakaoLogin());
         return "member/LoginForm";
     }
 

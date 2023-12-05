@@ -11,10 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemId(String memId); //유저 아이디로 회원 찾기
 
-//Admin이 회원아이디를 검색할 때
-    Page<Member> findAllByMemIdContains(String memId, PageRequest pageRequest);
-
-    // 회원이 존재하는지
-    Boolean existsByMemId(String memId);
 
 }

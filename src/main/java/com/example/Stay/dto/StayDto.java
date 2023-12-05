@@ -23,9 +23,10 @@ public class StayDto {
     private String category;
     @NotBlank(message = "숙박가격은 필수 입력값입니다.")
     private int price;
+
     @NotBlank(message = "주소는 필수 입력값입니다.")
     private String address;
-
+    private int people;
     private int room;  // 객실수
     private String service;   //서비스
     private String use_guide;   //이용안내
@@ -57,6 +58,7 @@ public class StayDto {
         this.category = stay.getCategory();
         this.room = stay.getRoom();
         this.price = stay.getPrice();
+        this.people = stay.getPeople();
         this.address = stay.getAddress();
         this.service = stay.getService();
         this.use_guide = stay.getUse_guide();
