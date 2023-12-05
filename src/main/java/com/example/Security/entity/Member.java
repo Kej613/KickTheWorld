@@ -18,17 +18,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="member_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long member_id;
-
+    private Long id;
 
     private String memId;   // 로그인 아이디
     private String name;    //이름
     @Column(unique = true)
     private String email;   //이메일
+
+    private String phonenumber; //핸드폰번호
     private String password; //비밀번호
     private String address;  //주소
 
@@ -43,6 +43,7 @@ public class Member {
         member.setMemId(memberFormDto.getMemId());
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
+        member.setPhonenumber(memberFormDto.getPhonenumber());
         member.setAddress(memberFormDto.getAddress());
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
