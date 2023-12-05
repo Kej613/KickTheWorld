@@ -22,7 +22,7 @@ public class Order {
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="member_id")
-    private Member member;
+    private Member member;          //예약자명
 
     private LocalDateTime orderDate;  //예약 날짜
 
@@ -32,9 +32,9 @@ public class Order {
     @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL, orphanRemoval = true, fetch= FetchType.LAZY) // 영속성 전이, 고아객체 제거
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    private LocalDateTime regTime;
+    private LocalDateTime regTime;      //등록시간
 
-    private LocalDateTime updateTime;
+    private LocalDateTime updateTime;       //수정시간
 
 
     //예약한 숙소 정보들을 담아둠

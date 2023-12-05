@@ -24,14 +24,14 @@ spring:
     multipart:
       maxFileSize: 20MB
       maxRequestSize: 100MB
-
-# 카카오 로그인 설정
-kakao :
-  client :
-    id : f6251fcbec1a0b926c225477ed4456a0
-    secret : DEybJxOQYf8i7JtYesj8byaSuWfz8dev
-  redirect :
-    url : http://localhost:9090/oauth2/code/kakao
+#
+## 카카오 로그인 설정
+#kakao :
+#  client :
+#    id : f6251fcbec1a0b926c225477ed4456a0
+#    secret : DEybJxOQYf8i7JtYesj8byaSuWfz8dev
+#  redirect :
+#    url : http://localhost:9090/oauth2/code/kakao
 
 server:
   port: 9090
