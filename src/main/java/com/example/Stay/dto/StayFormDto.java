@@ -26,6 +26,8 @@ public class StayFormDto {  //숙소 데이터 정보를 전달하는 DTO
 
     private int price;           //가격
     private int room;  // 객실수
+
+    private int people; //최대 수용인원
     private String detail;          //숙소상세설명
     private String address;         //숙소위치
     private String service;         //숙소 서비스내용

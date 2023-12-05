@@ -12,8 +12,8 @@
     <link rel="stylesheet" th:href="@{/css/main_test.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 
-<!--    <link th:href="@{/css/stay.css}" rel="stylesheet">-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script th:inline="javascript">
         $(document).ready(function(){
             $("#searchBtn").on("click",function(e) {
@@ -165,7 +165,7 @@
 <main class="main">
     <!-- HOME -->
     <section class="home" id="home">
-        <img th:src="@{/images/main/Stay1.jpg}" alt="home main image" class="home__img">
+        <img th:src="@{/images/main/stay.jpg}" alt="home main image" class="home__img">
 
         <div class="home__container container grid">
             </div>
@@ -197,49 +197,25 @@
                 <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" >
 
                 <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>
-<!--                <select th:field="*{searchBy}" name="address"  style="width:auto;">-->
-<!--                    <option value="name">숙소명</option>-->
-<!--                    <option value="address">지역</option>-->
-<!--                </select>-->
-            </div>
-            <!--        <div class="container">-->
-            <!--            <div class="side">-->
-            <!--            <ul class="sidemenu1">-->
-            <!--                <li class="side_li"><a class="home" >여행지역</a>-->
-            <!--                    <select name="address">-->
-            <!--                        <option value="지역" >지역</option>-->
-            <!--                        <option value="서울" th:selected="${param.address == '서울'}">서울</option>-->
-            <!--                        <option value="경기" th:selected="${param.address == '경기'}">경기</option>-->
-            <!--                        <option value="인천" th:selected="${param.address == '인천'}">인천</option>-->
-            <!--                        <option value="부산" th:selected="${param.address == '부산'}">부산</option>-->
-            <!--                        <option value="강원" th:selected="${param.address == '강원'}">강원</option>-->
-            <!--                        <option value="대전" th:selected="${param.address == '대전'}">대전</option>-->
-            <!--                        <option value="경북" th:selected="${param.address == '경북'}">경북</option>-->
-            <!--                        <option value="경남" th:selected="${param.address == '경남'}">경남</option>-->
-            <!--                        <option value="인천" th:selected="${param.address == '인천'}">전남</option>-->
-            <!--                        <option value="인천" th:selected="${param.address == '인천'}">전북</option>-->
-            <!--                        <option value="제주" th:selected="${param.address == '제주'}">제주</option>-->
-            <!--                    </select></li>-->
-            <!--&lt;!&ndash;                <li class="side_li" >&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <a href="#">숙소유형</a>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <label><input type="checkbox"  th:value="호텔"> 호텔</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <label><input type="checkbox"  th:value="펜션"> 펜션</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <label><input type="checkbox"  th:value="게스트하우스"> 게스트하우스</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <label><input type="checkbox"  th:value="기타"> 기타</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;                </li>&ndash;&gt;-->
-            <!--                <li class="side_li" ><a href="#">가격</a></li>-->
-            <!--                <li class="side_li"><a href="#">편의시설</a></li>-->
-            <!--            </ul>-->
-            <!--            </div>-->
 
+            </div>
+
+
+<!--            <div th:each="stay, status: ${stays.getContent()}" class="card" >-->
+<!--                <a th:href="@{'/stay/' + ${stay.id}}">-->
+<!--                <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">-->
+<!--                <a th:text="${stay.name}"></a>-->
+<!--                    <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>-->
+<!--                </a>-->
+<!--            </div>-->
             <div th:each="stay, status: ${stays.getContent()}" class="card" >
                 <a th:href="@{'/stay/' + ${stay.id}}">
-                <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">
-                <a th:text="${stay.name}"></a>
+                    <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">
+                    <a th:text="${stay.name}"></a>
                     <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>
                 </a>
             </div>
-            <!--        </div>-->
+
             <!--        페이징처리-->
             <div class="paging" style="margin-top:300px;" >
                 <div th:with="start=${(stays.number/maxPage)*maxPage + 1}, end=(${(stays.totalPages == 0) ? 1 : (start + (maxPage - 1) < stays.totalPages ? start + (maxPage - 1) : stays.totalPages)})" >
