@@ -2,9 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>게시글 조회</title>
+
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <style>
     @font-face {
@@ -13,17 +15,26 @@
       font-weight: 400;
       font-style: normal;
     }
-
+  body {
+    background-color: #FDFAFF;
+  }
     h1 {
       font-family: 'Pretendard-Regular';
       text-align:center;
     }
+    .p1 {
+      font-family: 'Pretendard-Regular';
+      text-size:25px;
+    }
+
     form {
       font-family: 'Pretendard-Regular';
       width:60%;
       text-align:center;
       margin-left:auto;
       margin-right:auto;
+      background: #ffffff;
+
     }
     .form-group {
       margin-bottom: 15px; /* Add some margin between form groups */
@@ -36,46 +47,53 @@
 
     }
     .result_btn {
+      text-align:center;
+    }
+    .comment_btn {
+      width:80%;
+      margin-left:auto;
+      margin-right:auto;
       text-align:right;
     }
-
+    .reply_content {
+      font-family: 'Pretendard-Regular';
+      width:60%;
+      margin-left:auto;
+      margin-right:auto;
+      text-align: left;
+      boder: solid 1px #ccc;
+      border-radius: 20px;
+      background-color: #ffffff;
+    }
   </style>
 
 </head>
 <body>
 
-
+<h2 style="text-align:center; margin-bottom: 20px;">POST</h2>
 <form>
-<div class="form-group">
-  <label>게시글번호</label>
-  <input type="text" class="form-control" name="bno" th:value="${dto.bno}" readonly>
-</div>
+  <table class="table" style="border: solid 1px #ccc; ">
+    <tr>
+      <td><p class="p1" th:text="${dto.bno}"></p></td>
+      <td><p class="p1" th:text="${dto.title}"></p></td>
+      <td><p class="p1" th:text="${dto.writer}"></p></td>
+    </tr>
+  </table>
 
-<div class="form-group">
-  <label>제목</label>
-  <input type="text" class="form-control" name="title" th:value="${dto.title}" readonly>
-</div>
+  <div class="form-group" style="height: 300px; border: solid 1px #ccc;">
+    <p class="p1" th:text="${dto.content}"></p>
+  </div>
 
-<div class="form-group">
-  <label>내용</label>
-  <textarea class="form-control" name="content" rows="5" readonly>[[${dto.content}]]</textarea>
-</div>
-
-<div class="form-group">
-  <label>작성자</label>
-  <input type="text" class="form-control" name="writer" th:value="${dto.writer}" readonly>
-</div>
-
-<div class="form-group">
-  <label>등록일</label>
-  <input type="text" class="form-control" name="regDate" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
-</div>
-
-<div class="form-group">
-  <label>수정일</label>
-  <input type="text" class="form-control" name="modDate" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
-</div><br>
+  <table class="table">
+    <tr>
+      <td><label>등록일</label></td>
+      <td><p class="p1" th:text="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"></p></td>
+      <td><label>수정일</label></td>
+      <td><p class="p1" th:text="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}"></p></td>
+    </tr>
+  </table>
 </form>
+
 
 <div class="result_btn">
 <a th:href="@{/board/modify(bno=${dto.bno}, page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
@@ -85,6 +103,150 @@
 <a th:href="@{/board/list(page=${requestDTO.page}, type=${requestDTO.page}, keyword=${requestDTO.keyword})}">
   <button type="button" class="btn btn-outline-dark">글 목록</button>
 </a>
+
+  <div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">댓글작성</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input class="form-control" type="textarea" name="replyText" placeholder="댓글내용">
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="replier" placeholder="작성자">
+            <input type="hidden" name="rno">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark replyRemove">삭제</button>
+          <button type="button" class="btn btn-outline-dark replyModify">수정</button>
+          <button type="button" class="btn btn-outline-dark replySave">저장</button>
+          <button type="button" class="btn btn-outline-dark replyClose" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="comment_btn">
+      <h5><button class="btn btn-outline-dark addReply"> 댓글 등록 </button></h5>
+    </div>
+    <div style="text-align:center; ">
+      <h5 class="replyCount">댓글 [[${dto.replyCount}]] 개</h5>
+    </div>
+    <div class="replyList" >
+
+    </div>
+  </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+
+  var csrfToken = $("meta[name='_csrf']").attr("content");
+
+  var bno = [[${dto.bno}]];  //게시글 번호
+  var listGroup = $(".replyList");
+
+  //댓글처리
+    function loadJSONData() {
+      $.getJSON('/replies/board/'+ bno, function(arr) {
+        console.log(arr);
+
+        var str="";
+
+        //날짜 처리
+        function formatTime(str) {
+          var date = new Date(str);
+          return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
+        }
+
+        $('.replyCount').html("댓글  " + arr.length);
+
+        $.each(arr, function(idx, reply) {
+          console.log(reply);
+          str += '   <div class="reply_content" data-rno = "'+reply.rno+'">';
+          str += '   <p class="p1"><b>'+reply.replier+'<b></p>';
+          str += '   <p class="p1">'+reply.text+'</p>';
+          str += '   <p>'+ formatTime(reply.regDate)+'</p>';
+          str += '  </div>';
+        })
+        listGroup.html(str);
+      });
+    }
+
+      $(document).ready(function() {
+        var bno = [[${dto.bno}]];
+        var listGroup = $(".replyList");
+
+        $(".replyCount").click(function() {
+          loadJSONData();
+        })
+        // 페이지 로딩 시 댓글 불러오기
+        loadJSONData();
+    });
+
+  //모달창
+  var modal = $('.modal');
+    $(".replyClose").on("click", () => {
+      modal.hide()
+    });
+
+
+
+    //댓글추가
+    $(".addReply").click(function() {
+
+      modal.modal('show');
+
+      //댓글 입력하는 부분 초기화 시키기
+      $('input[name="replyText"]').val('');
+      $('input[name="replier"]').val('');
+
+      $(".modal-footer .btn").hide();
+      $(".replySave, .replyClose").show();
+    })
+
+
+    // 댓글저장
+    $(".replySave").click(function() {
+      var bno = [[${dto.bno}]];
+
+      var reply = {
+        bno: bno,
+        text: $('input[name="replyText"]').val(),
+        replier: $('input[name="replier"]').val()
+      }
+      console.log(reply);
+
+      $.ajax({
+        url: '/replies',
+        method: 'post',
+        data: JSON.stringify(reply),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        },
+
+        success: function(data) {
+          console.log(data);
+          var newRno = parseInt(data);
+          alert("댓글이 등록되었습니다.")
+          modal.modal('hide');
+          loadJSONData();
+        },
+      })
+    })
+</script>
+
 </body>
 </html>

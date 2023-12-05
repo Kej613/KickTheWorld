@@ -148,10 +148,6 @@
 
                 <li class="side_li">
                     <a class="home">숙소유형</a>
-<!--                    <button type="button" name="category" value="호텔" class="${param.category == '호텔' ? 'selected' : ''}">호텔</button>-->
-<!--                    <button type="button" name="category" value="펜션" class="${param.category == '펜션' ? 'selected' : ''}">펜션</button>-->
-<!--                    <button type="button" name="category" value="게스트하우스" class="${param.category == '게스트하우스' ? 'selected' : ''}">게스트하우스</button>-->
-<!--                    <button type="button" name="category" value="기타" class="${param.category == '기타' ? 'selected' : ''}">기타</button>-->
 
                     <label>
                         <input type="radio" name="category" value="전체" checked>전체
@@ -173,18 +169,6 @@
                 </li>
                 <li class="side_li">
                     <a class="home">테마</a>
-<!--                    <button type="button" name="theme" value="힐링" class="${param.theme == '힐링' ? 'selected' : ''}">힐링</button>-->
-<!--                    <button type="button" name="theme" value="역사" class="${param.theme == '역사' ? 'selected' : ''}">역사</button>-->
-<!--                    <button type="button" name="theme" value="액티비티" class="${param.theme == '액티비티' ? 'selected' : ''}">액티비티</button>-->
-
-
-<!--                                        <select name="theme">-->
-<!--                        <option value="전체" >전체</option>-->
-<!--                        <option value="힐링" th:selected="${param.address == '힐링'}">힐링</option>-->
-<!--                        <option value="역사" th:selected="${param.address == '역사'}">역사</option>-->
-<!--                        <option value="액티비티" th:selected="${param.address == '액티비티'}">액티비티</option>-->
-<!--                    </select>-->
-                <li class="side_li">
                     <label>
                         <input type="radio" name="theme" value="전체" checked>전체
                     </label>
@@ -194,7 +178,6 @@
                         <input type="radio" name="theme" value="액티비티" th:checked="${param.theme == '액티비티'}">액티비티
                     </label>
                     <!-- Add other radio buttons for different options -->
-                </li>
                 </li>
             </ul>
             <div class="btn1" style="text-align:center;">
