@@ -1,8 +1,8 @@
-package com.example.Security.entity;
+package com.example.Member.entity;
 
 
-import com.example.Security.constant.Role;
-import com.example.Security.dto.MemberFormDto;
+import com.example.Member.constant.Role;
+import com.example.Member.dto.MemberFormDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;

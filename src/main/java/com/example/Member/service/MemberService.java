@@ -1,7 +1,7 @@
-package com.example.Security.service;
+package com.example.Member.service;
 
-import com.example.Security.entity.Member;
-import com.example.Security.repository.MemberRepository;
+import com.example.Member.entity.Member;
+import com.example.Member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

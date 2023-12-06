@@ -1,4 +1,4 @@
-package com.example.Security.controller;//package com.example.Security.controller;
+package com.example.Member.controller;//package com.example.Security.controller;
 //
 //import com.example.Security.service.KakaoLoginService;
 //import lombok.RequiredArgsConstructor;

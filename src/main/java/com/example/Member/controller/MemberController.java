@@ -1,13 +1,11 @@
-package com.example.Security.controller;
+package com.example.Member.controller;
 
-import com.example.Security.constant.Role;
-import com.example.Security.dto.MemberFormDto;
-import com.example.Security.entity.Member;
-import com.example.Security.service.MemberService;
+import com.example.Member.constant.Role;
+import com.example.Member.dto.MemberFormDto;
+import com.example.Member.entity.Member;
+import com.example.Member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
