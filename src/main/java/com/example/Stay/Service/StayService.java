@@ -110,7 +110,7 @@ public class StayService {
         return stayFormDto;
     }
 
-    //숙소 페이지 쿼리
+//    숙소 페이지 쿼리
     @Transactional
     public Page<StayItemDto> getStayPage(StaySearchDto staySearchDto, Pageable pageable) {
         return stayRepository.getStayPage(staySearchDto, pageable);

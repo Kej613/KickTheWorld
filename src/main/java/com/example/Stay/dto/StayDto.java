@@ -37,19 +37,8 @@ public class StayDto {
 
     private LocalDateTime regTime;  //숙소 등록 날짜
 
+    private String imgUrl;   //이미지 url
 
-//    private List<StayImgDto> stayImgDtoList = new ArrayList<>();
-//
-//    private List<Long> stayImgIds = new ArrayList<>();
-//
-//    private static ModelMapper modelMapper = new ModelMapper();
-//
-//    public Stay createStay() {
-//        return modelMapper.map(this, Stay.class);
-//    }
-//    public static StayDto of(Stay stay) {
-//        return modelMapper.map(stay, StayDto.class);
-//    }
 
     public StayDto(Stay stay) {
         this.id = stay.getId();

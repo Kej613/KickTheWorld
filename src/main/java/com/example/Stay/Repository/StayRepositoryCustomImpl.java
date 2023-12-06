@@ -97,7 +97,9 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
                                 stay.name,
                                 stay.address,
                                 stay.category,
-                                stayImg.imgUrl)
+                                stayImg.imgUrl,
+                                stay.price
+                        )
                 )
                 .from(stayImg)
                 .join(stayImg.stay, stay)

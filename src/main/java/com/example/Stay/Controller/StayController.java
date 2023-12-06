@@ -4,10 +4,7 @@ import com.example.Stay.Entity.Stay;
 import com.example.Stay.Repository.StayImgRepository;
 import com.example.Stay.Repository.StayRepository;
 import com.example.Stay.Service.StayService;
-import com.example.Stay.dto.SearchResult;
-import com.example.Stay.dto.StayFormDto;
-import com.example.Stay.dto.StayItemDto;
-import com.example.Stay.dto.StaySearchDto;
+import com.example.Stay.dto.*;
 import com.example.Trip.Entity.Trip;
 import com.example.Trip.Service.TripService;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,17 +34,17 @@ public class StayController {
     private final StayImgRepository stayImgRepository;
 
 
-//    //숙소 전체 리스트
-//    @GetMapping("/stays")
-//    public String getStays(Model model) {
-//        List<StayDto> stays = stayService.findAll()
-//                .stream()
-//                .map(StayDto::new)
-//                .toList();
-//        model.addAttribute("stays", stays);
-//
-//        return "stay/stayPage";
-//    }
+    //숙소 전체 리스트
+    @GetMapping("/stays")
+    public String getStays(Model model) {
+        List<StayDto> stays = stayService.findAll()
+                .stream()
+                .map(StayDto::new)
+                .toList();
+        model.addAttribute("stays", stays);
+
+        return "stay/stayPage";
+    }
 
 //    //카테고리별로 숙소 조회
 //    @GetMapping("/stays/category")
@@ -99,18 +96,17 @@ public class StayController {
         model.addAttribute("stays", stays);
         model.addAttribute("staySearchDto", staySearchDto);
         model.addAttribute("maxPage", 5);
-
         return "stay/stayPage";
     }
 
 
-    //숙소 상세보기
-    @GetMapping(value="/stay/{id}")
-    public String stayDtl(Model model, @PathVariable("id") Long id) {
-        StayFormDto stayFormDto = stayService.getStayDtl(id);
-        model.addAttribute("stay", stayFormDto);
-        return "stay/stay";
-    }
+//    //숙소 상세보기
+//    @GetMapping(value="/stay/{id}")
+//    public String stayDtl(Model model, @PathVariable("id") Long id) {
+//        StayFormDto stayFormDto = stayService.getStayDtl(id);
+//        model.addAttribute("stay", stayFormDto);
+//        return "stay/stay";
+//    }
 
     // 여행지 상세 보기
 //    @GetMapping(value = "/admin/stay/{id}")
@@ -132,61 +128,62 @@ public class StayController {
     @GetMapping("/admin/stay/new")
     public String StayForm(Model model) {
         model.addAttribute("stayFormDto", new StayFormDto());
-        return "stay/createStay";
+        return "stay/stayForm";
     }
 
     @PostMapping("/admin/stay/new")
     public String StayNew(@Valid StayFormDto stayFormDto, BindingResult bindingResult, Model model,
                              @RequestParam("stayImgFile") List<MultipartFile> stayImgFileList) {
         if(bindingResult.hasErrors()) {
-            return "stay/createStay";
+            return "stay/stayForm";
         }
 
         //첫번째 이미지를 등록하지 않았을 때
         if(stayImgFileList.get(0).isEmpty() && stayFormDto.getId() ==null) {
             model.addAttribute("errorMessage", "첫번째 이미지는 필수 입력 값입니다.");
-            return "stay/createStay";
+            return "stay/stayForm";
         }
         try {
             stayService.saveStay(stayFormDto, stayImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "여행지 등록중 에러 발생") ;
-            return "stay/createStay";
+            return "stay/stayForm";
         }
         return "redirect:/";
     }
 
+    //숙소 상세보기
     @GetMapping(value="/admin/stay/{id}")
     public String stayDtl(@PathVariable("id") Long id, Model model) {
         try{
             StayFormDto stayFormDto = stayService.getStayDtl(id);
-            model.addAttribute("stayFormDto" , stayFormDto);
+            model.addAttribute("stay" , stayFormDto);
 
         }catch(EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 여행지 입니다.");
             model.addAttribute("stayFormDto", new StayFormDto());
 
-            return "stay/createStay";
+            return "stay/stay";
         }
-        return "stay/createStay";
+        return "stay/stay";
     }
 
     // 숙소수정
-    @PostMapping(value = "/admin/stay/{id}")
+    @PostMapping(value = "/admin/stay/edit/{id}")
     public String stayUpdate(@Valid StayFormDto stayFormDto, BindingResult bindingResult, @RequestParam("stayImgFile") List<MultipartFile> stayImgFileList, Model model) {
         if (bindingResult.hasErrors()) {
-            return "stay/createStay";
+            return "stay/stayForm";
         }
         if (stayImgFileList.get(0).isEmpty() && stayFormDto.getId() == null) {
             model.addAttribute("errorMessage", "첫번째 이미지는 필수 입력값입니다.");
-            return "stay/createStay";
+            return "stay/stayForm";
         }
         try {
             stayService.updateStay(stayFormDto, stayImgFileList);
 
         } catch (Exception e) {
             model.addAttribute("errorMessage", "수정 중 에러가 발생");
-            return "stay/createStay";
+            return "stay/stayForm";
         }
         return "redirect:/";
     }
@@ -194,14 +191,15 @@ public class StayController {
 
 
 
-//    //숙소 수정
-//    @GetMapping("/stays/edit/{id}")
-//    public String showEditStayForm(@PathVariable Long id, Model model) {
-//        Stay stay = stayService.findById(id);
-//        model.addAttribute("stay", stay);
-//        return "stay/editStay";
-//    }
-//
+    //숙소 수정
+    @GetMapping("/admin/stay/edit/{id}")
+    public String showEditStayForm(@PathVariable Long id, Model model) {
+        Stay stay = stayService.findById(id);
+        model.addAttribute("stay", stay);
+        return "stay/stayForm";
+    }
+
+
 //    @PostMapping("/stays/edit/{id}")
 //    public String editStay(@PathVariable Long id, @ModelAttribute Stay updatedStay) {
 //        stayService.update(id, updatedStay);
@@ -211,12 +209,12 @@ public class StayController {
 
     //숙소 삭제
     @Transactional
-    @RequestMapping(value = {"/stay/delete/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/admin/stay/delete/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteById(@PathVariable Long id) {
-        Stay Stay = stayRepository.findById(id)
+        Stay stay = stayRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
-        stayImgRepository.deleteByStay(Stay);
+        stayImgRepository.deleteByStay(stay);
         stayRepository.deleteById(id);
 
         return "redirect:/";
