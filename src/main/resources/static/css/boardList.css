@@ -1,0 +1,179 @@
+* {
+    font-family: 'Pretendard-Regular';
+}
+
+/* SEARCH BAR */
+/* SEARCH BAR ROOT COLOR */
+:root {
+    --hue-color: 275;
+    --first-color: hsl(var(--hue-color), 90%, 23%);
+    --shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+
+    --font-size-normal: 1rem;
+    --font-weight-normal: 500;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    min-width: 700px;
+    background-color: white;
+}
+
+.dropdown {
+    position: relative;
+    width: 280px;
+    border-radius: 50px;
+    border : 1px solid white;
+    background-color: var(--first-color);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.dropdown-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-normal);
+    font-weight: var(--font-weight-normal);
+    color: white;
+    padding: 1rem 1.5rem;
+}
+.dropdown-list {
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    width: 100%;
+    border-radius: 15px;
+    max-height: 0;
+    overflow: hidden;
+    background-color: white;
+    transition: max-height 0.5s;
+}
+
+#list.show {
+    max-height: 300px;
+}
+
+.dropdown-list-item {
+    font-size: var(--font-size-normal);
+    font-weight: var(--font-weight-normal);
+    border-radius: 15px;
+    padding: 1rem 0 1rem 1.5rem;
+    cursor: pointer;
+    transition: margin-left 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-list-item:hover {
+    margin-left: 0.5rem;
+    color: var(--first-color);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    padding-right: 1rem;
+    width: 100%;
+    color: var(--first-color);
+}
+
+.search-box input {
+    padding: 1rem;
+    width: 70%;
+    font-size:var(--font-size-normal);
+    color: var(--first-color);
+    border: 0;
+    outline: 0;
+}
+.search-box {
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.search-box input::placeholder {
+    font-size: var(--font-size-normal);
+    font-weight: var(--font-weight-normal);
+    color: var(--first-color);
+}
+
+/* MAIN HEADER와 BOARD PAGE 간격 조정: margin-top */
+form {
+    margin-top:200px;
+    width:60%;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/* MAIN HEADER와 BOARD PAGE 간격 조정 */
+/*#searchForm{*/
+/*    margin-top:200px;*/
+/*}*/
+
+.table-container {
+    font-family: 'Pretendard-Regular';
+    justify-content: center;
+    align-items: center;
+    width:80%;
+    magin-left:auto;
+    margin-right:auto;
+    margin-top: 30px;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 6px; /* Adjust as needed */
+}
+
+.write_btn {
+    text-align: right;
+}
+
+/*@font-face {*/
+/*    font-family: 'Pretendard-Regular';*/
+/*    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');*/
+/*    font-weight: 400;*/
+/*    font-style: normal;*/
+/*}*/
+
+/*h1 {*/
+/*    font-family: 'Pretendard-Regular';*/
+/*    text-align:center;*/
+/*}*/
+/*body {*/
+/*    background-color: #FDFAFF;*/
+/*}*/
+/*a {*/
+/*    text-display: none;*/
+/*    color:black;*/
+/*}*/
+/*form {*/
+/*    font-family: 'Pretendard-Regular';*/
+/*    width:60%;*/
+/*    text-align:center;*/
+/*    margin-left:auto;*/
+/*    margin-right:auto;*/
+/*}*/
+
+/*table {*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*}*/
+/*.table-container {*/
+/*    font-family: 'Pretendard-Regular';*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    width:80%;*/
+/*    magin-left:auto;*/
+/*    margin-right:auto;*/
+/*    margin-top: 30px;*/
+/*}*/
+
+/*.custom-table th,*/
+/*.custom-table td {*/
+/*    padding: 6px; !* Adjust as needed *!*/
+/*}*/
+
+/*.write_btn {*/
+/*    text-align:right;*/
+/*}*/
