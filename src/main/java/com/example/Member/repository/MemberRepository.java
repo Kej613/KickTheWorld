@@ -1,9 +1,7 @@
-package com.example.Security.repository;
+package com.example.Member.repository;
 
 
-import com.example.Security.entity.Member;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.example.Member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

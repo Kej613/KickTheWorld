@@ -68,7 +68,7 @@ public class TripController {
     //조건별로 여행지 페이징처리
     @GetMapping(value = {"/main/trips", "/main/trips/{page}"})
     public String tripManage(TripSearchDto tripSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 9);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
         Page<MainItemDto> trips = tripService.getTripPage(tripSearchDto, pageable);
         model.addAttribute("trips", trips);

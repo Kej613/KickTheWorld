@@ -1,4 +1,4 @@
-package com.example.Security.config;//package com.example.kicktheworld_test.Security.config;
+package com.example.Member.config;//package com.example.kicktheworld_test.Security.config;
 //
 //
 //import org.springframework.context.annotation.Bean;

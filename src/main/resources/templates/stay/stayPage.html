@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!-- TITLE -->
     <title>StayPage</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- REMIX ICONS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
@@ -11,8 +13,8 @@
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/main_test.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
     <script th:inline="javascript">
         $(document).ready(function(){
@@ -38,6 +40,8 @@
         }
         a{
             text-decoration: none;
+            color:black;
+            text-size: 20px;
         }
         body{
             font-family: 'Pretendard-Regular';
@@ -49,64 +53,30 @@
             text-align:center;
         }
         input {
-            width:60%;
+            width:600px;
+            height:30px;
             margin-left:auto;
             margin-right:auto;
             border-radius:10px;
             border: 1px solid #ccc;
         }
-        .card {
-            margin-top:0;
+
+        .main_div {
+            margin-left:auto;
+            margin-right:auto;
+            width:80%;
+            border: #ccc 1px;
+            padding:30px;
             text-align:center;
-            margin-left: auto;
-            margin-right: auto;
-            width:40%;
-            padding:20px;
         }
-
-        .sidemenu1 {
-            list-style-type: none;
+        .sideli {
+            list-style : none;
             padding: 20px;
-            margin: 20px;
-            width: 200px;
-            background-color: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .side_li {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .side_li a {
-            text-decoration: none;
-            color: #000;
-            display: block;
-            padding: 8px;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-        }
-
-        .side_li a:hover {
-            background-color: #ddd;
-        }
-
-
-        select{
-            margin-right:10px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #000000;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
+<!-- HEADER -->
 <header class="header" id="header">
     <!--NAV CONTAINER 1-->
     <nav class="nav container">
@@ -117,6 +87,9 @@
             <ul class="nav__list">
                 <li class="nav__item">
                     <a class="nav__link" href="/" ><b>마이페이지</b></a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
                 </li>
                 <li class="nav__item">
                     <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
@@ -152,7 +125,7 @@
                     <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
                 </li>
                 <li class="nav__item">
-                    <a href="/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
                 </li>
                 <li class="nav__item">
                     <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
@@ -161,59 +134,47 @@
         </div>
     </nav>
 </header>
+
 <!-- MAIN -->
 <main class="main">
     <!-- HOME -->
     <section class="home" id="home">
         <img th:src="@{/images/main/stay.jpg}" alt="home main image" class="home__img">
-
         <div class="home__container container grid">
-            </div>
-            <div class="home__social">
-                <!--학교-->
-                <a href="https://cs.skuniv.ac.kr/" target="_blank" class="home__social-link">
-                    <i class="ri-leaf-fill"></i>
-                </a>
-                <!--인스타그램-->
-                <a href="https://instagram.com/kicktheworld.official?igshid=OGQ5ZDc2ODk2ZA==" target="__blank" class="home__social-link">
-                    <i class="ri-instagram-fill"></i>
-                </a>
-                <!--깃허브-->
-                <a href="https://github.com/SKU-PROJECT/KTW_project" target="__blank" class="home__social-link">
-                    <i class="ri-github-fill"></i>
-                </a>
-            </div>
         </div>
     </section>
 
     <div>
-        <h2>어떤 숙소를 찾아보고 계신가요 ?  </h2><br>
+        <br><h2>어떤 숙소를 찾으시나요 ? </h2><br>
         <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">
             <div th:object="${staySearchDto}" style="text-align: center;">
                 <select th:field="*{searchBy}" style="width:auto;">
-                    <option value="name">숙소명</option>
                     <option value="address">지역</option>
+                    <option value="name">여행지</option>
                 </select>
-                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" >
-
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:60%; margin-left:auto; margin-right:auto; border-radius:10px;">
                 <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>
-
             </div>
 
-
-<!--            <div th:each="stay, status: ${stays.getContent()}" class="card" >-->
-<!--                <a th:href="@{'/stay/' + ${stay.id}}">-->
-<!--                <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">-->
-<!--                <a th:text="${stay.name}"></a>-->
-<!--                    <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>-->
-<!--                </a>-->
-<!--            </div>-->
-            <div th:each="stay, status: ${stays.getContent()}" class="card" >
-                <a th:href="@{'/stay/' + ${stay.id}}">
-                    <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">
-                    <a th:text="${stay.name}"></a>
-                    <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>
-                </a>
+               <div class="sidemenu">
+                   <ul class="sideul" style="background-color:#FFFFFF; boarder-radius:20px;">
+                       <li class="sideli">지역</li>
+                       <li class="sideli">숙소유형</li>
+                       <li class="sideli" >인원</li>
+                       <li class="sideli" >가격</li>
+                   </ul>
+               </div>
+                <div class="main_div" >
+                <div th:each="stay, status: ${stays.getContent()}" >
+                    <input type="hidden" id="id" th:value="${stay.id}">
+                    <a th:href="'/admin/stay/'+${stay.id}">
+                        <img th:src="${stay.imgUrl}" th:alt="${stay.name}" style="width: 500px; height: 300px;" >
+                        <p th:text="${stay.name}"></p>
+                        <p th:text="${stay.address}"></p>
+                        <p th:text="${stay.price}"></p>
+                        <button th:href="'/admin/stay/'+${stay.id}" type="button" class="btn btn-outline-dark">숙소 둘러보기</button>
+                    </a>
+                </div>
             </div>
 
             <!--        페이징처리-->
@@ -223,7 +184,7 @@
 
                         <li class="page-item" th:classappend="${stays.first}?'disabled'">
                             <a th:onclick="'javascript:page(' + ${stays.number - 1} + ')'" aria-label='Previous' class="page-link">
-                                <span aria-hidden='true'>Previous</span>
+                                <span aria-hidden='true'><<</span>
                             </a>
                         </li>
 
@@ -233,7 +194,7 @@
 
                         <li class="page-item" th:classappend="${stays.last}?'disabled'">
                             <a th:onclick="'javascript:page(' + ${stays.number + 1} + ')'" aria-label='Next' class="page-link">
-                                <span aria-hidden='true'>Next</span>
+                                <span aria-hidden='true'>>></span>
                             </a>
                         </li>
 
@@ -242,7 +203,13 @@
             </div>
         </form>
     </div>
+    </div>
+    </div>
+    </section>
 </main>
+
+
+<!-- FOOTER -->
 <footer class="footer section">
     <div class="footer__container container grid">
         <div class="footer__content grid">
@@ -258,11 +225,12 @@
                 </div>
             </div>
 
+
             <div class="footer__data">
-                <h3 class="footer__subtitle">SKU</h3>
+                <h3 class="footer__subtitle">Company</h3>
                 <ul>
                     <li class="footer__item">
-                        <a href="" class="footer__link">SoftWare</a>
+                        <a href="" class="footer__link">Team</a>
                     </li>
                     <li class="footer__item">
                         <a href="" class="footer__link">Plan y Pricing</a>
@@ -273,15 +241,304 @@
                 </ul>
             </div>
         </div>
+
         <div class="footer__rights">
-            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
         </div>
     </div>
 </footer>
 <!-- SWIPER JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <!-- MAIN JS -->
 <script th:src="@{/js/main_test.js}"></script>
-<script th:src="@{/js/stay.js}"></script>
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>StayPage</title>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    &lt;!&ndash; REMIX ICONS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">-->
+<!--    &lt;!&ndash; SWIPER CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">-->
+<!--    &lt;!&ndash; CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/css/main_test.css}">-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">-->
+
+<!--    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+
+<!--    <script th:inline="javascript">-->
+<!--        $(document).ready(function(){-->
+<!--            $("#searchBtn").on("click",function(e) {-->
+<!--                e.preventDefault();-->
+<!--                page(0);  //조회할때 페이지 번호를 0으로 설정해서 조회해야 함-->
+<!--            });-->
+<!--        });-->
+
+<!--        function page(page){-->
+<!--            var searchBy = $("#searchBy").val();-->
+<!--            var searchQuery = $("#searchQuery").val();-->
+
+<!--            location.href="/main/stays/" + page + "?searchBy=" + searchBy + "&searchQuery=" + searchQuery ;-->
+<!--        }-->
+<!--    </script>-->
+<!--    <style>-->
+<!--        @font-face {-->
+<!--            font-family: 'Pretendard-Regular';-->
+<!--            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');-->
+<!--            font-weight: 400;-->
+<!--            font-style: normal;-->
+<!--        }-->
+<!--        a{-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        body{-->
+<!--            font-family: 'Pretendard-Regular';-->
+<!--            background-color: #FDFAFF;-->
+<!--        }-->
+<!--        h2{-->
+<!--            font-family: 'Pretendard-Regular';-->
+<!--            font-size: 23px;-->
+<!--            text-align:center;-->
+<!--        }-->
+<!--        input {-->
+<!--            width:60%;-->
+<!--            margin-left:auto;-->
+<!--            margin-right:auto;-->
+<!--            border-radius:10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--        }-->
+<!--        .card {-->
+<!--            margin-top:0;-->
+<!--            text-align:center;-->
+<!--            margin-left: auto;-->
+<!--            margin-right: auto;-->
+<!--            width:40%;-->
+<!--            padding:20px;-->
+<!--        }-->
+
+<!--        .sidemenu1 {-->
+<!--            list-style-type: none;-->
+<!--            padding: 20px;-->
+<!--            margin: 20px;-->
+<!--            width: 200px;-->
+<!--            background-color: #f1f1f1;-->
+<!--            border-radius: 10px;-->
+<!--        }-->
+
+<!--        .side_li {-->
+<!--            padding: 10px;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .side_li a {-->
+<!--            text-decoration: none;-->
+<!--            color: #000;-->
+<!--            display: block;-->
+<!--            padding: 8px;-->
+<!--            background-color: #f1f1f1;-->
+<!--            border-radius: 5px;-->
+<!--        }-->
+
+<!--        .side_li a:hover {-->
+<!--            background-color: #ddd;-->
+<!--        }-->
+
+
+<!--        select{-->
+<!--            margin-right:10px;-->
+<!--        }-->
+
+<!--        .btn {-->
+<!--            display: inline-block;-->
+<!--            background-color: #000000;-->
+<!--            color: #fff;-->
+<!--            padding: 10px 20px;-->
+<!--            text-decoration: none;-->
+<!--            border-radius: 5px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header class="header" id="header">-->
+<!--    &lt;!&ndash;NAV CONTAINER 1&ndash;&gt;-->
+<!--    <nav class="nav container">-->
+<!--        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>-->
+
+<!--        &lt;!&ndash;NAV MENU&ndash;&gt;-->
+<!--        <div class="nav__menu" id="nav-menu">-->
+<!--            <ul class="nav__list">-->
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/" ><b>마이페이지</b></a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>-->
+<!--                </li>-->
+
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>-->
+<!--                </li>-->
+
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>-->
+<!--                </li>-->
+
+<!--                <i class="ri-close-line nav__close" id="nav-close"></i>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="nav__toggle" id="nav-toggle">-->
+<!--            <i class="ri-function-line"></i>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<!--    &lt;!&ndash;NAV CONTAINER 2&ndash;&gt;-->
+<!--    <nav class="nav__container-main">-->
+<!--        <div class="nav__menu" id="nav-menu-main">-->
+<!--            <ul class="nav__list">-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </nav>-->
+<!--</header>-->
+<!--&lt;!&ndash; MAIN &ndash;&gt;-->
+<!--<main class="main">-->
+<!--    &lt;!&ndash; HOME &ndash;&gt;-->
+<!--    <section class="home" id="home">-->
+<!--        <img th:src="@{/images/main/stay.jpg}" alt="home main image" class="home__img">-->
+
+<!--        <div class="home__container container grid">-->
+<!--            </div>-->
+<!--            <div class="home__social">-->
+<!--                &lt;!&ndash;학교&ndash;&gt;-->
+<!--                <a href="https://cs.skuniv.ac.kr/" target="_blank" class="home__social-link">-->
+<!--                    <i class="ri-leaf-fill"></i>-->
+<!--                </a>-->
+<!--                &lt;!&ndash;인스타그램&ndash;&gt;-->
+<!--                <a href="https://instagram.com/kicktheworld.official?igshid=OGQ5ZDc2ODk2ZA==" target="__blank" class="home__social-link">-->
+<!--                    <i class="ri-instagram-fill"></i>-->
+<!--                </a>-->
+<!--                &lt;!&ndash;깃허브&ndash;&gt;-->
+<!--                <a href="https://github.com/SKU-PROJECT/KTW_project" target="__blank" class="home__social-link">-->
+<!--                    <i class="ri-github-fill"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--    <div>-->
+<!--        <h2>어떤 숙소를 찾아보고 계신가요 ?  </h2><br>-->
+<!--        <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">-->
+<!--            <div th:object="${staySearchDto}" style="text-align: center;">-->
+<!--                <select th:field="*{searchBy}" style="width:auto;">-->
+<!--                    <option value="name">숙소명</option>-->
+<!--                    <option value="address">지역</option>-->
+<!--                </select>-->
+<!--                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" >-->
+
+<!--                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>-->
+
+<!--            </div>-->
+
+
+<!--&lt;!&ndash;            <div th:each="stay, status: ${stays.getContent()}" class="card" >&ndash;&gt;-->
+<!--&lt;!&ndash;                <a th:href="@{'/stay/' + ${stay.id}}">&ndash;&gt;-->
+<!--&lt;!&ndash;                <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a th:text="${stay.name}"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <div th:each="stay, status: ${stays.getContent()}" class="card" >-->
+<!--                <a th:href="@{'/stay/' + ${stay.id}}">-->
+<!--                    <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" height="400">-->
+<!--                    <a th:text="${stay.name}"></a>-->
+<!--                    <button type="button" class="btn btn-outline-dark">숙소 둘러보기</button>-->
+<!--                </a>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash;        페이징처리&ndash;&gt;-->
+<!--            <div class="paging" style="margin-top:300px;" >-->
+<!--                <div th:with="start=${(stays.number/maxPage)*maxPage + 1}, end=(${(stays.totalPages == 0) ? 1 : (start + (maxPage - 1) < stays.totalPages ? start + (maxPage - 1) : stays.totalPages)})" >-->
+<!--                    <ul class="pagination justify-content-center">-->
+
+<!--                        <li class="page-item" th:classappend="${stays.first}?'disabled'">-->
+<!--                            <a th:onclick="'javascript:page(' + ${stays.number - 1} + ')'" aria-label='Previous' class="page-link">-->
+<!--                                <span aria-hidden='true'>Previous</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+
+<!--                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${stays.number eq page-1}?'active':''">-->
+<!--                            <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>-->
+<!--                        </li>-->
+
+<!--                        <li class="page-item" th:classappend="${stays.last}?'disabled'">-->
+<!--                            <a th:onclick="'javascript:page(' + ${stays.number + 1} + ')'" aria-label='Next' class="page-link">-->
+<!--                                <span aria-hidden='true'>Next</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</main>-->
+<!--<footer class="footer section">-->
+<!--    <div class="footer__container container grid">-->
+<!--        <div class="footer__content grid">-->
+<!--            <div class="footer__data">-->
+<!--                <h3 class="footer__title">Developer</h3>-->
+<!--                <div>-->
+<!--                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">-->
+<!--                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>-->
+<!--                    </a>-->
+<!--                    <a href="https://twitter.com/" target="_blank" class="footer__social">-->
+<!--                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="footer__data">-->
+<!--                <h3 class="footer__subtitle">SKU</h3>-->
+<!--                <ul>-->
+<!--                    <li class="footer__item">-->
+<!--                        <a href="" class="footer__link">SoftWare</a>-->
+<!--                    </li>-->
+<!--                    <li class="footer__item">-->
+<!--                        <a href="" class="footer__link">Plan y Pricing</a>-->
+<!--                    </li>-->
+<!--                    <li class="footer__item">-->
+<!--                        <a href="" class="footer__link">Become a member</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="footer__rights">-->
+<!--            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
+<!--&lt;!&ndash; SWIPER JS &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>-->
+<!--&lt;!&ndash; MAIN JS &ndash;&gt;-->
+<!--<script th:src="@{/js/main_test.js}"></script>-->
+<!--<script th:src="@{/js/stay.js}"></script>-->
+<!--</body>-->
+<!--</html>-->

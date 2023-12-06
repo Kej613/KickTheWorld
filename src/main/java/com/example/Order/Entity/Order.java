@@ -2,7 +2,7 @@ package com.example.Order.Entity;
 
 
 import com.example.Order.Constant.OrderStatus;
-import com.example.Security.entity.Member;
+import com.example.Member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

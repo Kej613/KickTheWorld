@@ -1,7 +1,6 @@
 package com.example.Order.Repository;
 
 import com.example.Order.Entity.Order;
-import com.example.Security.entity.Member;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,5 @@
 package com.example.Board.Dto;
 
-import com.example.Security.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
