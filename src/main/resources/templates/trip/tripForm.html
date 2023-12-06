@@ -121,7 +121,7 @@
 
 <!--    이미지 업로드-->
     <div th:if="${#lists.isEmpty(tripFormDto.tripImgDtoList)}">
-        <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
+        <div class="form-group" th:each="num: ${#numbers.sequence(1,3)}">
             <div class="custom-file img-div">
                 <input type="file" class="custom-file-input" name="tripImgFile">
                 <label class="custom-file-label" th:text="여행지이미지 + ${num}"></label>

@@ -1,4 +1,4 @@
-package com.example.Security.config;
+package com.example.Member.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
