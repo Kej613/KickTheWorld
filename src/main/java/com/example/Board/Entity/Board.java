@@ -2,7 +2,6 @@ package com.example.Board.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.example.Security.entity.Member;
 
 @Entity
 @Getter

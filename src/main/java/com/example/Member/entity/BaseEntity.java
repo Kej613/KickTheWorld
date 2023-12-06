@@ -1,4 +1,4 @@
-package com.example.Security.entity;//package com.example.kicktheworld_test.Security.entity;
+package com.example.Member.entity;//package com.example.kicktheworld_test.Security.entity;
 //
 //
 //import jakarta.persistence.Column;

@@ -43,9 +43,9 @@
           <a th:href="@{/eaterys}">맛집</a>
         </div>
       </li>
-      <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
+      <li class="main_list"><a class="main" href="/board/list">여행게시판</a></li>
       <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-      <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+      <li class="main_list"><a class="main" href="/admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
         관리자페이지
       </a></li>
       <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
