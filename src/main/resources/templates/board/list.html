@@ -1,69 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-
-    <title>boardlist</title>
+  <meta charset="UTF-8">
+  <title>boardlist</title>
+  <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
+  <link rel="stylesheet" th:href="@{/css/boardList.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<style>
-  @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
-
-h1 {
-  font-family: 'Pretendard-Regular';
-  text-align:center;
-}
-  body {
-    background-color: #FDFAFF;
-  }
-a {
-  text-display: none;
-  color:black;
-}
-form {
-  font-family: 'Pretendard-Regular';
-  width:60%;
-  text-align:center;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-  .table-container {
-    font-family: 'Pretendard-Regular';
-    justify-content: center;
-    align-items: center;
-    width:80%;
-    magin-left:auto;
-    margin-right:auto;
-    margin-top: 30px;
-  }
-
-  .custom-table th,
-  .custom-table td {
-    padding: 6px; /* Adjust as needed */
-  }
-
-  .write_btn {
-    text-align:right;
-  }
-</style>
 
 </head>
 <body>
 
-<h1>Trip Board</h1>
+<!-- HEADER -->
+<header class="header" id="header">
+  <!--NAV CONTAINER 1-->
+  <nav class="nav container">
+    <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
 
+    <!--NAV MENU-->
+    <div class="nav__menu" id="nav-menu">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a class="nav__link" href="/" ><b>마이페이지</b></a>
+        </li>
 
-<!--검색 폼-->
+        <!-- 8번 브랜치에서 추가-->
+        <li class="nav__item">
+          <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
+        </li>
+
+        <li class="nav__item">
+          <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="/members/login" th:href="@{/members/login}"
+             th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+        </li>
+
+        <li class="nav__item">
+          <a class="nav__link" href="/members/new" th:href="@{/members/new}"
+             th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+        </li>
+
+        <li class="nav__item">
+          <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
+             th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+        </li>
+
+        <i class="ri-close-line nav__close" id="nav-close"></i>
+      </ul>
+    </div>
+    <div class="nav__toggle" id="nav-toggle">
+      <i class="ri-function-line"></i>
+    </div>
+  </nav>
+
+  <!--NAV CONTAINER 2-->
+  <nav class="nav__container-main">
+    <div class="nav__menu" id="nav-menu-main">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
+        </li>
+        <li class="nav__item">
+          <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
+        </li>
+        <li class="nav__item">
+          <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+        </li>
+        <li class="nav__item">
+          <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- boardList.css -->
+<!-- SEARCH -->
 <form action="/board/list" method="get" id="searchForm">
   <div class="input-group">
     <input type="hidden" name="page" value="1">
@@ -85,7 +101,8 @@ table {
   </div>
 </form>
 
-<!--게시글테이블-->
+<!-- boardList.css -->
+<!--BOARD LIST-->
 <div class="table-container">
 <table class="table custom-table">
   <thead>
@@ -154,6 +171,45 @@ table {
     </div>
   </div>
 </div>
+
+<!-- FOOTER -->
+<footer class="footer section">
+  <div class="footer__container container grid">
+    <div class="footer__content grid">
+      <div class="footer__data">
+        <h3 class="footer__title">Developer</h3>
+        <div>
+          <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+            <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
+          </a>
+          <a href="https://twitter.com/" target="_blank" class="footer__social">
+            <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
+          </a>
+        </div>
+      </div>
+
+
+      <div class="footer__data">
+        <h3 class="footer__subtitle">Company</h3>
+        <ul>
+          <li class="footer__item">
+            <a href="" class="footer__link">Team</a>
+          </li>
+          <li class="footer__item">
+            <a href="" class="footer__link">Plan y Pricing</a>
+          </li>
+          <li class="footer__item">
+            <a href="" class="footer__link">Become a member</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__rights">
+      <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+    </div>
+  </div>
+</footer>
 
 
 <script th:inline="javascript">
