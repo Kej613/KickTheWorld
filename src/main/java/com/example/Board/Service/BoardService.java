@@ -10,7 +10,6 @@ public interface BoardService {
 
     PageResultDTO<BoardDto, Board> getList(PageRequestDTO requestDTO);
 
-
     //게시글 상세조회
     BoardDto read(Long bno);
 
@@ -21,6 +20,7 @@ public interface BoardService {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .writer(dto.getWriter())
+                .category(dto.getCategory())
                 .build();
         return entity;
     }
@@ -31,6 +31,7 @@ public interface BoardService {
                 .title(entity.getTitle())
                 .content(entity.getContent())
                 .writer(entity.getWriter())
+                .category(entity.getCategory())
                 .regDate(entity.getRegDate())
                 .modDate(entity.getModDate())
                 .build();

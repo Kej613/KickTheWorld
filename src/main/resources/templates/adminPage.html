@@ -16,18 +16,23 @@
   /*  font-weight: 400;*/
   /*  font-style: normal;*/
   /*}*/
-
+body,header {
+  background-color: #FDFAFF;
+}
   .admin-button {
     font-family: 'Pretendard-Regular';
     font-size: 20px;
     font-weight:bold;
     background-color: white;
-    border-radius: 5px;
-    border: 1px solid #161616;
     padding:30px;
     margin:20px;
     justify-content: center;
     text-align:center;
+  }
+  button {
+    padding:30px;
+    marin:30px;
+    font-size: 30px;
   }
 </style>
 <body>
@@ -48,7 +53,9 @@
         <li class="nav__item">
           <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
         </li>
-
+        <li class="nav__item">
+          <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
+        </li>
         <li class="nav__item">
           <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
         </li>
@@ -96,18 +103,15 @@
   </nav>
 </header>
 
-<!-- ADMIN PAGE -->
-<!--<div>-->
-<!--  <div class="admin-button">-->
-<!--    <hr class="my-4">-->
-<!--  <div style="text-align:center;"></div>-->
-<!--  <button type="button" th:onclick="|location.href='@{/admin/stays}'|">숙소 전체 관리</button>-->
-<!--  <button type="button" id="stay-create-btn" th:onclick="|location.href='@{/admin/stay/new}'|">숙소등록</button>-->
-<!--  <button type="button" th:onclick="|location.href='@{/admin/trip/new}'|">여행지등록</button>-->
-<!--  <button>음식점 등록</button>-->
-<!--  <button>회원 관리</button>-->
-<!--  </div>-->
-<!--</div>-->
+<div>
+  <div class="admin-button" style="margin-top:300px;">
+  <div style="text-align:center;">
+    <button type="button" id="stay-create-btn" th:onclick="|location.href='@{/admin/stay/new}'|">숙소등록</button>
+   <button type="button" th:onclick="|location.href='@{/admin/trip/new}'|">여행지등록</button>
+    <button type="button" th:onclick="|location.href='@{/admin/eatery/new}'|">음식점 등록</button>
+  </div>
+  </div>
+</div>
 
 <!--FOOTER -->
 <footer class="footer section">
@@ -147,7 +151,6 @@
     </div>
   </div>
 </footer>
-
 
 
 </body>

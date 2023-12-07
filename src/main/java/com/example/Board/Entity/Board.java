@@ -21,7 +21,8 @@ public class Board extends BaseEntity {
     @Column(length=1500, nullable = false)
     private String content;
 
-
+    @Column
+    private String category;
     private String writer;
 
     //추가
@@ -31,4 +32,6 @@ public class Board extends BaseEntity {
     public void changeContent(String content) {
         this.content = content;
     }
+
+    public void changeCategory(String category) { this.category = category; }
 }

@@ -22,11 +22,4 @@ public interface StayRepository extends JpaRepository<Stay, Long>, QuerydslPredi
             "order by s.price desc")
     Page<Stay> findByCategory(@Param("category") String category, @Param("address") String address, Pageable pageable);
 
-//    @Query(value = "SELECT * FROM stay s " +
-//            "WHERE s.category LIKE %:category% " +
-//            "AND s.address LIKE %:address% " +
-//            "ORDER BY s.price DESC " +
-//            "LIMIT :offset, :limit", nativeQuery = true)
-//    List<Stay> findByCategoryNative(@Param("category") String category, @Param("address") String address, @Param("offset") long offset, @Param("limit") int limit);
-
 }

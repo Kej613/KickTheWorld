@@ -118,6 +118,7 @@ form {
     magin-left:auto;
     margin-right:auto;
     margin-top: 30px;
+    text-align:center;
 }
 
 .custom-table th,
@@ -140,9 +141,12 @@ form {
 /*    font-family: 'Pretendard-Regular';*/
 /*    text-align:center;*/
 /*}*/
-/*body {*/
-/*    background-color: #FDFAFF;*/
-/*}*/
+    body {
+        background-color: #FDFAFF;
+    }
+    header {
+        background-color: #FDFAFF;
+    }
 /*a {*/
 /*    text-display: none;*/
 /*    color:black;*/

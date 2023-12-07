@@ -9,7 +9,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+  table {
+    background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+  }
+  body,header {
+    background-color: #FDFAFF;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
 
+</style>
 </head>
 <body>
 
@@ -101,8 +116,6 @@
   </div>
 </form>
 
-<!-- boardList.css -->
-<!--BOARD LIST-->
 <div class="table-container">
 <table class="table custom-table">
   <thead>
@@ -110,6 +123,7 @@
     <th scope="col">게시물번호</th>
     <th scope="col">제목</th>
     <th scope="col">작성자</th>
+    <th scope="col">카테고리</th>
     <th scope="col">등록일</th>
   </tr>
   </thead>
@@ -122,6 +136,7 @@
     <td><a th:href="@{/board/read(bno=${dto.bno}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
      [[${dto.title}]]</a></td>
     <td>[[${dto.writer}]]</td>
+    <td>[[${dto.category}]]</td>
     <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
   </tr>
   </tbody>
