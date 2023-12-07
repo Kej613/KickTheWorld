@@ -52,7 +52,7 @@ public class MemberController {
     @GetMapping(value = "/login")
     public String loginMember(Model model){
 //        model.addAttribute("kakaoUrl", kakaoLoginService.getKakaoLogin());
-        return "member/LoginForm";
+        return "member/LoginForm_test";
     }
 
 
@@ -62,7 +62,6 @@ public class MemberController {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
         return "member/LoginForm";
     }
-
 
 
     //회원수정
