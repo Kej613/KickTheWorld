@@ -1,8 +1,3 @@
-/*!* GOOGLE FONT - ENG *!*/
-/*@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@500;600;700&display=swap");*/
-/*!* GOOGLE FONT - KOR *!*/
-/*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&display=swap');*/
-
 @font-face {
     font-family: 'Pretendard-Regular';
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -454,48 +449,7 @@ input {
     background-color: var(--text-color-light);
 }
 
-/* MEDIA QUERIES */
-/* For small devices */
-/*@media screen and (max-width: 340px) {*/
-/*    .place__container {*/
-/*        grid-template-columns: max-content;*/
-/*        justify-content: center;*/
-/*    }*/
-/*    .experience__content {*/
-/*        padding: 0;*/
-/*    }*/
-/*    .experience__overlay:nth-child(1) {*/
-/*        width: 190px;*/
-/*    }*/
-/*    .experience__overlay:nth-child(2) {*/
-/*        width: 80px;*/
-/*    }*/
-/*    .home__info {*/
-/*        width: 190px;*/
-/*        padding: 1rem;*/
-/*    }*/
-/*    .experience__img,*/
-/*    .video__container {*/
-/*        padding: 0;*/
-/*    }*/
-/*}*/
-
 /* For medium devices */
-@media screen and (min-width: 568px) {
-    .video__container {
-        display: grid;
-        grid-template-columns: .6fr;
-        justify-content: center;
-    }
-    .place__container {
-        grid-template-columns: repeat(3, max-content);
-    }
-    .subscribe__form {
-        width: 470px;
-        margin: 0 auto;
-    }
-}
-
 @media screen and (min-width: 768px) {
     body {
         margin: 0;
