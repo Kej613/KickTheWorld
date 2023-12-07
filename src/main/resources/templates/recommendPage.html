@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
     <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
     <style>
-
         @font-face {
             font-family: 'Pretendard-Regular';
             src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -16,7 +15,6 @@
         body {
             font-family: 'Pretendard-Regular';
             background-color: #FDFAFF;
-            width:80%;
         }
         header {
             background-color: #FDFAFF;
@@ -25,6 +23,13 @@
             font-family: 'Pretendard-Regular';
             text-align:center;
             font-size: 28px;
+        }
+        .result_content{
+            width:80% ;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 28px;
+
         }
         .sidemenu1 {
             list-style-type: none;
@@ -141,9 +146,8 @@
         </div>
     </nav>
 </header>
-<br><br><br><br><br><br><br><br><br><br><br>
 
-<form th:action="@{/search}" method="get" id="searchForm">
+<form th:action="@{/search}" method="get" id="searchForm" style="margin-top:300px; margin-left:auto; margin-right:auto;">
     <div class="container">
         <div class="side">
             <ul class="sidemenu1">
@@ -214,8 +218,8 @@
     </div>
 </form>
 
-<div th:if="${result}">
-    <div th:each="trip, status: ${result.trips.getContent()}" class="card">
+<div class="result_content" th:if="${result}">
+    <div th:each="trip, status: ${result.trips.getContent()}">
 <!--        <img th:src="${trip.imgUrl}" th:alt="${trip.name}" class="rounded-1 repImg">-->
         <!--        <a th:href="@{'/trip/' + ${trip.id}">-->
 <!--       <a th:text="${trip.imgUrl}" th:alt="${trip.name}" ></a>-->
