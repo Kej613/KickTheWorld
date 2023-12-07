@@ -93,7 +93,7 @@
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a class="nav__link" href="/" ><b>마이페이지</b></a>
+                    <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
                 </li>
                 <li class="nav__item">
                     <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
@@ -149,7 +149,7 @@
 <main class="main">
     <!-- HOME -->
     <section class="home" id="home">
-        <img th:src="@{/images/main/Eatery.jpg}" alt="home main image" class="home__img">
+        <img th:src="@{/images/main/eatery.jpg}" alt="home main image" class="home__img">
         <div class="home__container container grid">
         </div>
     </section>
@@ -171,6 +171,9 @@
                     <a th:href="'/admin/eatery/'+${eatery.id}">
                         <img th:src="${eatery.imgUrl}" th:alt="${eatery.name}" class="rounded-1 repImg">
                         <p th:text="${eatery.name}" class="trip-name"></p>
+                        <p th:text="${eatery.category}" class="trip-name"></p>
+                        <p th:text="${eatery.address}" class="trip-name"></p>
+                        <button th:href="'/admin/eatery/'+${eatery.id}" type="button" class="btn btn-outline-dark">상세보기</button>
                     </a>
                 </div>
             </div>
