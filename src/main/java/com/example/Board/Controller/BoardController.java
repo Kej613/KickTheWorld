@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @Log4j2
 @RequestMapping("/board")
-@RequiredArgsConstructor    //GuestbookService를 DI하기 위해 추가
+@RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService service;

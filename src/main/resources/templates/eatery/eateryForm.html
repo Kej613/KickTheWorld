@@ -19,37 +19,10 @@
     </style>
 </head>
 <body>
-<header>
-    <a href="/"><img class="logo" src="/images/Logo.png" alt="Logo Image" /></a>
-    <nav>
-        <ul>
-            <li class="main_list"><a class="main" href="/">여행지 추천</a></li>
-            <li class="main_list dropdown">
-                <a class="main" href="#">여행 정보</a>
-                <div class="dropdown-content">
-                    <a th:href="@{/main/trips}">여행지</a>
-                    <a th:href="@{/main/stays}">숙소</a>
-                    <a th:href="@{/main/eaterys}">음식점 & 카페</a>
-                </div>
-            </li>
-            <li class="main_list"><a class="main" href="/board/list">메인게시판</a></li>
-            <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-            <li class="main_list"><a class="main" href="/admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                관리자페이지
-            </a></li>
-            <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
-                로그인
-            </a>
-            <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-                로그아웃
-            </a>
-        </ul>
-    </nav>
-    <hr>
-</header>
+
 <div>
     <form class="create_form" role="form" method="post" enctype="multipart/form-data" th:object="${eateryFormDto}">
-        <h2>Add Eatery</h2>
+        <h2>ADD EATERY</h2>
         <input type="hidden" th:field="*{id}">
         <div class="input-group">
             <div class="input-group-prepend">
@@ -130,7 +103,7 @@
 
         <!--    이미지 업로드-->
         <div th:if="${#lists.isEmpty(eateryFormDto.eateryImgDtoList)}">
-            <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
+            <div class="form-group" th:each="num: ${#numbers.sequence(1,3)}">
                 <div class="custom-file img-div">
                     <input type="file" class="custom-file-input" name="eateryImgFile">
                     <label class="custom-file-label" th:text="음식점이미지 + ${num}"></label>

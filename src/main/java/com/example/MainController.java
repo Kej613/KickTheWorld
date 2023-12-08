@@ -21,4 +21,10 @@ public class MainController {
         return "mainPage_test";
     }
 
+
+    @GetMapping("/mypage")
+    public String myPage() {
+        return "myPage";
+    }
+
 }

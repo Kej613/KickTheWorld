@@ -16,7 +16,6 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-
         show_sql: true
         format_sql: true
 
@@ -35,3 +34,7 @@ spring:
 
 server:
   port: 9090
+
+jasypt:
+  encryptor:
+    password: JASYPTPASSWORD
