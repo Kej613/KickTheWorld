@@ -1,0 +1,163 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+    --hue-color : 275;
+    --first-color : hsl(var(--hue-color), 90%, 23%);
+
+    --font-weight-normal: 500;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
+}
+
+/* BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard-Regular';
+}
+
+body {
+    min-height: 100vh;
+}
+
+li {
+    list-style: none;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* SIDE-BAR */
+.side-bar {
+    position: fixed;
+    background: var(--first-color);
+    width: 20vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-bar .logo-name {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.side-bar li {
+    font-size: 20px;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+}
+
+.side-bar li:hover {
+    background: white;
+    color: var(--first-color);
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 25px;
+    /* 글씨 크기도 키울까 scale 어쩌구 속성 이용하면 될 듯*/
+}
+
+/* CONTAINER */
+.container {
+    position: absolute;
+    right: 0;
+    width: 80vw;
+    width: 80vw;
+    height: 100vh;
+    background:white;
+}
+
+/* HEADER */
+.container .header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80vw;
+    height: 10vh;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgb(0,0,0,0.2);
+}
+
+/* header nav 부분 -> 요소가 영역을 얼만큼 사용할지 */
+.container .header .nav {
+    width: 50%;
+    display: flex;
+
+}
+
+.container .header .nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.container .header .nav li {
+    margin-right: 50px;
+    font-size: 1.2rem;
+}
+
+.container .header .nav a {
+    text-decoration: none;
+    color: black;
+    /* font-size, font-weight 추가 필요 */
+    font-size: var(--font-size-normal);
+    font-weight: var(--font-weight-semi-bold);
+}
+
+.container .content {
+    position: relative;
+    margin-top: 10vh;
+    min-height: 90vh;
+
+}
+
+.container .content .cards {
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.container .content .cards .card {
+    width: 250px;
+    height: 150px;
+    background: white;
+    margin: 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.container .content .cards .card .icon-design .link i {
+    font-size: 3.5rem;
+}
+
+.container .content .cards .card .icon-design img {
+    width: 60px;
+    height: 60px;
+
+}
+
+.container .content .content-ii {
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
