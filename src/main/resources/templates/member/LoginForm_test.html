@@ -6,17 +6,36 @@
     <!-- ICON -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login_test.css}">
+    <link rel="stylesheet" th:href="@{/css/login_test.css}">
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Login</title>
 </head>
 <body>
+<!-- BACKGROUND -->
+<img th:src="@{/images/login__bg.jpg}" alt="image" class="login__bg">
 
+<!-- HEADER -->
+<header class="login__header">
+    <div class="header__container">
+        <a th:href="@{/}">
+            <i class="ri-earth-line"></i>Kick The World
+        </a>
+    </div>
+</header>
+
+<!--LOGIN-->
 <div class="login">
-    <img th:src="@{/images/login__bg.jpg}" alt="image" class="login__bg">
 
     <form role="form" method="post" th:action="@{/members/login}" class="login__form">
+        <div class="login__logo">
+            <a th:href="@{/}">
+            <i class="ri-earth-line"></i>
+            Kick The World</a>
+        </div>
+
+        <p class="login__logo-subtitle">함께하는 여행, 킥더월드</p>
+
         <h1 class="login__title">Login</h1>
 
         <div class="login__inputs">
@@ -25,7 +44,6 @@
                 <input type="text" name="memId" placeholder="아이디 입력" required class="login__input">
                 <i class="ri-account-circle-line"></i>
             </div>
-
             <!-- PASSWORD -->
             <div class="login__box">
                 <input type="password" name="password" id="password"
@@ -33,17 +51,8 @@
                 <i class="ri-lock-2-line"></i>
             </div>
         </div>
-
-        <!-- <div class="login__check">
-           <div class="login__check-box">
-              <input type="checkbox" class="login__check-input" id="user-check">
-              <label for="user-check" class="login__check-label">아이디/비밀번호 저장</label>
-           </div>
-           <a href="#" class="login__forgot">비밀번호 찾기</a>
-        </div> -->
-
         <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
-        <button type="submit" class="login__button">Login</button>
+        <button type="submit" class="login__button">로그인</button>
 
         <div class="login__register">
             아직 회원이 아니신가요? &nbsp&nbsp <a th:href="@{/members/new}">회원가입</a>
