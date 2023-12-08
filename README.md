@@ -5,7 +5,7 @@
   
 
 ## 개발기간
-23.10.26 ~ 23.12.22
+23.10.26 ~ 23.12.17
 
 ### 협업 툴
 - Notion (https://www.notion.so/94a4731680a240b2b6c5418ae17fbe0d?pvs=4)
@@ -15,4 +15,4 @@
 - Springboot 3.1.5
 - Gradle
 - MariaDB
-- KT Clout
+- KT Cloud
