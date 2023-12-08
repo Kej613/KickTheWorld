@@ -32,6 +32,12 @@ dependencies {
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 
 
+    //pay
+    implementation 'org.json:json:20231013'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+    implementation('org.springframework.boot:spring-boot-starter-jdbc') {
+        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+    }
 
     //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
