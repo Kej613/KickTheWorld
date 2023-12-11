@@ -36,20 +36,6 @@ public class StayService {
     private final StayImgRepository stayImgRepository;
 
 
-//    public Stay update(Long stay_id, Stay updatedStay) {
-//        Stay existingStay = findById(stay_id);
-//        existingStay.setDetail(updatedStay.getDetail());
-//        existingStay.setName(updatedStay.getName());
-//        existingStay.setCategory(updatedStay.getCategory());
-//        existingStay.setPrice(updatedStay.getPrice());
-//        existingStay.setStayday(updatedStay.getStayday());
-//        existingStay.setStaySellStatus(updatedStay.getStaySellStatus());
-//        existingStay.setAddress(updatedStay.getAddress());
-//        existingStay.setService(updatedStay.getService());
-//        existingStay.setUse_guide(updatedStay.getUse_guide());
-//        existingStay.setAmenity(updatedStay.getAmenity());
-//        return stayRepository.save(existingStay);
-//    }
 
     //숙소 등록
     public Long saveStay(StayFormDto stayFormDto, List<MultipartFile> stayImgFileList) throws Exception {
@@ -82,13 +68,12 @@ public class StayService {
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
 
-    public Page<Stay> findByCategory(String category, String address, Pageable pageable) {
+    public Page<StayItemDto> findByCategory(String category, String address, Pageable pageable) {
         return stayRepository.findByCategory(category, address, pageable);
     }
 
-//    @Transactional
-//    public Page<Stay> getAdminStayPage(StaySearchDto staySearchDto, Pageable pageable) {
-//        return stayRepository.getAdminStayPage(staySearchDto, pageable);
+//    public List<Stay> searchStays(String address, String category, Integer people, Integer price) {
+//        return stayRepository.searchStays(address, category, people, price);
 //    }
 
     //숙소 상세 조회

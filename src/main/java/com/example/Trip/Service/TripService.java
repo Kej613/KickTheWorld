@@ -62,7 +62,6 @@ public class TripService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
-
     //여행지 상세 조회
     @Transactional
     public TripFormDto getTripDtl(Long id){
@@ -103,15 +102,14 @@ public class TripService {
         return trip.getId();
     }
 
-    public Page<Trip> findByCategory(String theme, String address, Pageable pageable) {
-        return tripRepository.findByCategory(theme,address, pageable);
-    }
-
     //여행지 삭제
     public void deleteById(Long id) {
         tripRepository.deleteById(id);
     }
 
-
+    //여행테마, 주소로 필터링처리
+    public Page<MainItemDto> findByCategory(String theme, String address, Pageable pageable) {
+        return tripRepository.findByCategory(theme,address, pageable);
+    }
 
 }

@@ -5,12 +5,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -25,14 +28,14 @@ public class SecurityConfig {
 
         //authorization
         http
-                .csrf().and()
+                .csrf().disable()
+                .cors().and()
                 .authorizeHttpRequests()
                 .requestMatchers("/members/login").anonymous()
                 .requestMatchers("/members/signup").anonymous()
                 .requestMatchers("/members/logout").authenticated()
 //                .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
                 .requestMatchers("/**").permitAll() //해당 경로에 대한 권한 설정
-
                 .anyRequest().authenticated();
 
         http
@@ -69,5 +72,20 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping(("/**"))
+                        .allowedOrigins("*")
+                        .allowedMethods(
+                                HttpMethod.GET.name(),
+                                HttpMethod.HEAD.name(),
+                                HttpMethod.POST.name(),
+                                HttpMethod.PUT.name(),
+                                HttpMethod.DELETE.name());
+            }
+        };
+    }
 }

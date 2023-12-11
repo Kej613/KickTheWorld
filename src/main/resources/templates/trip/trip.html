@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <title>TripDetail</title>
-    <link th:href="@{/css/stay.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
+<!--    <link th:href="@{/css/stay.css}" rel="stylesheet">-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <style>
         h2{
             font-family: 'Pretendard-Regular';
             font-size: 20px;
             text-align:left;
+        }
+        body, header {
+            font-family: 'Pretendard-Regular';
+            background-color: #FDFAFF;
         }
         .slider-container {
             position: relative;
@@ -26,27 +32,27 @@
         .slider {
             display: flex;
             transition: transform 0.5s ease-in-out;
+            justify-content: center;
         }
 
         .slide {
             min-width: 100%;
             box-sizing: border-box;
+            display: flex; /* 이미지를 수직으로 가운데 정렬 */
+            align-items: center;
+            justify-content: center;
         }
 
         img {
             width: 600px;
             height: 400px;
         }
+        .main_content {
+            width:80%;
+            margin-left:auto;
+            margin-right:auto;
 
-        /*button {*/
-        /*    position: absolute;*/
-        /*    top: 50%;*/
-        /*    transform: translateY(-50%);*/
-        /*    background: none;*/
-        /*    border: none;*/
-        /*    font-size: 24px;*/
-        /*    cursor: pointer;*/
-        /*}*/
+        }
 
         .prev-btn {
             left: 10px;
@@ -78,99 +84,81 @@
         select{
             margin-right:10px;
         }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 30px 0;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .footer-section {
-            flex: 1;
-            margin-right: 20px;
-            text-align:center;
-        }
-
-        .footer-section h2 {
-            color: #fff;
-            margin-bottom: 10px;
-            text-align:center;
-        }
-
-        .footer-section p {
-            font-size: 0.9em;
-            line-height: 1.4em;
-            color: #aaa;
-            text-align:center;
-        }
-
-        .footer-section a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section li {
-            margin-bottom: 8px;
-        }
 
     </style>
 
 </head>
 <body>
-<header>
-    <a href="/"><img class="logo" src="/images/Logo.png" alt="Logo Image" /></a>
-    <nav>
-        <ul>
-            <li class="main_list"><a class="main" href="/">여행지 추천</a></li>
-            <li class="main_list dropdown">
-                <a class="main" href="#">여행 정보</a>
-                <div class="dropdown-content">
-                    <a th:href="@{/main/trips}">여행지</a>
-                    <a th:href="@{/stays}">숙소</a>
-                    <a th:href="@{/eaterys}">음식점 & 카페</a>
-                </div>
-            </li>
-            <li class="main_list"><a class="main" href="/boards">메인게시판</a></li>
 
-            <li class="main_list"><a class="main" href="/" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a></li>
-            <li class="main_list"><a class="main" href="admin" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                관리자페이지
-            </a></li>
-            <a class="main" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}">
-                로그인
-            </a>
-            <a class="main" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-                로그아웃
-            </a>
-        </ul>
+<!-- HEADER -->
+<header class="header" id="header">
+    <!--NAV CONTAINER 1-->
+    <nav class="nav container">
+        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
+
+        <!--NAV MENU-->
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="/" ><b>마이페이지</b></a>
+                </li>
+
+                <!-- 8번 브랜치에서 추가-->
+                <li class="nav__item">
+                    <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
+                </li>
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/login" th:href="@{/members/login}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/new" th:href="@{/members/new}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
+                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+                </li>
+
+                <i class="ri-close-line nav__close" id="nav-close"></i>
+            </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-function-line"></i>
+        </div>
     </nav>
-    <hr>
+
+    <!--NAV CONTAINER 2-->
+    <nav class="nav__container-main">
+        <div class="nav__menu" id="nav-menu-main">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>
 <div>
-    <div class="main_content">
+    <div class="main_content" style="margin-top:250px;">
     <input type="hidden" id="id" th:value="${trip.id}">
-<!--        대표이미지-->
         <div class="d-flex">
             <div class="repImgDiv" >
-<!--                <img th:src="${trip.tripImgDtoList[0].imgUrl}" class = "rounded repImg" th:alt="${trip.name}" style=" width: 500px;-->
-<!--            height: 400px;-->
-<!--            margin-left:auto;-->
-<!--            margin-right:auto;-->
-<!--            justify-content: center;-->
-<!--            text-align:center;">-->
+
                 <b><h2 th:text="${trip.name}" style="text-align:center;"></h2></b>
                 <hr class="my-4">
                 <h2>여행지 소개</h2><hr class="my-4">
@@ -214,7 +202,7 @@
         <hr class="my-4">
         <div>
             <a th:href="@{/admin/trip/edit/{id}(id=${trip.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>
-            <form th:action="@{'/admin/trip/delete/' + ${trip.id}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+            <form th:action="@{'/admin/trip/delete/' + ${trip.id}}" th:if="${trip != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
                 <button type="submit" class="btn btn-outline-dark">삭제</button>
             </form>
         </div>
@@ -223,24 +211,46 @@
     </div>
 </div>
 
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section about">
-                <h2>KickTheWorld</h2>
-                <p>KickTheWorld에 오신걸 환영합니다 !</p>
+
+<!-- FOOTER -->
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content grid">
+            <div class="footer__data">
+                <h3 class="footer__title">Developer</h3>
+                <div>
+                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
+                    </a>
+                </div>
             </div>
 
-            <div class="footer-section links">
-                <h2>DEVELOPER</h2>
+
+            <div class="footer__data">
+                <h3 class="footer__subtitle">Company</h3>
                 <ul>
-                    <li>김은정 / <a href="https://github.com/Kej613">https://github.com/Kej613</a></li>
-                    <li>박의연 / <a href="https://github.com/euiyeon0519">https://github.com/euiyeon0519</a></li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Team</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Plan y Pricing</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Become a member</a>
+                    </li>
                 </ul>
             </div>
         </div>
+
+        <div class="footer__rights">
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+        </div>
     </div>
 </footer>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const slider = document.querySelector(".slider");

@@ -1,18 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>myPage</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <title>Title</title>
+
     <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/boardList.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <script src="https://tbezauth.settlebank.co.kr/js/SettlePay.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
 
     <style>
-        body,header {
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        input {
+            width: 280px;
+        }
+        body,header,form {
+            font-family: 'Pretendard-Regular';
             background-color: #FDFAFF;
+            text-align:center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            font-family: 'Pretendard-Regular';
+            padding:10px;
+            margin:10px;
+            margin-left:auto;
+            margin-right:auto;
+            color:black;
+            background-color: #FFFFFF;
+        }
+        h1 {
+            font-family: 'Pretendard-Regular';
+        }
+        td,th{
+            padding:7px;
         }
     </style>
-
 </head>
 <body>
 <!-- HEADER -->
@@ -25,7 +56,7 @@
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
+                    <a class="nav__link" href="/" ><b>마이페이지</b></a>
                 </li>
 
                 <!-- 8번 브랜치에서 추가-->
@@ -78,19 +109,55 @@
         </div>
     </nav>
 </header>
-
 <div>
-    <div class="admin-button" style="margin-top:300px;">
-        <div style="text-align:center;">
-<!--            <button type="button" id="stay-create-btn" th:onclick="|location.href='@{/}'|"> 찜리스트</button>-->
-            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/}'|">회원정보수정</button>
-            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/orders}'|">관심리스트</button>
-            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/list}'|">예약/결제내역</button>
+    <form method="post" action="" id="payForm" name="payForm" >
+        <div>
+            <h2>숙소결제내역</h2>
+            <!-- container -->
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>숙소번호</th>
+                            <th>승인번호</th>
+                            <th>거래번호</th>
+                            <th>결제상태</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="pay : ${payList}">
+                                <td th:text="${pay.id}"></td>
+                                <td th:text="${pay.ordNo}"></td>
+                                <td th:text="${pay.authNo}"></td>
+                                <td th:text="${pay.trNo}"></td>
+                                <th:block th:switch="${pay.payStatus}">
+                                    <td th:case="${'P'}">결제완료</td>
+                                    <td th:case="${'C'}">결제취소완료</td>
+                                </th:block>
+                                <td th:if="${pay.payStatus == 'P'}">
+                                    <button type="button" th:onclick="goCancel([[${pay.ordNo}]], [[${pay.trNo}]])">결제취소</button>
+                                </td>
+                                <td th:if="${pay.payStatus == 'C'}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- //container -->
         </div>
-    </div>
+    </form>
 </div>
 
-<!--FOOTER -->
+<!-- FOOTER -->
 <footer class="footer section">
     <div class="footer__container container grid">
         <div class="footer__content grid">
@@ -128,7 +195,31 @@
         </div>
     </div>
 </footer>
-
-
 </body>
+
+<script th:inline="javascript">
+    function goCancel(ordNo, trNo) {
+        console.log(ordNo + ", " + trNo)
+        $.ajax({
+            type : 'POST',
+            url : '/payCancel',
+            dataType : 'JSON',
+            data : {
+                ordNo: ordNo,
+                trNo: trNo
+            },
+            success: function(data) {
+                if(data.resultCd == "0"){
+                    alert("결제 취소 성공");
+                    location.reload();
+                }else{
+                    alert("결제 취소 실패 : " + data.resultMsg);
+                }
+            },
+            error: function(e) {
+                alert("처리중 오류가 발생했습니다");
+            }
+        });
+    }
+</script>
 </html>

@@ -378,6 +378,7 @@ input {
 }
 
 .home__data-title-kor {
+    font-family: 'Pretendard-Regular';
     color: var(--white-color);
     font-size: var(--h3-font-size);
     font-weight: var(--font-light);

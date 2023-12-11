@@ -73,7 +73,7 @@
     display: flex;
     align-items: center;
     padding-right: 1rem;
-    width: 100%;
+    width: 80%;
     color: var(--first-color);
 }
 
@@ -114,11 +114,18 @@ form {
     font-family: 'Pretendard-Regular';
     justify-content: center;
     align-items: center;
-    width:80%;
+    width:100%;
     magin-left:auto;
     margin-right:auto;
     margin-top: 30px;
     text-align:center;
+}
+.table custom-table {
+    font-family: 'Pretendard-Regular';
+    magin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    width:100%;
 }
 
 .custom-table th,
@@ -130,54 +137,10 @@ form {
     text-align: right;
 }
 
-/*@font-face {*/
-/*    font-family: 'Pretendard-Regular';*/
-/*    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');*/
-/*    font-weight: 400;*/
-/*    font-style: normal;*/
-/*}*/
 
-/*h1 {*/
-/*    font-family: 'Pretendard-Regular';*/
-/*    text-align:center;*/
-/*}*/
     body {
         background-color: #FDFAFF;
     }
     header {
         background-color: #FDFAFF;
     }
-/*a {*/
-/*    text-display: none;*/
-/*    color:black;*/
-/*}*/
-/*form {*/
-/*    font-family: 'Pretendard-Regular';*/
-/*    width:60%;*/
-/*    text-align:center;*/
-/*    margin-left:auto;*/
-/*    margin-right:auto;*/
-/*}*/
-
-/*table {*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-/*.table-container {*/
-/*    font-family: 'Pretendard-Regular';*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    width:80%;*/
-/*    magin-left:auto;*/
-/*    margin-right:auto;*/
-/*    margin-top: 30px;*/
-/*}*/
-
-/*.custom-table th,*/
-/*.custom-table td {*/
-/*    padding: 6px; !* Adjust as needed *!*/
-/*}*/
-
-/*.write_btn {*/
-/*    text-align:right;*/
-/*}*/

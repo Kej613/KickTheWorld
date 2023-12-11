@@ -24,18 +24,14 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
-
     private final OrderService orderService;
 
     @PostMapping(value = "/order")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto
-            , BindingResult bindingResult, Principal principal) {
-
+    public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult, Principal principal) {
         if (principal == null) {
             // 사용자가 로그인되어 있지 않은 경우 로그인 폼으로 리다이렉트
             return new ResponseEntity<String>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
-
         if (bindingResult.hasErrors()) { //에러가 있는지 검사
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -50,8 +46,14 @@ public class OrderController {
         String memId = principal.getName();
         Long orderId;
 
+//        try {
+//            orderId = orderService.order(orderDto, memId);
+//        } catch (Exception e) {
+//            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
         try {
-            orderId = orderService.order(orderDto, memId);
+            // 체크인과 체크아웃 날짜를 받아와서 orderService에 전달
+            orderId = orderService.order(orderDto, memId, orderDto.getCheckInDate(), orderDto.getCheckOutDate());
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -81,13 +83,27 @@ public class OrderController {
     }
 
 
-    @PostMapping("/order/{orderId}/cancel")
-    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
-        if(!orderService.validateOrder(orderId, principal.getName())) {
-            return new ResponseEntity<String> ("예약 취소 권한이 없습니다", HttpStatus.FORBIDDEN);  //다른 사용자가 주문을 취소하지못하게 막기위함
+//    @PostMapping("/order/{orderId}/cancel")
+//    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
+//        if(!orderService.validateOrder(orderId, principal.getName())) {
+//            return new ResponseEntity<String> ("예약 취소 권한이 없습니다", HttpStatus.FORBIDDEN);  //다른 사용자가 주문을 취소하지못하게 막기위함
+//        }
+//        orderService.cancelOrder(orderId);
+//        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+//    }
 
+
+    @PostMapping("/order/{orderId}/cancel")
+    public @ResponseBody ResponseEntity<String> cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
+        if (!orderService.validateOrder(orderId, principal.getName())) {
+            return new ResponseEntity<>("예약 취소 권한이 없습니다", HttpStatus.FORBIDDEN);
         }
-        orderService.cancelOrder(orderId);
-        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+
+        try {
+            orderService.cancelOrder(orderId);
+            return new ResponseEntity<>("주문이 취소되었습니다.", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

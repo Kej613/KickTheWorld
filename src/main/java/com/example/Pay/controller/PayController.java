@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 /**
  * n\
@@ -26,7 +26,6 @@ import java.util.List;
 public class PayController {
 
 	private final PayRepository payRepo;
-
 	/**
 	 * 기본 화면 로드
 	 * @param model
@@ -35,13 +34,13 @@ public class PayController {
 	@RequestMapping(value = "/pay", method = RequestMethod.GET)
 	public String index(Model model, HttpServletRequest request) throws Exception {
 		String mercntId = "M2266037"; 	//가맹점 아이디
+
 		model.addAttribute("mercntId", mercntId);
 		model.addAttribute("ordNo", "STAY_" + DateUtil.getDateTimeMillisecond());
 		model.addAttribute("baseUrl", request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
-
 		model.addAttribute("productNm", "테스트 상품");
 
-		return "index";
+		return "pay/index";
 	}
 
 	@RequestMapping(value = "/callback", method = RequestMethod.POST)
@@ -87,17 +86,17 @@ public class PayController {
 			model.addAttribute("viewType", viewType);
 		}
 
-		return "callback";
+		return "pay/callback";
 	}
 
 	@RequestMapping(value = "/cancel", method = RequestMethod.POST)
 	public String cancel(Model model, HttpServletRequest request) throws Exception {
-		return "cancel";
+		return "pay/cancel";
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) throws Exception {
 		model.addAttribute("payList", payRepo.findAllByPayStatusIn(List.of("P", "C")).orElse(null));
-		return "list";
+		return "pay/list";
 	}
 }

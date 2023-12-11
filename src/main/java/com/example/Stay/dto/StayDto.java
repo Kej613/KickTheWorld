@@ -18,27 +18,20 @@ public class StayDto {
     @NotBlank(message = "숙소명은 필수 입력값입니다.")
     private String name;
     private String detail;
-
     @NotBlank(message = "카테고리는 필수 입력값입니다.")
     private String category;
-    @NotBlank(message = "숙박가격은 필수 입력값입니다.")
+    @NotBlank(message = "숙소가격 입력은 필수 입력값입니다.")
     private int price;
-
     @NotBlank(message = "주소는 필수 입력값입니다.")
     private String address;
     private int people;
     private int room;  // 객실수
     private String service;   //서비스
     private String use_guide;   //이용안내
-
     private String amenity;  //편의시설
-
     private StaySellStatus staySellStatus;  //숙소 판매상태
-
     private LocalDateTime regTime;  //숙소 등록 날짜
-
     private String imgUrl;   //이미지 url
-
 
     public StayDto(Stay stay) {
         this.id = stay.getId();

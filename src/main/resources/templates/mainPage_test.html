@@ -23,24 +23,24 @@
     <div class="nav__menu" id="nav-menu">
       <ul class="nav__list">
         <li class="nav__item">
-          <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
+          <a class="nav__link" href="/mypage"><b>마이페이지</b></a>
         </li>
         <li class="nav__item">
           <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
         </li>
-        <li class="nav__item">
+        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
           <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
         </li>
         <li class="nav__item">
-          <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+          <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>[로그인]</b></a>
         </li>
 
         <li class="nav__item">
-          <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+          <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>[회원가입]</b></a>
         </li>
-
         <li class="nav__item">
-          <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+          <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+            <p th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></p> <b>[로그아웃]</b></a>
         </li>
 
         <i class="ri-close-line nav__close" id="nav-close"></i>
@@ -71,23 +71,17 @@
     </div>
   </nav>
 </header>
-
 <!-- MAIN -->
 <main class="main">
   <!-- HOME -->
   <section class="home" id="home">
     <img th:src="@{images/main/home1.jpg}" alt="home main image" class="home__img">
-
     <div class="home__container container grid">
       <div class="home__data">
-
         <br><h3 class="home__data-title-kor" style="font-size:25px;">
-
           함께하는 <b> 힐링여행, </b> 국내로 떠나볼까요 ?
         </h3>
       </div>
-
-
       <div class="home__social">
         <!--학교-->
         <a href="https://cs.skuniv.ac.kr/" target="_blank" class="home__social-link">
@@ -102,19 +96,6 @@
           <i class="ri-github-fill"></i>
         </a>
       </div>
-
-      <!-- <div class="home__info">
-          <div>
-              <span class="home__info-title">5 best places to visit</span>
-              <a href="#" class="button button--flex button--link home__info-button">
-                  More <i class="ri-arrow-right-line"></i>
-              </a>
-          </div>
-
-          <div class="home__info-overlay">
-              <img src="assets/img/home2.jpg" alt="home sub overlay iamge" class="home__info-overlay">
-          </div>
-      </div> -->
     </div>
   </section>
 
@@ -380,6 +361,5 @@
 
 <!-- SWIPER JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <!-- MAIN JS -->
 <script th:src="@{js/main_test.js}"></script>

@@ -31,6 +31,9 @@ public class EateryRepositoryCustomImpl implements  EateryRepositoryCustom {
 
         }else if(StringUtils.equals("address", searchBy)) {
             return QEatery.eatery.address.like("%" + searchQuery+ "%");
+
+        }else if(StringUtils.equals("eaterycategory", searchBy)) {
+            return QEatery.eatery.eaterycategory.like("%" + searchQuery+"%");
         }
         return null;
     }
@@ -51,7 +54,7 @@ public class EateryRepositoryCustomImpl implements  EateryRepositoryCustom {
                                 eatery.id,
                                 eatery.name,
                                 eatery.address,
-                                eatery.category,
+                                eatery.eaterycategory,
                                 eateryImg.imgUrl)
                 )
                 .from(eateryImg)

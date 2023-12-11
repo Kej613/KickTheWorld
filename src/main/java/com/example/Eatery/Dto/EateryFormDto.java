@@ -23,7 +23,7 @@ public class EateryFormDto {
     @NotBlank(message="음식점명은 필수 입력값입니다.")
     private String name;   //음식점명
 
-    private String category;   //음식점 카테고리
+    private String eaterycategory;   //음식점 카테고리
 
     private String address;  //음식점 주소
 

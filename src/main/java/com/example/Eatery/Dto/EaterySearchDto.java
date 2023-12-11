@@ -7,6 +7,9 @@ import lombok.Setter;
 @Setter
 public class EaterySearchDto {
 
+    private String eaterycategory;
+    private String address;
+
     private String searchBy;  //지역과 음식점명을 검색
     private String searchQuery = "";
 }
