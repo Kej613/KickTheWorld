@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
+    <link rel="stylesheet" th:href="@{/css/boardList.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <script src="https://tbezauth.settlebank.co.kr/js/SettlePay.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        input {
+            width: 280px;
+            text-align:center;
+        }
+        body,header,form {
+            font-family: 'Pretendard-Regular';
+            background-color: #FDFAFF;
+            text-align:center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            font-family: 'Pretendard-Regular';
+            padding:10px;
+            margin:10px;
+            margin-left:auto;
+            margin-right:auto;
+            color:black;
+            background-color: #FFFFFF;
+        }
+        h1 {
+            font-family: 'Pretendard-Regular';
+        }
+        td,th{
+            padding:7px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header" id="header">
+    <!--NAV CONTAINER 1-->
+    <nav class="nav container">
+        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
+
+        <!--NAV MENU-->
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="/" ><b>마이페이지</b></a>
+                </li>
+
+                <!-- 8번 브랜치에서 추가-->
+                <li class="nav__item">
+                    <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
+                </li>
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/login" th:href="@{/members/login}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/new" th:href="@{/members/new}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
+                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+                </li>
+
+                <i class="ri-close-line nav__close" id="nav-close"></i>
+            </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-function-line"></i>
+        </div>
+    </nav>
+
+    <!--NAV CONTAINER 2-->
+    <nav class="nav__container-main">
+        <div class="nav__menu" id="nav-menu-main">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div>
+<form method="post" action="" id="payForm" name="payForm" >
+    <div style="margin-top:200px;">
+        <h2>결제 명세서</h2>
+        <!-- container -->
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table">
+                    <colgroup>
+                        <col style="width: 15%;">
+                        <col style="width: 35%;">
+                        <col style="width: 15%;">
+                        <col style="width: 35%;">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>가맹점아이디</td><td><input type="text" name="mercntId" id="mercntId" placeholder="가맹점아이디" th:value="${mercntId}"></td>
+                    </tr>
+                    <tr>
+                        <td>예약번호</td><td><input type="text" name="ordNo" id="ordNo" placeholder="예약번호" th:value="${ordNo}"></td>
+                    </tr>
+                    <tr>
+                        <td>숙소금액</td><td><input type="text" name="trPricePlain" id="trPricePlain" placeholder="숙소금액" th:value="${param.trPricePlain}"></td>
+                    </tr>
+                    <tr>
+                        <td>숙소명</td><td><input type="text" name="productNm" id="productNm" placeholder="숙소명" th:value="${param.productNm}"></td>
+                    </tr>
+                    <tr>
+                        <td>체크인날짜</td><td><input type="text" name="mercntParam1" id="mercntParam1" placeholder="체크인날짜" th:value="${param.checkInDate}"></td>
+                    </tr>
+                    <tr>
+                        <td>체크아웃날짜</td><td><input type="text" name="mercntParam2" id="mercntParam2" placeholder="체크아웃날짜"th:value="${param.checkOutDate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- //container -->
+        <!-- fixed bottom button -->
+        <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayAuth();">결제요청</button></div>
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+        <!-- //fixed bottom button -->
+    </div>
+
+
+    <input type="hidden" name="hdInfo" id="hdInfo" value="IA_AUTHPAGE_1.0_1.0" readonly="readonly"><!--    전문정보-->
+    <input type="hidden" name="apiVer" id="apiVer"  value="1.0" readonly="readonly"><!--    전문버전-->
+    <input type="hidden" name="processType" id="processType"  value="D"><!--    처리구분-->
+    <input type="hidden" name="dutyFreeYn" id="dutyFreeYn"  value="N"><!--    면세여부-->
+    <input type="hidden" name="callbackUrl" id="callbackUrl" th:value="${baseUrl + '/callback'}"><!--    결과통보URL-->
+    <input type="hidden" name="cancelUrl" id="cancelUrl" th:value="${baseUrl + '/cancel'}"><!--    인증창취소URL-->
+    <input type="hidden" id="viewType" name="viewType" value="self" /><!--    결제창 팝업방식-->
+
+    <input type="hidden" id="trPrice" name="trPrice" value="" /> <!-- 거래금액 -->
+    <input type="hidden" id="trDay" name="trDay" value="" /> <!-- 거래일자 -->
+    <input type="hidden" id="trTime" name="trTime" value="" /> <!-- 거래시간 -->
+    <input type="hidden" id="signature" name="signature" value="" /> <!-- 위변조 방지 sha256 hash 값 -->
+</form>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content grid">
+            <div class="footer__data">
+                <h3 class="footer__title">Developer</h3>
+                <div>
+                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="footer__data">
+                <h3 class="footer__subtitle">Company</h3>
+                <ul>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Team</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Plan y Pricing</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Become a member</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__rights">
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+        </div>
+    </div>
+</footer>
+</body>
+
+<script>
+    function goPayAuth(){
+        if ( $("#hdInfo").val() == "" ) {
+            alert("전문정보를 입력해주세요.");
+            $("#hdInfo").focus();
+            return;
+        } else if ( $("#apiVer").val() == "" ) {
+            alert("전문버전을 입력해주세요.");
+            $("#apiVer").focus();
+            return;
+        } else if ( $("#mercntId").val() == "" ) {
+            alert("가맹점아이디를 입력해주세요.");
+            $("#mercntId").focus();
+            return;
+        } else if ( $("#ordNo").val() == "" ) {
+            alert("예약번호를 입력해주세요.");
+            $("#ordNo").focus();
+            return;
+        } else if ( $("#trPricePlain").val() == "" ) {
+            alert("거래금액을 입력해주세요.");
+            $("#trPricePlain").focus();
+            return;
+        } else if ( $("#productNm").val() == "" ) {
+            alert("숙소명을 입력해주세요.");
+            $("#productNm").focus();
+            return;
+        } else if ( $("#dutyFreeYn").val() == "" ) {
+            alert("면세여부를 입력해주세요.");
+            $("#dutyFreeYn").focus();
+            return;
+        } else if ( $("#dutyFreeYn").val() == "G" ) {
+            if ( $("#taxPrice").val() == "" ) {
+                alert("복합과세일경우 과세금액을 입력해주세요.");
+                $("#taxPrice").focus();
+                return;
+            } else if ( $("#vatPrice").val() == "" ) {
+                alert("복합과세일경우 부가세금액을 입력해주세요.");
+                $("#vatPrice").focus();
+                return;
+            } else if ( $("#dutyFreePrice").val() == "" ) {
+                alert("복합과세일경우 면세금액을 입력해주세요.");
+                $("#dutyFreePrice").focus();
+                return;
+            }
+        } else if ( $("#callbackUrl").val() == "" ) {
+            alert("결과통보 URL을 입력해주세요.");
+            $("#callbackUrl").focus();
+            return;
+        }
+
+        $.ajax({
+            type : 'POST',
+            url : '/payReserv',
+            dataType : 'JSON',
+            data : $("#payForm").serialize(),
+
+            success: function(data) {
+                if(data.resCode == "0000"){
+                    $("#trPrice").val(data.trPriceEnc);
+                    $("#email").val(data.emailEnc);
+                    $("#cphoneNo").val(data.cphoneNoEnc);
+                    $("#signature").val(data.signature);
+                    $("#trDay").val(data.trDay);
+                    $("#trTime").val(data.trTime);
+
+                    var obj = document.forms["payForm"];
+                    SettlePay.pay(obj);
+                }else{
+                    alert("fail");
+                }
+            },
+            error: function(e) {
+                alert("처리중 오류가 발생했습니다");
+            }
+        });
+
+    }
+
+    function setValue(selector, value){
+        $(selector).val(value);
+    }
+
+    function goPayApprov(){
+        if ( $("#callbackHdInfo").val() == "" ) {
+            alert("전문정보를 입력해주세요.");
+            $("#callbackHdInfo").focus();
+            return;
+        } else if ( $("#callbackApiVer").val() == "" ) {
+            alert("전문버전을 입력해주세요.");
+            $("#callbackApiVer").focus();
+            return;
+        } else if ( $("#callbackMercntId").val() == "" ) {
+            alert("가맹점아이디를 입력해주세요.");
+            $("#callbackMercntId").focus();
+            return;
+        } else if ( $("#callbackAuthNo").val() == "" ) {
+            alert("인증번호를 입력해주세요.");
+            $("#callbackAuthNo").focus();
+            return;
+        }
+
+
+        $.ajax({
+            type : 'POST',
+            url : '/payAction',
+            dataType : 'JSON',
+            data : {
+                'hdInfo' : $("#callbackHdInfo").val(),
+                'apiVer' : $("#callbackApiVer").val(),
+                'mercntId' : $("#callbackMercntId").val(),
+                'authNo' : $("#callbackAuthNo").val(),
+                'ordNo':$("#callbackOrdNo").val()
+            },
+            // headers: {
+            //     'X-CSRF-TOKEN': $('meta[name="_csrf"]').attr('content')
+            // },
+            success: function(data) {
+                if(data.resultCd == "0"){
+                    alert(data.resultMsg);
+                }else{
+                    alert(data.resultMsg);
+                }
+            },
+            error: function(e) {
+                alert("처리중 오류가 발생했습니다");
+            }
+        });
+    }
+</script>
+</html>

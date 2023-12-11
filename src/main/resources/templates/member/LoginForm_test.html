@@ -37,7 +37,9 @@
         <p class="login__logo-subtitle">함께하는 여행, 킥더월드</p>
 
         <h1 class="login__title">Login</h1>
-
+        <p>[test계정]</p>
+        <p>일반사용자: user1/12345678</p>
+        <p>관리자: admin1/12345678</p>
         <div class="login__inputs">
             <!-- ID -->
             <div class="login__box">
@@ -58,7 +60,7 @@
             아직 회원이 아니신가요? &nbsp&nbsp <a th:href="@{/members/new}">회원가입</a>
         </div>
 
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 
         <div class="login__social">
             <i class="ri-kakao-talk-fill"></i>
