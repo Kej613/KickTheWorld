@@ -45,8 +45,7 @@
         <li class="nav__item">
           <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
         </li>
-
-        <li class="nav__item">
+        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
           <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
         </li>
         <li class="nav__item">
@@ -118,7 +117,7 @@
 
 <div class="table-container">
 <table class="table custom-table">
-  <thead>
+  <thead style="background-color: #eeeeee;">
   <tr>
     <th scope="col">게시물번호</th>
     <th scope="col">제목</th>
@@ -127,9 +126,9 @@
     <th scope="col">등록일</th>
   </tr>
   </thead>
-
   <tbody>
-  <tr th:each="dto : ${result.dtoList}">
+  <tr th:each="dto : ${result.dtoList}" th:if="${#authorization.expression('isAuthenticated()')}">
+
     <th scope="row">
         [[${dto.bno}]]
     </th>
@@ -141,12 +140,11 @@
   </tr>
   </tbody>
 </table>
-
-  <div class="write_btn">
-          <a th:href="@{/board/register}">
-               <button type="button" class="btn btn-outline-dark">글 쓰기</button>
-           </a>
-      </div>
+  <div class="write_btn" th:if="${#authorization.expression('isAuthenticated')}">
+    <a th:href="@{/board/register}">
+      <button type="button" class="btn btn-outline-dark">글 쓰기</button>
+    </a>
+  </div>
 </div>
 
 <!--페이징-->

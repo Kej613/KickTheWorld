@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <title>게시글 조회</title>
 
   <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
@@ -91,8 +91,7 @@
         <li class="nav__item">
           <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
         </li>
-
-        <li class="nav__item">
+        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
           <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
         </li>
         <li class="nav__item">
@@ -257,7 +256,7 @@
 
 <script th:inline="javascript">
 
-  var csrfToken = $("meta[name='_csrf']").attr("content");
+  // var csrfToken = $("meta[name='_csrf']").attr("content");
 
   var bno = [[${dto.bno}]];  //게시글 번호
   var listGroup = $(".replyList");
@@ -340,9 +339,9 @@
     $.ajax({
       url: '/replies/' + rno, // 서버 엔드포인트에 따라 URL 조정
       method: 'delete',
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-      },
+      // beforeSend: function(xhr) {
+      //   xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+      // },
       success: function(result) {
         console.log("result: " + result);
         if(result === 'success') {
@@ -377,9 +376,9 @@
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
 
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-        },
+        // beforeSend: function (xhr) {
+        //   xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        // },
 
         success: function(data) {
           console.log(data);
