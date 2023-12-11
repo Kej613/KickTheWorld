@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
+    <link rel="stylesheet" th:href="@{/css/boardList.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <script src="https://tbezauth.settlebank.co.kr/js/SettlePay.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        input {
+            width: 280px;
+        }
+        body,header,form {
+            font-family: 'Pretendard-Regular';
+            background-color: #FDFAFF;
+            text-align:center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            font-family: 'Pretendard-Regular';
+            padding:10px;
+            margin:10px;
+            margin-left:auto;
+            margin-right:auto;
+            color:black;
+            background-color: #FFFFFF;
+        }
+        h1 {
+            font-family: 'Pretendard-Regular';
+        }
+        td,th{
+            padding:7px;
+        }
+    </style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header" id="header">
+    <!--NAV CONTAINER 1-->
+    <nav class="nav container">
+        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
+
+        <!--NAV MENU-->
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a class="nav__link" href="/" ><b>마이페이지</b></a>
+                </li>
+
+                <!-- 8번 브랜치에서 추가-->
+                <li class="nav__item">
+                    <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
+                </li>
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/login" th:href="@{/members/login}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/new" th:href="@{/members/new}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
+                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+                </li>
+
+                <i class="ri-close-line nav__close" id="nav-close"></i>
+            </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+            <i class="ri-function-line"></i>
+        </div>
+    </nav>
+
+    <!--NAV CONTAINER 2-->
+    <nav class="nav__container-main">
+        <div class="nav__menu" id="nav-menu-main">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+                </li>
+                <li class="nav__item">
+                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div>
+    <form method="post" action="" id="payForm" name="payForm" >
+        <div>
+            <h2>숙소결제내역</h2>
+            <!-- container -->
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>숙소번호</th>
+                            <th>승인번호</th>
+                            <th>거래번호</th>
+                            <th>결제상태</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="pay : ${payList}">
+                                <td th:text="${pay.id}"></td>
+                                <td th:text="${pay.ordNo}"></td>
+                                <td th:text="${pay.authNo}"></td>
+                                <td th:text="${pay.trNo}"></td>
+                                <th:block th:switch="${pay.payStatus}">
+                                    <td th:case="${'P'}">결제완료</td>
+                                    <td th:case="${'C'}">결제취소완료</td>
+                                </th:block>
+                                <td th:if="${pay.payStatus == 'P'}">
+                                    <button type="button" th:onclick="goCancel([[${pay.ordNo}]], [[${pay.trNo}]])">결제취소</button>
+                                </td>
+                                <td th:if="${pay.payStatus == 'C'}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- //container -->
+        </div>
+    </form>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content grid">
+            <div class="footer__data">
+                <h3 class="footer__title">Developer</h3>
+                <div>
+                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="footer__social">
+                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="footer__data">
+                <h3 class="footer__subtitle">Company</h3>
+                <ul>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Team</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Plan y Pricing</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Become a member</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__rights">
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+        </div>
+    </div>
+</footer>
+</body>
+
+<script th:inline="javascript">
+    function goCancel(ordNo, trNo) {
+        console.log(ordNo + ", " + trNo)
+        $.ajax({
+            type : 'POST',
+            url : '/payCancel',
+            dataType : 'JSON',
+            data : {
+                ordNo: ordNo,
+                trNo: trNo
+            },
+            success: function(data) {
+                if(data.resultCd == "0"){
+                    alert("결제 취소 성공");
+                    location.reload();
+                }else{
+                    alert("결제 취소 실패 : " + data.resultMsg);
+                }
+            },
+            error: function(e) {
+                alert("처리중 오류가 발생했습니다");
+            }
+        });
+    }
+</script>
+</html>

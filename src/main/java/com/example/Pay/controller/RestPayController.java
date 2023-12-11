@@ -36,6 +36,7 @@ public class RestPayController {
 
         String encrypt_key = "SETTLEBANKISGOODSETTLEBANKISGOOD";
 
+
         String hdInfo = request.getParameter("hdInfo");
         String apiVer = request.getParameter("apiVer");
         String processType = request.getParameter("processType");
@@ -81,7 +82,7 @@ public class RestPayController {
                 .viewType(viewType)
                 .build();
 
-        // 주문 정보 저장
+        // 예약 정보 저장
         Pay order = Pay.builder()
                 .ordNo(ordNo)
                 .mercntId(mercntId)
@@ -185,7 +186,7 @@ public class RestPayController {
 
         String hdInfo = "IA_CANCEL";
         String apiVer = "3.0";
-        String mercntId = "ms00003t";
+        String mercntId = "M2266037";
         String canelOrdNo = "CANCEL_" + request.getParameter("ordNo");
         String oldTrNo = request.getParameter("trNo");
         String cancelPrice = String.valueOf(pay.getTrPrice());
