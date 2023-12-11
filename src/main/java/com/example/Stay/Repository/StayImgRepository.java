@@ -9,6 +9,5 @@ import java.util.List;
 public interface StayImgRepository extends JpaRepository<StayImg, Long> {
     List<StayImg> findByStay_IdOrderByIdAsc(Long id);
     void deleteByStay(Stay Stay);
-
     StayImg findByStay_IdAndRepimgYn(Long id, String repimgYn);
 }

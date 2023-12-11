@@ -2,6 +2,7 @@ package com.example.Stay.Repository;
 
 
 import com.example.Stay.Entity.Stay;
+import com.example.Stay.dto.StayItemDto;
 import com.example.Trip.Entity.Trip;
 import com.example.Trip.Repository.TripRepositoryCustom;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ public interface StayRepository extends JpaRepository<Stay, Long>, QuerydslPredi
             "where s.category like %:category% " +
             "and s.address like %:address% " +
             "order by s.price desc")
-    Page<Stay> findByCategory(@Param("category") String category, @Param("address") String address, Pageable pageable);
+    Page<StayItemDto> findByCategory(@Param("category") String category, @Param("address") String address, Pageable pageable);
+
 
 }

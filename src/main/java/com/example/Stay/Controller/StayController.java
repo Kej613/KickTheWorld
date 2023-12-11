@@ -1,5 +1,8 @@
 package com.example.Stay.Controller;
 
+import com.example.Eatery.Entity.Eatery;
+import com.example.Eatery.Repository.EateryRepository;
+import com.example.Eatery.Service.EateryService;
 import com.example.Stay.Entity.Stay;
 import com.example.Stay.Repository.StayImgRepository;
 import com.example.Stay.Repository.StayRepository;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +32,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 public class StayController {
-    private final TripService tripService;
+
     private final StayService stayService;
     private final StayRepository stayRepository;
     private final StayImgRepository stayImgRepository;
@@ -58,22 +62,6 @@ public class StayController {
 //    }
 
 
-    @GetMapping("/search")
-    public String search(@RequestParam(value = "address", required = false) String address,
-                         @RequestParam(value = "category", required = false) String category,
-                         @RequestParam(value = "theme", required = false) String theme,
-                         @PageableDefault(page = 0, size = 10) Pageable pageable,
-                         Model model) {
-        Page<Stay> stays = stayService.findByCategory(category, address, pageable);
-        Page<Trip> trips = tripService.findByCategory(theme, address, pageable);
-
-        SearchResult result = new SearchResult(stays, trips);
-        model.addAttribute("result", result);
-
-        return "recommendPage";
-    }
-
-
 
 //    @GetMapping("/stays/category")
 //    public String getStaysByCategory(@RequestParam(value = "category", required = false) String category,
@@ -85,7 +73,6 @@ public class StayController {
 //        model.addAttribute("stays", staysByCategory);
 //        return "stay/stayPage";
 //    }
-
 
     //조건별로 숙소 페이징처리
     @GetMapping(value = {"/main/stays", "/main/stays/{page}"})
@@ -99,30 +86,6 @@ public class StayController {
         return "stay/stayPage";
     }
 
-
-//    //숙소 상세보기
-//    @GetMapping(value="/stay/{id}")
-//    public String stayDtl(Model model, @PathVariable("id") Long id) {
-//        StayFormDto stayFormDto = stayService.getStayDtl(id);
-//        model.addAttribute("stay", stayFormDto);
-//        return "stay/stay";
-//    }
-
-    // 여행지 상세 보기
-//    @GetMapping(value = "/admin/stay/{id}")
-//    public String stayDtl(@PathVariable("id") Long id, Model model) {
-//        try {
-//            StayFormDto stayFormDto = stayService.getStayDtl(id);
-//            model.addAttribute("stay", stayFormDto);
-//
-//        } catch (EntityNotFoundException e) {
-//            model.addAttribute("errorMessage", "존재하지 않는 여행지 입니다.");
-//            model.addAttribute("stayFormDto", new StayFormDto());
-//
-//            return "stay/stay";
-//        }
-//        return "stay/stay";
-//    }
 
     //숙소 등록
     @GetMapping("/admin/stay/new")
@@ -189,8 +152,6 @@ public class StayController {
     }
 
 
-
-
     //숙소 수정
     @GetMapping("/admin/stay/edit/{id}")
     public String showEditStayForm(@PathVariable Long id, Model model) {
@@ -198,13 +159,6 @@ public class StayController {
         model.addAttribute("stay", stay);
         return "stay/stayForm";
     }
-
-
-//    @PostMapping("/stays/edit/{id}")
-//    public String editStay(@PathVariable Long id, @ModelAttribute Stay updatedStay) {
-//        stayService.update(id, updatedStay);
-//        return "redirect:/stays";
-//    }
 
 
     //숙소 삭제
@@ -220,7 +174,6 @@ public class StayController {
         return "redirect:/";
     }
 
-
 //    //관리자-숙소관리
 //    @GetMapping(value={"/admin/stays", "/admin/stays/{page}"}) // 숙소관리화면 페이지 진입시 페이지 번호가 있는경우와 없는경우
 //    public String stayManage(StaySearchDto staySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
@@ -233,7 +186,5 @@ public class StayController {
 //                    return "stay/stayMng";
 //
 //    }
-
-
 
 }

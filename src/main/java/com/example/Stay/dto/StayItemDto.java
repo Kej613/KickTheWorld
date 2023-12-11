@@ -1,8 +1,10 @@
 package com.example.Stay.dto;
 
+import com.example.Stay.Entity.Stay;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 @Getter
 @Setter
@@ -26,5 +28,14 @@ public class StayItemDto {
         this.category = category;
         this.price = price;
 
+    }
+//    private static ModelMapper modelMapper = new ModelMapper();
+    public static StayItemDto of(Stay stay) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(stay, StayItemDto.class);
+    }
+
+    // 인자가 없는 기본 생성자 추가
+    public StayItemDto() {
     }
 }

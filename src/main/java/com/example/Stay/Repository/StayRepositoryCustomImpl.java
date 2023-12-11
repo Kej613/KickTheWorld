@@ -33,7 +33,7 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
     }
     private BooleanExpression searchSellStatusEq(StaySellStatus searchSellStatus) {
         return searchSellStatus == null ? null : QStay.stay.staySellStatus.eq(searchSellStatus);
-    }//상품의 판매상태조건이 null일 경우에는 null을 리턴
+    }
 
 //    private BooleanExpression regDtsAfter(String searchDateType) {
 //        LocalDateTime dateTime = LocalDateTime.now();
@@ -66,24 +66,6 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
         return StringUtils.isEmpty(searchQuery) ? null : QStay.stay.name.like("%" + searchQuery + "%");
     }
 
-//    @Override
-//    public Page<Stay> getAdminStayPage(StaySearchDto staySearchDto, Pageable pageable) {
-//        QueryResults<Stay> results = queryFactory
-//                .selectFrom(QStay.stay)
-//                .where(regDtsAfter(staySearchDto.getSearchDateType()),
-//                        searchSellStatusEq(staySearchDto.getSearchSellStatus()),
-//                        searchByLike(staySearchDto.getSearchBy(),
-//                                staySearchDto.getSearchQuery()))
-//                .orderBy(QStay.stay.stay_id.desc())
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetchResults();
-//
-//        List<Stay> content = results.getResults();
-//        long total = results.getTotal();
-//        return new PageImpl<>(content, pageable, total);
-//
-//    }
 
     @Override
     public Page<StayItemDto> getStayPage (StaySearchDto staySearchDto, Pageable pageable) {
@@ -114,5 +96,22 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
         long total = results.getTotal();
         return new PageImpl<>(content,pageable, total);
     }
-
+//    @Override
+//    public Page<Stay> getAdminStayPage(StaySearchDto staySearchDto, Pageable pageable) {
+//        QueryResults<Stay> results = queryFactory
+//                .selectFrom(QStay.stay)
+//                .where(regDtsAfter(staySearchDto.getSearchDateType()),
+//                        searchSellStatusEq(staySearchDto.getSearchSellStatus()),
+//                        searchByLike(staySearchDto.getSearchBy(),
+//                                staySearchDto.getSearchQuery()))
+//                .orderBy(QStay.stay.stay_id.desc())
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .fetchResults();
+//
+//        List<Stay> content = results.getResults();
+//        long total = results.getTotal();
+//        return new PageImpl<>(content, pageable, total);
+//
+//    }
 }
