@@ -21,7 +21,7 @@ public class OrderHistDto {
 
     private Long orderId; //예약아이디
     private String orderDate; //예약날짜
-    private OrderStatus orderStatus; //예약 상태
+    private OrderStatus orderStatus; //예약상태
 
     //예약 상품
     private List<OrderItemDto> orderItemDtoList = new ArrayList<>();

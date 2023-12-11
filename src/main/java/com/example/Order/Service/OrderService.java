@@ -21,8 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -34,25 +37,43 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final StayImgRepository stayImgRepository;
 
+//
+//    // 예약
+//    public Long order(OrderDto orderDto, String memId) {
+//
+//        Stay stay = stayRepository.findById(orderDto.getId())    // 예약할 숙소를 조회
+//                .orElseThrow(EntityNotFoundException::new);
+//
+//        Member member = memberRepository.findByMemId(memId);  //현재 로그인한 회원의 아이디를 이용해 회원 정보 조회
+//
+//        List<OrderItem> orderItemList = new ArrayList<>();
+//        OrderItem orderItem = OrderItem.createOrderItem(stay, orderDto.getCount());
+//        orderItemList.add(orderItem);
+//        Order order = Order.createOrder(member, orderItemList);    // 숙소 정보 저장
+//
+//        orderRepository.save(order);
+//
+//        return order.getId();
+//    }
 
-    // 예약
-    public Long order(OrderDto orderDto, String memId) {
-
-        Stay stay = stayRepository.findById(orderDto.getId())    // 예약할 숙소를 조회
+    //예약
+    public Long order(OrderDto orderDto, String memId, Date checkInDate, Date checkOutDate) {
+        Stay stay = stayRepository.findById(orderDto.getId())
                 .orElseThrow(EntityNotFoundException::new);
 
-        Member member = memberRepository.findByMemId(memId);  //현재 로그인한 회원의 아이디를 이용해 회원 정보 조회
+        Member member = memberRepository.findByMemId(memId);
 
         List<OrderItem> orderItemList = new ArrayList<>();
-        OrderItem orderItem = OrderItem.createOrderItem(stay, orderDto.getCount());
+        OrderItem orderItem = OrderItem.createOrderItem(stay, orderDto.getCount(), checkInDate, checkOutDate);
         orderItemList.add(orderItem);
-        Order order = Order.createOrder(member, orderItemList);    // 숙소 정보 저장
+
+        // 수정된 부분
+        Order order = Order.createOrder(member, orderItemList, checkInDate, checkOutDate);
 
         orderRepository.save(order);
 
         return order.getId();
     }
-
 
     //예약한 숙소 리스트
     @Transactional
@@ -95,14 +116,30 @@ public class OrderService {
     }
 
 
-
+    // 예약 취소
     public void cancelOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
-        order.cancelOrder();
+        // 주문 취소 로직 구현
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            // 여기에서 취소에 필요한 로직을 추가하세요.
+            // 예를 들어, 주문 상태를 변경하거나 삭제 등을 수행합니다.
+
+            // 주문을 삭제하는 예시
+            orderRepository.delete(order);
+        } else {
+            throw new RuntimeException("주문을 찾을 수 없습니다.");
+        }
+    }
+
+//
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(EntityNotFoundException::new);
+//        order.cancelOrder();
     }
 
 
 
 
-}
+
