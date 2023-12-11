@@ -8,6 +8,7 @@ import com.example.Eatery.Entity.Eatery;
 import com.example.Eatery.Entity.EateryImg;
 import com.example.Eatery.Repository.EateryImgRepository;
 import com.example.Eatery.Repository.EateryRepository;
+import com.example.Stay.Entity.Stay;
 import com.example.Trip.Dto.MainItemDto;
 import com.example.Trip.Dto.TripFormDto;
 import com.example.Trip.Dto.TripImgDto;
@@ -108,14 +109,16 @@ public class EateryService {
         return eatery.getId();
     }
 
-    public Page<Eatery> findByCategory(String category, String address, Pageable pageable) {
-        return eateryRepository.findByCategory(category,address, pageable);
+    //조건별로 필터링 처리
+    public Page<EateryItemDto> findByAddressAndEateryCategory(String address, String eaterycategory, Pageable pageable) {
+        return eateryRepository.findByAddressAndEateryCategory(address, eaterycategory, pageable);
     }
 
     //음식점 삭제
     public void deleteById(Long id) {
         eateryRepository.deleteById(id);
     }
+
 
 
 }

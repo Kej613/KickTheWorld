@@ -1,5 +1,6 @@
 package com.example.Eatery.Repository;
 
+import com.example.Eatery.Dto.EateryItemDto;
 import com.example.Eatery.Entity.Eatery;
 import com.example.Trip.Entity.Trip;
 import com.example.Trip.Repository.TripRepositoryCustom;
@@ -15,11 +16,9 @@ public interface EateryRepository extends JpaRepository<Eatery, Long>, QuerydslP
 
     @Query("select e " +
             "from Eatery e " +
-            "where e.category like %:category% " +
+            "where e.eaterycategory like %:eaterycategory% " +
             "and e.address like %:address% " +
             "order by e.id desc")
-    Page<Eatery> findByCategory(@Param("category") String category, @Param("address") String address, Pageable pageable);
-
-
+    Page<EateryItemDto> findByAddressAndEateryCategory(@Param("eaterycategory") String eaterycategory, @Param("address") String address, Pageable pageable);
 
 }

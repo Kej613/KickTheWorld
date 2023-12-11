@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,9 +32,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 public class EateryController {
-
     private final EateryService eateryService;
-
     private final EateryRepository eateryRepository;
     private final EateryImgRepository eateryImgRepository;
 
@@ -53,8 +52,9 @@ public class EateryController {
 
     //조건별로 여행지 페이징처리
     @GetMapping(value = {"/main/eaterys", "/main/eaterys/{page}"})
-    public String eateryManage(EaterySearchDto eaterySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 9);
+    public String eateryManage(EaterySearchDto eaterySearchDto,
+                               @PathVariable("page") Optional<Integer> page, Model model) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
         Page<EateryItemDto> eaterys = eateryService.getEateryPage(eaterySearchDto, pageable);
         model.addAttribute("eaterys", eaterys);
@@ -63,6 +63,19 @@ public class EateryController {
 
         return "eatery/eateryPage";
     }
+
+//        //조건별로 필터링
+//    @GetMapping("/main/eaterys/filtered")
+//    public String getFilteredEateryList(
+//            @RequestParam(name = "address", required = false) String address,
+//            @RequestParam(name = "eaterycategory", required = false) String eaterycategory,
+//            @PageableDefault(size = 10) Pageable pageable, Model model) {
+//
+//        Page<Eatery> eaterys = eateryService.findByAddressAndEateryCategory(address, eaterycategory, pageable);
+//        model.addAttribute("eaterys", eaterys);
+//
+//        return "eatery/eateryPage";
+//    }
 
     //음식점 등록
     @GetMapping(value = "/admin/eatery/new")
@@ -129,7 +142,6 @@ public class EateryController {
     }
 
 
-
     //음식점 수정
     @GetMapping("/admin/eatery/edit/{id}")
     public String showEditEateryForm(@PathVariable Long id, Model model) {
@@ -151,6 +163,20 @@ public class EateryController {
 
         return "redirect:/";
     }
+
+//    //조건별로 필터링
+//    @GetMapping("/main/eaterys/filtered")
+//    public String getFilteredEateryList(
+//            @RequestParam(name = "address", required = false) String address,
+//            @RequestParam(name = "eaterycategory", required = false) String eateryCategory,
+//            @PageableDefault(size = 10) Pageable pageable, Model model) {
+//
+//        Page<Eatery> eateryPage = eateryService.findByAddressAndEateryCategory(address, eateryCategory, pageable);
+//        model.addAttribute("eaterys", eateryPage);
+//
+//        return "eatery/eateryPage"; // 이 부분은 실제 사용하는 템플릿 파일명으로 변경해야 합니다.
+//    }
+
 
 
 

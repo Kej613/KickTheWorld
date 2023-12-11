@@ -22,7 +22,7 @@ public class EateryImg {
     private String imgUrl; //이미지 조회 경로
     private String repimgYn; //대표 이미지 여부
 
-    @ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.REMOVE  )
+    @ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.REMOVE )
     @JoinColumn(name = "eatery_id" )
     private Eatery eatery;
 

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 
     <title>EateryDetail</title>
     <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
@@ -98,8 +98,7 @@
                 <li class="nav__item">
                     <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
                 </li>
-
-                <li class="nav__item">
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                     <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
                 </li>
                 <li class="nav__item">
@@ -146,23 +145,23 @@
     </nav>
 </header>
 <div>
-    <div class="main_content" style="width:70%; margin-left:auto; margin-right: auto; margin-top: 300px; ">
+    <div class="main_content" style="width:70%; margin-left:auto; margin-right: auto; margin-top: 300px; background-color: white;">
         <input type="hidden" id="id" th:value="${eatery.id}">
         <!--        대표이미지-->
             <div class="repImgDiv">
                 <b><h2 th:text="${eatery.name}" style="text-align:center;"></h2></b>
                 <hr class="my-4">
-                <h2>맛집 소개</h2>
+                <h2>가게 소개</h2>
                 <hr class="my-4">
                 <div>
                     <p th:text="${eatery.detail}" ></p>
                 </div>
                 <hr class="my-4">
+                <h2>내부사진</h2>
+                <hr class="my-4">
             </div>
 
         <div class="slider-container">
-            <h2>가게 내부</h2>
-            <hr class="my-4">
             <div class="slider">
                 <div th:each="eateryImg: ${eatery.reversedEateryImgDtoList}" class="slide">
                     <img th:if="${not #strings.isEmpty(eateryImg.imgUrl)}" th:src="@{${eateryImg.imgUrl}}" alt="slide-image" class="rounded-1 repImg">
@@ -195,8 +194,8 @@
         </div>
         <hr class="my-4">
         <div>
-            <a th:href="@{/admin/eatery/edit/{id}(id=${eatery.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>
-            <form th:action="@{'/admin/eatery/delete/' + ${eatery.id}}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+<!--            <a th:href="@{/admin/eatery/edit/{id}(id=${eatery.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>-->
+            <form th:action="@{'/admin/eatery/delete/' + ${eatery.id}}" th:if="${eatery != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
                 <button type="submit" class="btn btn-outline-dark">삭제</button>
             </form>
         </div>
@@ -240,7 +239,7 @@
         </div>
 
         <div class="footer__rights">
-            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
         </div>
     </div>
 </footer>

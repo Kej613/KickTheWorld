@@ -24,7 +24,7 @@ public class Eatery {
     private String name;   //음식점명
 
     @Column(name = "category")
-    private String category;   //음식점 카테고리
+    private String eaterycategory;   //음식점 카테고리
 
     @Column(name = "address")
     private String address;  //음식점 주소
@@ -52,7 +52,7 @@ public class Eatery {
     private String menu;  //메뉴
 
     @Builder
-    public Eatery(Long id, String category, String name, String parking, String telephone, String service, String menu, String guide,
+    public Eatery(Long id, String eaterycategory, String name, String parking, String telephone, String service, String menu, String guide,
                   String address, String detail) {
         this.id = id;
         this.name = name;
@@ -60,7 +60,7 @@ public class Eatery {
         this.guide = guide;
         this.telephone = telephone;
         this.address = address;
-        this.category = category;
+        this.eaterycategory = eaterycategory;
         this.detail = detail;
         this.service = service;
         this.menu = menu;
@@ -76,7 +76,7 @@ public class Eatery {
         this.service = eateryFormDto.getService();
         this.guide = eateryFormDto.getGuide();
         this.menu = eateryFormDto.getMenu();
-        this.category = eateryFormDto.getCategory();
+        this.eaterycategory = eateryFormDto.getEaterycategory();
     }
 
 
