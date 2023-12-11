@@ -1,8 +1,12 @@
 package com.example.Trip.Dto;
 
+import com.example.Stay.Entity.Stay;
+import com.example.Stay.dto.StayItemDto;
+import com.example.Trip.Entity.Trip;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 @Getter
 @Setter
@@ -24,4 +28,15 @@ public class MainItemDto {
         this.theme = theme;
 
     }
+
+    public static MainItemDto of(Trip trip) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(trip, MainItemDto.class);
+    }
+
+    // 인자가 없는 기본 생성자 추가
+    public MainItemDto() {
+    }
+
+
 }

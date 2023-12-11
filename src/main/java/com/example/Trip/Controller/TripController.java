@@ -30,7 +30,6 @@ import java.util.Optional;
 public class TripController {
     private final TripService tripService;
     private final TripRepository tripRepository;
-
     private final TripImgRepository tripImgRepository;
 
 
@@ -46,15 +45,7 @@ public class TripController {
         return "trip/tripPage";
     }
 
-//    //상세보기
-//    @GetMapping("/trips/{id}")
-//    public String getTrip(@PathVariable Long id, Model model) {
-//        Trip trip = tripService.findById(id);
-//        model.addAttribute("trip", new TripDto(trip));
-//
-//        return "trip/trip";
-//    }
-//
+
 //    //여행지역별로 여행지 검색
 //    @GetMapping("/trips/address") //페이지가 있는경우와 없는경우
 //    public String getTripsByAddressAndName(@RequestParam(value = "query", required = false) String query,
@@ -167,13 +158,6 @@ public class TripController {
 //        return "trip/updatedTripPage"; // Update the view name based on your file structure
 //    }
 
-
-
-//    @PostMapping("/stays/edit/{id}")
-//    public String editStay(@PathVariable Long id, @ModelAttribute Stay updatedStay) {
-//        stayService.update(id, updatedStay);
-//        return "redirect:/stays";
-//    }
 
 
     //여행지 삭제

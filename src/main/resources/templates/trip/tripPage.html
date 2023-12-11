@@ -78,33 +78,11 @@
         .trip-name {
             text-align: center;
             margin-top: 10px;
-            font-weight: bold;
+            text-display: none;
+            color:black;
+
         }
 
-        /*.card-container {*/
-
-        /*    display: flex;*/
-        /*    flex-wrap: wrap;*/
-        /*    justify-content: space-between;*/
-        /*    width: 70%; !* 전체 화면의 80%를 차지하도록 설정 *!*/
-        /*    margin: 0 auto; !* 가운데 정렬을 위해 margin 추가 *!*/
-        /*}*/
-        /*.card {*/
-        /*    font-family: 'Pretendard-Regular';*/
-        /*    width: calc(33.33% - 20px); !* 3열로 나오게 하려면 전체 너비의 33.33%로 설정하고 간격을 제거합니다 *!*/
-        /*    margin-bottom: 20px;*/
-        /*    !*border: 1px solid #ccc;*!*/
-        /*    border-radius: 8px;*/
-        /*    padding: 10px;*/
-        /*    box-sizing: border-box;*/
-        /*    text-align:center;*/
-        /*}*/
-        /*.card img {*/
-        /*    text-align:center;*/
-        /*    justify-content: center;*/
-        /*    border-radius:30px;*/
-
-        /*}*/
 
     </style>
 </head>
@@ -121,15 +99,10 @@
                 <li class="nav__item">
                     <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
                 </li>
-                <!-- 8번 브랜치에서 추가-->
-                <li class="nav__item">
-                    <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
-                </li>
-
                 <li class="nav__item">
                     <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
                 </li>
-                <li class="nav__item">
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                     <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
                 </li>
                 <li class="nav__item">
@@ -185,7 +158,7 @@
         </div>
     </section>
 
-    <div>
+    <div style="width:80%; margin-left:auto; margin-right:auto;">
         <br><h2>어디로 떠나볼까요? </h2><br>
         <form th:action="@{'/main/trips/' + ${trips.number}}" role="form" method="get" th:object="${trips}">
             <div th:object="${tripSearchDto}" style="text-align: center;">
@@ -193,7 +166,7 @@
                     <option value="address">지역</option>
                     <option value="name">여행지</option>
                 </select>
-                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:60%; margin-left:auto; margin-right:auto; border-radius:10px;">
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:300px; margin-left:auto; margin-right:auto; border-radius:10px;">
                 <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>
             </div>
 
