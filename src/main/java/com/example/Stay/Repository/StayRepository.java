@@ -21,7 +21,7 @@ public interface StayRepository extends JpaRepository<Stay, Long>, QuerydslPredi
             "where s.category like %:category% " +
             "and s.address like %:address% " +
             "order by s.price desc")
-    Page<StayItemDto> findByCategory(@Param("category") String category, @Param("address") String address, Pageable pageable);
+    Page<Stay> findByCategory(@Param("category") String category, @Param("address") String address, Pageable pageable);
 
 
 }

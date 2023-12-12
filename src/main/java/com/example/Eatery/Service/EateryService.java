@@ -110,7 +110,7 @@ public class EateryService {
     }
 
     //조건별로 필터링 처리
-    public Page<EateryItemDto> findByAddressAndEateryCategory(String address, String eaterycategory, Pageable pageable) {
+    public Page<Eatery> findByAddressAndEateryCategory(String address, String eaterycategory, Pageable pageable) {
         return eateryRepository.findByAddressAndEateryCategory(address, eaterycategory, pageable);
     }
 

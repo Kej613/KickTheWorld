@@ -2,133 +2,262 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>myPage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ICON -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
-    <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-
-    <style>
-        body,header {
-            background-color: #FDFAFF;
-        }
-    </style>
-
+    <!-- ADMIN CSS -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <!--HEADER, FOOTER CSS-->
+    <!-- <link rel="stylesheet" href="headerFooter.css">  -->
+    <title>my page</title>
 </head>
 <body>
-<!-- HEADER -->
-<header class="header" id="header">
-    <!--NAV CONTAINER 1-->
-    <nav class="nav container">
-        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
 
-        <!--NAV MENU-->
-        <div class="nav__menu" id="nav-menu">
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
-                </li>
-
-                <!-- 8번 브랜치에서 추가-->
-                <li class="nav__item">
-                    <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
-                </li>
-                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
-                </li>
-                <li class="nav__item">
-                    <a class="nav__link" href="/members/login" th:href="@{/members/login}"
-                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
-                </li>
-
-                <li class="nav__item">
-                    <a class="nav__link" href="/members/new" th:href="@{/members/new}"
-                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
-                </li>
-
-                <li class="nav__item">
-                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
-                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
-                </li>
-
-                <i class="ri-close-line nav__close" id="nav-close"></i>
-            </ul>
-        </div>
-        <div class="nav__toggle" id="nav-toggle">
-            <i class="ri-function-line"></i>
-        </div>
-    </nav>
-
-    <!--NAV CONTAINER 2-->
-    <nav class="nav__container-main">
-        <div class="nav__menu" id="nav-menu-main">
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
-
-<div>
-    <div class="admin-button" style="margin-top:300px;">
-        <div style="text-align:center;">
-<!--            <button type="button" id="stay-create-btn" th:onclick="|location.href='@{/}'|"> 찜리스트</button>-->
-            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/}'|">회원정보수정</button>
-            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/orders}'|">예약대기</button>
-            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/list}'|">예약/결제내역</button>
-        </div>
+<!--- SIDE BAR -->
+<div class="side-bar">
+    <div class="logo-name">
+        <a th:if="${#authorization.expression('isAuthenticated()')}">
+            <p style="color: white" th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></p></a>
     </div>
+    <ul>
+        <li><i class="ri-dashboard-line" style="font-size: 1.5rem;"></i> &nbsp 여행지 </li>
+        <li><i class="ri-money-dollar-circle-line" style="font-size: 1.5rem;"></i> &nbsp 숙소 </li>
+        <li><i class="ri-funds-box-line" style="font-size: 1.5rem;"></i> &nbsp 맛집 </li>
+        <li><i class="ri-settings-4-line" style="font-size: 1.5rem;"></i> &nbsp 코스추천 </li>
+        <li><i class="ri-settings-4-line" style="font-size: 1.5rem;"></i> &nbsp 여행게시판 </li>
+    </ul>
 </div>
 
-<!--FOOTER -->
-<footer class="footer section">
-    <div class="footer__container container grid">
-        <div class="footer__content grid">
-            <div class="footer__data">
-                <h3 class="footer__title">Developer</h3>
-                <div>
-                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
-                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
-                    </a>
-                    <a href="https://twitter.com/" target="_blank" class="footer__social">
-                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="footer__data">
-                <h3 class="footer__subtitle">Company</h3>
-                <ul>
-                    <li class="footer__item">
-                        <a href="" class="footer__link">Team</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="" class="footer__link">Plan y Pricing</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="" class="footer__link">Become a member</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer__rights">
-            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+<!-- HEADER -->
+<div class="container">
+    <div class="header" style="text-align:left;">
+        <div class="nav">
+            <ul style="text-align:right;">
+                <li style="text-align:left;">
+                    <a th:href="@{/}" ><b>KickTheWorld</b></a>
+                </li>
+                <li>
+                    <a th:href="@{/members/login}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+                </li>
+                <li>
+                    <a th:href="@{/members/new}"
+                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+                </li>
+                <li>
+                    <a th:href="@{/members/logout}"
+                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+                </li>
+            </ul>
         </div>
     </div>
-</footer>
 
+    <!-- CONTENT -->
+    <div class="content">
+        <div class="cards">
+            <!-- CARD 1 - STAY -->
+            <div class="card">
+                <div class="box">
+<!--                    <a th:href="@{/members/update(id=${member.id})}" class="link "> 회원 수정 </a>-->
+                    <h2>회원정보수정</h2>
+                    <p>Member</p></a>
+                </div>
+<!--                <div class="icon-design">-->
+<!--                    <a th:href="@{/}" class="link">-->
+<!--                        <img th:src="@{/images/admin/admin-stay.png}" alt="">-->
+<!--                    </a>-->
+<!--                    &lt;!&ndash;                    <a th:href="@{/admin/stay/new}" class="link"><i class="ri-hotel-bed-line"></i></a>&ndash;&gt;-->
+<!--                </div>-->
+            </div>
+            <!-- CARD 2 - TRIP -->
+            <div class="card">
+                <div class="box">
+                    <a th:href="@{/orders}" class="link">
+                        <h2>예약대기</h2>
+                        <p>Reservation</p></a>
+                </div>
+<!--                <div class="icon-design">-->
+<!--                    <a th:href="@{/admin/trip/new}" class="link">-->
+<!--                        <img th:src="@{/images/admin/admin-trip.png}" alt="">-->
+<!--                    </a>-->
+<!--                    &lt;!&ndash;                    <a th:href="@{/admin/trip/new}" class="link"><i class="ri-map-pin-line"></i></a>&ndash;&gt;-->
+<!--                </div>-->
+            </div>
+            <!-- CARD 3 - EATERY -->
+            <div class="card">
+                <div class="box">
+                    <a th:href="@{/list}" class="link">
+                    <h2>결제내역</h2>
+                    <p>Pay</p>  </a>
+                </div>
+<!--                <div class="icon-design">-->
+<!--                    <a th:href="@{/admin/eatery/new}" class="link">-->
+<!--                        <img th:src="@{/images/admin/admin-eatery.png}" alt="">-->
+<!--                    </a>-->
+<!--                    &lt;!&ndash;                    <a th:href="@{/admin/eatery/new}" class="link"><i class="ri-restaurant-line"></i></a>&ndash;&gt;-->
+<!--                </div>-->
+            </div>
 
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>myPage</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">-->
+<!--    <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">-->
+
+<!--    <style>-->
+<!--        body,header {-->
+<!--            background-color: #FDFAFF;-->
+<!--        }-->
+<!--    </style>-->
+
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; HEADER &ndash;&gt;-->
+<!--<header class="header" id="header">-->
+<!--    &lt;!&ndash;NAV CONTAINER 1&ndash;&gt;-->
+<!--    <nav class="nav container">-->
+<!--        <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>-->
+
+<!--        &lt;!&ndash;NAV MENU&ndash;&gt;-->
+<!--        <div class="nav__menu" id="nav-menu">-->
+<!--            <ul class="nav__list">-->
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>-->
+<!--                </li>-->
+
+<!--                &lt;!&ndash; 8번 브랜치에서 추가&ndash;&gt;-->
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>-->
+<!--                </li>-->
+<!--                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">-->
+<!--                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/members/login" th:href="@{/members/login}"-->
+<!--                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>-->
+<!--                </li>-->
+
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/members/new" th:href="@{/members/new}"-->
+<!--                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>-->
+<!--                </li>-->
+
+<!--                <li class="nav__item">-->
+<!--                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"-->
+<!--                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>-->
+<!--                </li>-->
+
+<!--                <i class="ri-close-line nav__close" id="nav-close"></i>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="nav__toggle" id="nav-toggle">-->
+<!--            <i class="ri-function-line"></i>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<!--    &lt;!&ndash;NAV CONTAINER 2&ndash;&gt;-->
+<!--    <nav class="nav__container-main">-->
+<!--        <div class="nav__menu" id="nav-menu-main">-->
+<!--            <ul class="nav__list">-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>-->
+<!--                </li>-->
+<!--                <li class="nav__item">-->
+<!--                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </nav>-->
+<!--</header>-->
+
+<!--<div>-->
+<!--    <div class="admin-button" style="margin-top:300px;">-->
+<!--        <div style="text-align:center;">-->
+<!--&lt;!&ndash;            <button type="button" id="stay-create-btn" th:onclick="|location.href='@{/}'|"> 찜리스트</button>&ndash;&gt;-->
+<!--            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/}'|">회원정보수정</button>-->
+<!--            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/orders}'|">예약대기</button>-->
+<!--            <button type="button" th:if="${#authorization.expression('isAuthenticated()')}" th:onclick="|location.href='@{/list}'|">예약/결제내역</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;FOOTER &ndash;&gt;-->
+<!--<footer class="footer section">-->
+<!--    <div class="footer__container container grid">-->
+<!--        <div class="footer__content grid">-->
+<!--            <div class="footer__data">-->
+<!--                <h3 class="footer__title">Developer</h3>-->
+<!--                <div>-->
+<!--                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">-->
+<!--                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>-->
+<!--                    </a>-->
+<!--                    <a href="https://twitter.com/" target="_blank" class="footer__social">-->
+<!--                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+<!--            <div class="footer__data">-->
+<!--                <h3 class="footer__subtitle">Company</h3>-->
+<!--                <ul>-->
+<!--                    <li class="footer__item">-->
+<!--                        <a href="" class="footer__link">Team</a>-->
+<!--                    </li>-->
+<!--                    <li class="footer__item">-->
+<!--                        <a href="" class="footer__link">Plan y Pricing</a>-->
+<!--                    </li>-->
+<!--                    <li class="footer__item">-->
+<!--                        <a href="" class="footer__link">Become a member</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="footer__rights">-->
+<!--            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
+
+
+<!--</body>-->
+<!--</html>-->

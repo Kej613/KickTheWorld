@@ -113,7 +113,7 @@
     <div class="nav__menu" id="nav-menu">
       <ul class="nav__list">
         <li class="nav__item">
-          <a class="nav__link" href="/" ><b>마이페이지</b></a>
+          <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
         </li>
         <!-- 8번 브랜치에서 추가-->
         <li class="nav__item">
@@ -168,7 +168,7 @@
 <div class="main" style="margin-top:200px;">
   <div th:each="order : ${orders.getContent()}">
     <div>
-      <h2 th:text="${order.orderDate} + ' 결제 대기'"></h2>
+      <h2 th:text="${order.orderDate}"></h2>
       <div>
         <div th:if="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
           <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">취소</button>
@@ -193,7 +193,7 @@
 
 <!--          <a th:href="@{/pay}" class="btn btn-outline-dark">결제하기</a>-->
 <!--          <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${orderItem.checkInDate}, checkOutDate=${orderItem.checkOutDate})}" class="btn btn-outline-dark">결제하기</a>-->
-          <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')})}" class="btn btn-outline-dark">결제하기</a>
+          <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제하기</a>
         </div>
       </div>
     </div>
@@ -219,44 +219,7 @@
 <!--    </ul>-->
 <!--  </div>-->
 
-<!-- FOOTER -->
-<footer class="footer section">
-  <div class="footer__container container grid">
-    <div class="footer__content grid">
-      <div class="footer__data">
-        <h3 class="footer__title">Developer</h3>
-        <div>
-          <a href="https://www.facebook.com/" target="_blank" class="footer__social">
-            <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
-          </a>
-          <a href="https://twitter.com/" target="_blank" class="footer__social">
-            <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
-          </a>
-        </div>
-      </div>
 
-
-      <div class="footer__data">
-        <h3 class="footer__subtitle">Company</h3>
-        <ul>
-          <li class="footer__item">
-            <a href="" class="footer__link">Team</a>
-          </li>
-          <li class="footer__item">
-            <a href="" class="footer__link">Plan y Pricing</a>
-          </li>
-          <li class="footer__item">
-            <a href="" class="footer__link">Become a member</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer__rights">
-      <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
-    </div>
-  </div>
-</footer>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

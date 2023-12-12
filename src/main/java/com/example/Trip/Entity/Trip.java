@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
+
 @EntityListeners(AuditingEntityListener.class)
 @Table(name="trip")
 @Entity
@@ -47,6 +49,8 @@ public class Trip {
     @Column
     private String theme; //여행테마
 
+    @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)
+    private List<TripImg> tripImgs;
 
     @Builder
     public Trip(Long id, String name, String detail, String address, String telephone, String link,

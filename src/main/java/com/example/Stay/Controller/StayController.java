@@ -45,6 +45,7 @@ public class StayController {
                 .stream()
                 .map(StayDto::new)
                 .toList();
+
         model.addAttribute("stays", stays);
 
         return "stay/stayPage";

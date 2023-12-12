@@ -108,7 +108,7 @@ public class TripService {
     }
 
     //여행테마, 주소로 필터링처리
-    public Page<MainItemDto> findByCategory(String theme, String address, Pageable pageable) {
+    public Page<Trip> findByCategory(String theme, String address, Pageable pageable) {
         return tripRepository.findByCategory(theme,address, pageable);
     }
 

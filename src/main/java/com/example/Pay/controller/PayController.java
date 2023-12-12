@@ -6,6 +6,8 @@ import com.example.Pay.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +38,7 @@ public class PayController {
 		String mercntId = "M2266037"; 	//가맹점 아이디
 
 		model.addAttribute("mercntId", mercntId);
-		model.addAttribute("ordNo", "STAY_" + DateUtil.getDateTimeMillisecond());
+		model.addAttribute("ordNo", DateUtil.getDateTimeMillisecond() + "M_"+request.getParameter("loginUser"));
 		model.addAttribute("baseUrl", request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
 		model.addAttribute("productNm", "테스트 상품");
 
@@ -94,9 +96,17 @@ public class PayController {
 		return "pay/cancel";
 	}
 
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	public String list(Model model) throws Exception {
+//		model.addAttribute("payList", payRepo.findAllByPayStatusIn(List.of("P", "C")).orElse(null));
+//		return "pay/list";
+//	}
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model) throws Exception {
-		model.addAttribute("payList", payRepo.findAllByPayStatusIn(List.of("P", "C")).orElse(null));
+	public String list(Model model, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+		String memId = userDetails.getUsername();
+		model.addAttribute("payList", payRepo.findPayByMemId(memId));
 		return "pay/list";
 	}
+
 }
