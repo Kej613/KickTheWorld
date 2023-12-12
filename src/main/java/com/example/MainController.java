@@ -48,6 +48,7 @@ public class MainController {
     @GetMapping("/kakao")
     public String kakaoPage() { return "kakaomap"; }
 
+
     @GetMapping("/search")
     public String search(@RequestParam(value = "address", required = false) String address,
                          @RequestParam(value = "category", required = false) String category,
@@ -55,18 +56,20 @@ public class MainController {
                          @RequestParam(value = "eaterycategory", required = false) String eaterycategory,
                          @PageableDefault(page = 0, size = 10) Pageable pageable,
                          Model model) {
-        Page<StayItemDto> stays = stayService.findByCategory(category, address, pageable);
-        Page<MainItemDto> trips = tripService.findByCategory(theme, address, pageable);
-        Page<EateryItemDto> eaterys = eateryService.findByAddressAndEateryCategory(eaterycategory, address, pageable);
+        Page<Stay> stays = stayService.findByCategory(category, address, pageable);
+        Page<Trip> trips = tripService.findByCategory(theme, address, pageable);
+        Page<Eatery> eaterys = eateryService.findByAddressAndEateryCategory(eaterycategory, address, pageable);
 
         model.addAttribute("stays", stays);
         model.addAttribute("trips", trips);
         model.addAttribute("eaterys", eaterys);
 
-        SearchResult result = new SearchResult(stays, trips, eaterys);
-        model.addAttribute("result", result);
+//        SearchResult result = new SearchResult(stays, trips, eaterys);
+//        model.addAttribute("result", result);
 
         return "recommendPage";
     }
+
+
 
 }

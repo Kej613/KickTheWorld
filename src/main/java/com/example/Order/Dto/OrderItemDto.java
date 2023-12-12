@@ -40,7 +40,6 @@ public class OrderItemDto {
         this.count = orderItem.getCount();
         this.orderPrice = orderItem.getOrderPrice();
         this.imgUrl = imgUrl;
-        // 수정된 부분
         this.checkInDate = orderItem.getCheckInDate();
         this.checkOutDate = orderItem.getCheckOutDate();
     }
@@ -49,10 +48,6 @@ public class OrderItemDto {
     private int count; // 객실수
     private int orderPrice; // 결제 금액
     private String imgUrl; // 숙소 이미지 경로
-
-    // 추가된 부분
-
     private Date checkInDate;
-
     private Date checkOutDate;
 }

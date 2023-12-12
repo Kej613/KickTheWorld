@@ -17,22 +17,22 @@ public class Pay {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="ord_no")
-    private String ordNo;
-    private String mercntId;
-    private Long trPrice;
-    private String productNm;
-    private String trDay;
-    private String trTime;
+    private String ordNo;               //숙소예약번호
+    private String mercntId;            //가맹점아이디
+    private Long trPrice;               //숙소금액
+    private String productNm;           //숙소명
+    private String trDay;               //거래날짜
+    private String trTime;                //거래시간
     private String signature;
-    private String mercntParam1;
-    private String mercntParam2;
+    private String mercntParam1;       //체크인날짜
+    private String mercntParam2;        //체크아웃날짜
     private String viewType;
 
     // 결제
-    private String authNo;
+    private String authNo;  //승인번호
     private String payResultCd;
     private String payResultMsg;
-    private String trNo;
+    private String trNo;        //거래번호
 
     // 취소
     private String cancelOrdNo;
