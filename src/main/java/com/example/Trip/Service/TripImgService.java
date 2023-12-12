@@ -12,7 +12,7 @@ import org.thymeleaf.util.StringUtils;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class TripImgService {
+public class    TripImgService {
 
     //프로젝트 상대경로 설정
     private final static String uploadPath = System.getProperty("user.dir").concat("\\src\\main\\resources\\static\\trip\\");
