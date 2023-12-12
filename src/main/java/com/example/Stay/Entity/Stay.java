@@ -3,6 +3,7 @@ package com.example.Stay.Entity;
 import com.example.Order.Exception.OutOfStockException;
 import com.example.Stay.Constant.StaySellStatus;
 import com.example.Stay.dto.StayFormDto;
+import com.example.Trip.Entity.TripImg;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -64,6 +65,10 @@ public class Stay {
     @Column(name = "update_time")
     private LocalDateTime updateTime;       //수정시간
 
+
+
+    @OneToMany(mappedBy = "stay", fetch = FetchType.EAGER)
+    private List<StayImg> stayImgs;
 
 
     public void removeStay(int room) {
