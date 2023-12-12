@@ -52,28 +52,28 @@
         }
 
 
-//        // 회원 수정
-//        public Member updateMember(Long id, MemberFormDto memberFormDto) {
-//            Member member = memberRepository.findById(id)
-//                    .orElseThrow(() -> new IllegalStateException("해당 회원을 찾을 수 없습니다."));
-//
-//            // 수정할 필드 업데이트
-//            member.setName(memberFormDto.getName());
-//            member.setPhonenumber(memberFormDto.getPhonenumber());
-//            member.setAddress(memberFormDto.getAddress());
-//
-//            return memberRepository.save(member);
-//        }
-//
-//
-//
-//        // 회원 삭제
-//        public void deleteMember(Long id) {
-//            memberRepository.deleteById(id);
-//        }
-//
-//
-//        public Optional<Member> findById(Long id) {
-//            return memberRepository.findById(id);
-//        }
+        // 회원 수정
+        public Member updateMember(Long id, MemberFormDto memberFormDto) {
+            Member member = memberRepository.findById(id)
+                    .orElseThrow(() -> new IllegalStateException("해당 회원을 찾을 수 없습니다."));
+
+            // 수정할 필드 업데이트
+            member.setName(memberFormDto.getName());
+            member.setPhonenumber(memberFormDto.getPhonenumber());
+            member.setAddress(memberFormDto.getAddress());
+
+            return memberRepository.save(member);
+        }
+
+
+
+        // 회원 삭제
+        public void deleteMember(Long id) {
+            memberRepository.deleteById(id);
+        }
+
+
+        public Optional<Member> findById(Long id) {
+            return memberRepository.findById(id);
+        }
     }

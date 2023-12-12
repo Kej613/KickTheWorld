@@ -31,10 +31,15 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeHttpRequests()
+
+                .requestMatchers("/orders").hasAnyRole("USER")
+                .requestMatchers("/list").hasAnyRole("USER")
+                .requestMatchers("/pay").hasAnyRole("USER")
                 .requestMatchers("/members/login").anonymous()
                 .requestMatchers("/members/signup").anonymous()
                 .requestMatchers("/members/logout").authenticated()
-//                .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
+
+//
                 .requestMatchers("/**").permitAll() //해당 경로에 대한 권한 설정
                 .anyRequest().authenticated();
 

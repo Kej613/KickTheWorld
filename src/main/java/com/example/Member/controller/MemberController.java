@@ -66,38 +66,38 @@ public class MemberController {
     }
 
 
-//    // 회원 수정 폼
-//    @GetMapping(value = "/update")
-//    public String updateMemberForm(@RequestParam Long id, Model model) {
-//        Optional<Member> member = memberService.findById(id);
-//        model.addAttribute("member", member);
-//        return "member/UpdateForm";
-//    }
-//
-//    // 회원 수정
-//    @PostMapping(value = "/update")
-//    public String updateMember(@RequestParam Long id, @Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            // 유효성 검사 오류 처리
-//            return "member/UpdateForm";
-//        }
-//
-//        try {
-//            memberService.updateMember(id, memberFormDto);
-//        } catch (IllegalStateException e) {
-//            model.addAttribute("errorMessage", e.getMessage());
-//            return "member/UpdateForm";
-//        }
-//
-//        return "redirect:/";
-//    }
-//
-//    // 회원 삭제
-//    @GetMapping(value = "/delete")
-//    public String deleteMember(@RequestParam Long id) {
-//        memberService.deleteMember(id);
-//        return "redirect:/";
-//    }
+    // 회원 수정 폼
+    @GetMapping(value = "/update")
+    public String updateMemberForm(@RequestParam Long id, Model model) {
+        Optional<Member> member = memberService.findById(id);
+        model.addAttribute("member", member);
+        return "member/UpdateForm";
+    }
+
+    // 회원 수정
+    @PostMapping(value = "/update")
+    public String updateMember(@RequestParam Long id, @Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            // 유효성 검사 오류 처리
+            return "member/UpdateForm";
+        }
+
+        try {
+            memberService.updateMember(id, memberFormDto);
+        } catch (IllegalStateException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "member/UpdateForm";
+        }
+
+        return "redirect:/";
+    }
+
+    // 회원 삭제
+    @GetMapping(value = "/delete")
+    public String deleteMember(@RequestParam Long id) {
+        memberService.deleteMember(id);
+        return "redirect:/";
+    }
 
 }
 

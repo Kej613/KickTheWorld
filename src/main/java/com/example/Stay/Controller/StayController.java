@@ -187,5 +187,10 @@ public class StayController {
 //                    return "stay/stayMng";
 //
 //    }
-
+        @GetMapping("/main/stays/filter")
+        public ResponseEntity<List<Stay>> filterStays(@RequestParam String category) {
+            // category에 따라 숙소 필터링 로직 수행 (예: 숙소 서비스에서 필터링 메소드 호출)
+            List<Stay> filteredStays = stayService.findStaysByCategory(category);
+            return ResponseEntity.ok(filteredStays);
+        }
 }

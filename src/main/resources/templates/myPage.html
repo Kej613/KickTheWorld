@@ -10,6 +10,7 @@
     <!--HEADER, FOOTER CSS-->
     <!-- <link rel="stylesheet" href="headerFooter.css">  -->
     <title>my page</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 
@@ -62,46 +63,61 @@
                     <h2>회원정보수정</h2>
                     <p>Member</p></a>
                 </div>
-<!--                <div class="icon-design">-->
-<!--                    <a th:href="@{/}" class="link">-->
-<!--                        <img th:src="@{/images/admin/admin-stay.png}" alt="">-->
-<!--                    </a>-->
-<!--                    &lt;!&ndash;                    <a th:href="@{/admin/stay/new}" class="link"><i class="ri-hotel-bed-line"></i></a>&ndash;&gt;-->
-<!--                </div>-->
+
             </div>
             <!-- CARD 2 - TRIP -->
-            <div class="card">
+<!--            <div class="card" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
+<!--                <div class="box">-->
+<!--                    <a th:href="@{/orders}" class="link" >-->
+<!--                        <h2>예약대기</h2>-->
+<!--                        <p>Reservation</p></a>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="card" >
                 <div class="box">
-                    <a th:href="@{/orders}" class="link">
+                    <a th:href="@{/orders}" class="link" >
                         <h2>예약대기</h2>
-                        <p>Reservation</p></a>
+                        <p>Reservation</p>
+                    </a>
+<!--                    <div th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
+<!--                        <button onclick="showLoginAlert()">예약대기</button>-->
+<!--                    </div>-->
                 </div>
-<!--                <div class="icon-design">-->
-<!--                    <a th:href="@{/admin/trip/new}" class="link">-->
-<!--                        <img th:src="@{/images/admin/admin-trip.png}" alt="">-->
-<!--                    </a>-->
-<!--                    &lt;!&ndash;                    <a th:href="@{/admin/trip/new}" class="link"><i class="ri-map-pin-line"></i></a>&ndash;&gt;-->
-<!--                </div>-->
             </div>
-            <!-- CARD 3 - EATERY -->
-            <div class="card">
+
+
+            <div class="card" >
                 <div class="box">
-                    <a th:href="@{/list}" class="link">
-                    <h2>결제내역</h2>
-                    <p>Pay</p>  </a>
+                    <a th:href="@{/list}" class="link" >
+                        <h2>결제내역</h2>
+                        <p>Pay</p>
+                    </a>
+<!--                    <div th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
+<!--                        <button onclick="showLoginAlert()">결제내역</button>-->
+<!--                    </div>-->
                 </div>
-<!--                <div class="icon-design">-->
-<!--                    <a th:href="@{/admin/eatery/new}" class="link">-->
-<!--                        <img th:src="@{/images/admin/admin-eatery.png}" alt="">-->
-<!--                    </a>-->
-<!--                    &lt;!&ndash;                    <a th:href="@{/admin/eatery/new}" class="link"><i class="ri-restaurant-line"></i></a>&ndash;&gt;-->
-<!--                </div>-->
             </div>
+
+
+
+            <!-- CARD 3 - EATERY -->
+<!--            <div class="card" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
+<!--                 <div class="box">-->
+<!--                    <a th:href="@{/list}" class="link">-->
+<!--                    <h2>결제내역</h2>-->
+<!--                    <p>Pay</p>  </a>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
     </div>
-
 </div>
+<script th:inline="javascript">
+    function showLoginAlert() {
+        alert('로그인이 필요합니다.');
+        window.location.href = '/members/login';
+    }
+</script>
 </body>
 </html>
 

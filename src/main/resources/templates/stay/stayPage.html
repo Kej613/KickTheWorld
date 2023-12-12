@@ -95,10 +95,21 @@
             justify-content: space-between;
         }
         .trip-card {
-            width: 18%;
+            width: 25%;
+            paddinig:10px;
+            margin:50px;
             margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #cccc; /* 테두리 추가 */
         }
-
+        .trip-name {
+            text-align: center;
+            margin-top: 10px;
+            font-size:18px;
+            color:black;
+            text-decoration: none;
+            text-align:left;
+        }
         .repImg {
             /*width: 100%;*/
             height: auto;
@@ -181,60 +192,77 @@
         </div>
     </section>
 
-    <!--SIDE BAR-->
-    <div class="side_menu" style="margin-top:30px;">
-        <div id="s_left"></div>
-        <div id="contents" >
-            <ul>
-                <li class="side_li">
-                    <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지도로 검색 >></b></a><br>
-                </li>
-                <li class="side_li">
-                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지역</b></a><br>
-                    <select>
-                        <option value="address"th:checked="${param.address == '서울'}">서울</option>
-                        <option value="address"th:checked="${param.address == '경기'}">경기</option>
-                        <option value="address"th:checked="${param.address == '강원'}">강원</option>
-                        <option value="address"th:checked="${param.address == '부산'}">부산</option>
-                        <option value="address"th:checked="${param.address == '제주'}">제주</option>
-                        <option value="address"th:checked="${param.address == '전북'}">전북</option>
-                        <option value="address"th:checked="${param.address == '경남'}">경남</option>
-                        <option value="address"th:checked="${param.address == '인천'}">인천</option>
-                        <option value="address"th:checked="${param.address == '경북'}">경북</option>
-                    </select>
-                </li>
-                <li class="side_li">
-                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>숙소유형</b></a>
-                    <label>
-                        <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}">호텔
-                        <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}">펜션
-                        <input type="radio" name="category" value="게하" th:checked="${param.category == '게하'}">게하
-                        <input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}">캠핑
-                    </label>
-                </li>
-                <li class="side_li">
-                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>가격</b></a>
+<!--    &lt;!&ndash;SIDE BAR&ndash;&gt;-->
+<!--    <div class="side_menu" style="margin-top:30px;">-->
+<!--        <div id="s_left"></div>-->
+<!--        <div id="contents" >-->
+<!--            <ul>-->
+<!--                <li class="side_li">-->
+<!--                    <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지도로 검색 >></b></a><br>-->
+<!--                </li>-->
+<!--                <li class="side_li">-->
+<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지역</b></a><br>-->
+<!--                    <select>-->
+<!--                        <option value="address"th:checked="${param.address == '서울'}">서울</option>-->
+<!--                        <option value="address"th:checked="${param.address == '경기'}">경기</option>-->
+<!--                        <option value="address"th:checked="${param.address == '강원'}">강원</option>-->
+<!--                        <option value="address"th:checked="${param.address == '부산'}">부산</option>-->
+<!--                        <option value="address"th:checked="${param.address == '제주'}">제주</option>-->
+<!--                        <option value="address"th:checked="${param.address == '전북'}">전북</option>-->
+<!--                        <option value="address"th:checked="${param.address == '경남'}">경남</option>-->
+<!--                        <option value="address"th:checked="${param.address == '인천'}">인천</option>-->
+<!--                        <option value="address"th:checked="${param.address == '경북'}">경북</option>-->
+<!--                    </select>-->
+<!--                </li>-->
+<!--                <li class="side_li">-->
+<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>숙소유형</b></a>-->
+<!--                    <label>-->
+<!--                        <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}">호텔-->
+<!--                        <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}">펜션-->
+<!--                        <input type="radio" name="category" value="게하" th:checked="${param.category == '게하'}">게하-->
+<!--                        <input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}">캠핑-->
+<!--                    </label>-->
+<!--                </li>-->
+<!--                <li class="side_li">-->
+<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>가격</b></a>-->
 
-                </li>
-            </ul>
-            <div class="btn1" style="text-align:center;">
-                <button type="submit" class="btn btn-outline-dark">검색</button></div>
-        </div>
-    </div>
-    </div>
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <div class="btn1" style="text-align:center;">-->
+<!--                <button type="submit" class="btn btn-outline-dark">검색</button></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
 
     <div class="stay_main">
         <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">
         <div class="side_menu" style="margin-top:30px;">
         <div id="s_left"></div>
         <div id="contents" >
-            <div th:object="${staySearchDto}" style="text-align: center;">
-                <select th:field="*{searchBy}" style="width:auto;">
+            <div th:object="${staySearchDto}" style="margin-top:10px; padding: 5px;">
+                <select th:field="*{searchBy}" style="width:auto; border-radius: 10px;">
                     <option value="address">지역</option>
                     <option value="name">여행지</option>
                 </select>
-                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:300px; margin-left:auto; margin-right:auto; border-radius:10px;">
-                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:300px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
+
+               <div style="text-align:center; padding:10px;">
+                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>
+
+                <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b></a><br>
+
+                <label>전체</label>
+                    <input type="radio" name="category" value="all" checked="checked" onclick="filterStays()">
+
+                <label>호텔 </label>
+                    <input type="radio" name="category" value="hotel" onclick="filterStays()">
+
+                <label>펜션 </label>
+                    <input type="radio" name="category" value="pension" onclick="filterStays()">
+                <label>게스트하우스 </label>
+                     <input type="radio" name="category" value="pension" onclick="filterStays()">
+                <label>캠핑 </label>
+                      <input type="radio" name="category" value="pension" onclick="filterStays()">
             </div>
 
 
@@ -280,11 +308,12 @@
                 <div th:each="stay, status: ${stays.getContent()}" class="trip-card" >
                     <input type="hidden" id="id" th:value="${stay.id}">
                     <a th:href="'/admin/stay/'+${stay.id}">
-                        <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width: 500px; height: 300px;" >
-                        <p th:text="${stay.name}" class="trip-name"></p>
-                        <p th:text="${stay.address}" class="trip-name" ></p>
-                        <p th:text="${stay.price}" class="trip-name"></p>
-                        <button th:href="'/admin/stay/'+${stay.id}" type="button" class="btn btn-outline-dark">숙소 둘러보기</button>
+                        <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width: 500px; height: 300px; border-radius: 20px;" >
+                        <p th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size:20px;padding:10px;"></p>
+                        <p th:text="${stay.address}" class="trip-name" style="padding:10px;" ></p>
+                        <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>
+                        <div style="text-align:right;">
+                        <button th:href="'/admin/stay/'+${stay.id}" type="button" class="btn btn-outline-dark">>>숙소 둘러보기</button></div>
                     </a>
                 </div>
             </div>
@@ -364,49 +393,129 @@
 <!-- MAIN JS -->
 <script th:src="@{/js/main_test.js}"></script>
 <script>
-    function search() {
-        var address = $("#addressFilter").val();
-        var category = $("#categoryFilter").val();
-        var people = $("#peopleFilter").val();
-        var price = $("#priceFilter").val();
+    // function search() {
+    //     var address = $("#addressFilter").val();
+    //     var category = $("#categoryFilter").val();
+    //     var people = $("#peopleFilter").val();
+    //     var price = $("#priceFilter").val();
+    //
+    //     // 서버에 필터 값 전송
+    //     $.ajax({
+    //         url: "/main/stays/search",
+    //         type: "GET",
+    //         data: {
+    //             address: address,
+    //             category: category,
+    //             people: people,
+    //             price: price
+    //         },
+    //         success: function (data) {
+    //             // 비동기적으로 결과를 화면에 업데이트
+    //             updateResults(data);
+    //         },
+    //         error: function (error) {
+    //             console.error("Error during search: " + error);
+    //         }
+    //     });
+    // }
+    // function updateResults(data) {
+    //     // 결과를 이용하여 화면 업데이트
+    //     // 예시: 각 숙소에 대한 정보를 가지고 있는 data를 이용하여 동적으로 업데이트
+    //     $(".main_div").empty(); // 기존 숙소 목록 비우기
+    //
+    //     data.forEach(function (stay) {
+    //         // 각 숙소에 대한 화면 업데이트 로직
+    //         var stayHtml = "<div>";
+    //         stayHtml += "<img src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
+    //         stayHtml += "<p>" + stay.name + "</p>";
+    //         stayHtml += "<p>" + stay.address + "</p>";
+    //         stayHtml += "<p>" + stay.price + "</p>";
+    //         stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
+    //         stayHtml += "</div>";
+    //
+    //         $(".main_div").append(stayHtml);
+    //     });
+    // }
+
+    // function filterStays() {
+    //     var category = document.querySelector('input[name="category"]:checked').value;
+    //
+    //     // 서버에 필터 값 전송
+    //     $.ajax({
+    //         url: "/main/stays/filter",  // 실제 서버 엔드포인트로 변경
+    //         type: "GET",
+    //         data: { category: category },
+    //         success: function (data) {
+    //             // 비동기적으로 결과를 화면에 업데이트
+    //             updateResults(data);
+    //         },
+    //         error: function (error) {
+    //             console.error("Error during filtering: " + error);
+    //         }
+    //     });
+    function filterStays() {
+        // 현재 선택된 라디오 버튼의 값을 가져오기
+        var selectedCategory = $("input[name='category']:checked").val();
 
         // 서버에 필터 값 전송
         $.ajax({
-            url: "/main/stays/search",
+            url: "/main/stays/filter",
             type: "GET",
-            data: {
-                address: address,
-                category: category,
-                people: people,
-                price: price
-            },
+            data: { category: selectedCategory },
             success: function (data) {
                 // 비동기적으로 결과를 화면에 업데이트
                 updateResults(data);
             },
             error: function (error) {
-                console.error("Error during search: " + error);
+                console.error("Error during filtering: " + error);
             }
         });
     }
-    function updateResults(data) {
-        // 결과를 이용하여 화면 업데이트
-        // 예시: 각 숙소에 대한 정보를 가지고 있는 data를 이용하여 동적으로 업데이트
-        $(".main_div").empty(); // 기존 숙소 목록 비우기
+        function updateResults(data) {
+            // 결과를 이용하여 화면 업데이트
+            $(".card-container").empty(); // 기존 숙소 목록 비우기
 
-        data.forEach(function (stay) {
-            // 각 숙소에 대한 화면 업데이트 로직
-            var stayHtml = "<div>";
-            stayHtml += "<img src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
-            stayHtml += "<p>" + stay.name + "</p>";
-            stayHtml += "<p>" + stay.address + "</p>";
-            stayHtml += "<p>" + stay.price + "</p>";
-            stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
-            stayHtml += "</div>";
+            /*[# th:each="stay : ${data}"]*/
+            /*[# th:src="${stay.imgUrl}" th:alt="${stay.name}"]*/
+            /*[# th:text="${stay.name}"]*/
+            /*[# th:text="${stay.address}"]*/
+            /*[# th:text="${stay.price}"]*/
+            /*[# th:href="'/admin/stay/' + ${stay.id}"]*/
+            /*[# th:text="'숙소 둘러보기'"]*/
 
-            $(".main_div").append(stayHtml);
-        });
+            data.forEach(function (stay) {
+                // 각 숙소에 대한 화면 업데이트 로직
+                var stayHtml = "<div>";
+                stayHtml += "<img th:src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
+                stayHtml += "<p>" + stay.name + "</p>";
+                stayHtml += "<p>" + stay.address + "</p>";
+                stayHtml += "<p>" + stay.price + "</p>";
+                stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
+                stayHtml += "</div>";
+
+                $(".card-container").append(stayHtml);
+            });
+
     }
+
+    // function updateResults(data) {
+    //     // 결과를 이용하여 화면 업데이트
+    //     $(".card-container").empty(); // 기존 숙소 목록 비우기
+    //
+    //     data.forEach(function (stay) {
+    //         // 각 숙소에 대한 화면 업데이트 로직
+    //         var stayHtml = "<div>";
+    //         stayHtml += "<img th:src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
+    //         stayHtml += "<p>" + stay.name + "</p>";
+    //         stayHtml += "<p>" + stay.address + "</p>";
+    //         stayHtml += "<p>" + stay.price + "</p>";
+    //         stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
+    //         stayHtml += "</div>";
+    //
+    //         $(".card-container").append(stayHtml);
+    //     });
+
+
 </script>
 </body>
 </html>

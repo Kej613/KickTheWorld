@@ -96,11 +96,11 @@ public class PayController {
 		return "pay/cancel";
 	}
 
-//	@RequestMapping(value = "/list", method = RequestMethod.GET)
-//	public String list(Model model) throws Exception {
-//		model.addAttribute("payList", payRepo.findAllByPayStatusIn(List.of("P", "C")).orElse(null));
-//		return "pay/list";
-//	}
+	@RequestMapping(value = "/adminlist", method = RequestMethod.GET)
+	public String list(Model model) throws Exception {
+		model.addAttribute("payList", payRepo.findAllByPayStatusIn(List.of("P", "C")).orElse(null));
+		return "pay/adminlist";
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
