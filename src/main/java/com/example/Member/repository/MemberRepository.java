@@ -15,10 +15,4 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemId(String memId); //유저 아이디로 회원 찾기
 
-//    @Query("SELECT p " +
-//            "FROM Pay p " +
-//            "WHERE p.ordNo LIKE %:memId%")
-//    List<Pay> findPayByMemId(@Param("memId") String memId);
-
-
 }

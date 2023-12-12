@@ -54,7 +54,7 @@ public class EateryController {
     @GetMapping(value = {"/main/eaterys", "/main/eaterys/{page}"})
     public String eateryManage(EaterySearchDto eaterySearchDto,
                                @PathVariable("page") Optional<Integer> page, Model model) {
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
 
         Page<EateryItemDto> eaterys = eateryService.getEateryPage(eaterySearchDto, pageable);
         model.addAttribute("eaterys", eaterys);

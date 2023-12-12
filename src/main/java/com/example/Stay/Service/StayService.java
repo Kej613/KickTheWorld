@@ -121,6 +121,9 @@ public class StayService {
         return stay.getId();
 
     }
-
+    public List<Stay> findStaysByCategory(String category) {
+        // 예시: 숙소 카테고리에 따라 필터링 로직 수행
+        return stayRepository.findStaysByCategory(category);
+    }
 
 }

@@ -24,6 +24,7 @@
 
 body {
     min-height: 100vh;
+    background-color: #FDFAFF;
 }
 
 li {
@@ -39,7 +40,7 @@ a{
 .side-bar {
     position: fixed;
     background: var(--first-color);
-    width: 20vw;
+    width: 17vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -74,7 +75,7 @@ a{
     width: 80vw;
     width: 80vw;
     height: 100vh;
-    background:white;
+    background-color: #FDFAFF;
 }
 
 /* HEADER */
@@ -82,7 +83,7 @@ a{
     position: fixed;
     top: 0;
     right: 0;
-    width: 80vw;
+    width: 83vw;
     height: 10vh;
     background: white;
     display: flex;
@@ -126,7 +127,7 @@ a{
 }
 
 .container .content .cards {
-    padding: 10px 5px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
