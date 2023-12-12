@@ -40,7 +40,7 @@
         </li>
         <li class="nav__item">
           <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-            <p th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></p> <b>[로그아웃]</b></a>
+            <p th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></p> <b>로그아웃</b></a>
         </li>
 
         <i class="ri-close-line nav__close" id="nav-close"></i>
@@ -135,7 +135,7 @@
       <div class="swiper-wrapper">
         <!-- DISCOVER1 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover1.jpg}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover1.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">경주</h2>
             <span class="discover__img-description">경상북도 경주시</span>
@@ -144,7 +144,7 @@
 
         <!-- DISCOVER2 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover2.png}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover2.png}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">부산</h2>
             <span class="discover__img-description">부산광역시</span>
@@ -153,7 +153,7 @@
 
         <!-- DISCOVER3 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover3.jpg}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover3.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">강릉</h2>
             <span class="discover__img-description">강원특별자치도 강릉시</span>
@@ -162,7 +162,7 @@
 
         <!-- DISCOVER4 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover4.jpg}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover4.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">제주</h2>
             <span class="discover__img-description">제주특별자치도</span>
@@ -171,7 +171,7 @@
 
         <!-- DISCOVER5 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover5.jpg}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover5.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">안산</h2>
             <span class="discover__img-description">경기도 안산시</span>
@@ -180,7 +180,7 @@
 
         <!-- DISCOVER6 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover6.jpg}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover6.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">창원</h2>
             <span class="discover__img-description">경상남도 창원시</span>
@@ -189,7 +189,7 @@
 
         <!-- DISCOVER7 -->
         <div class="discover__card swiper-slide">
-          <img th:src="@{images/main/discover7.jpg}" alt="discover image" class="discover__img">
+          <img th:href="@{/main/trips}" th:src="@{images/main/discover7.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">함안</h2>
             <span class="discover__img-description">경상남도 함안군</span>
@@ -208,7 +208,7 @@
 
       <!-- PLACES CARD 1 -->
       <div class="place__card">
-        <img th:src="@{images/main/place1.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}"  th:src="@{images/main/place1.jpg}" alt="" class="place__img">
 
         <div class="place__content">
           <span class="place__rating">
@@ -231,7 +231,7 @@
 
       <!-- PLACES CARD 3 -->
       <div class="place__card">
-        <img th:src="@{images/main/place3.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place3.jpg}" alt="" class="place__img">
 
         <div class="place__content">
           <span class="place__rating">
@@ -253,7 +253,7 @@
 
       <!-- PLACES CARD 4 -->
       <div class="place__card">
-        <img th:src="@{images/main/place4.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place4.jpg}" alt="" class="place__img">
 
         <div class="place__content">
           <span class="place__rating">
@@ -275,7 +275,7 @@
 
       <!-- PLACES CARD 5 -->
       <div class="place__card">
-        <img th:src="@{images/main/place5.jpg}" alt="" class="place__img">
+        <img  th:href="@{/main/stays}" th:src="@{images/main/place5.jpg}" alt="" class="place__img">
 
         <div class="place__content">
           <span class="place__rating">
@@ -298,7 +298,7 @@
 
       <!-- PLACES CARD 6 -->
       <div class="place__card">
-        <img th:src="@{images/main/place2.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place2.jpg}" alt="" class="place__img">
 
         <div class="place__content">
           <span class="place__rating">
@@ -354,7 +354,7 @@
     </div>
 
     <div class="footer__rights">
-      <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+      <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
     </div>
   </div>
 </footer>
