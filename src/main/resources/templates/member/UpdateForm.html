@@ -1,41 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>UPdateMember</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-</head>
-<body>
-<div class="col-lg-6">
-    <div class="row justify-content-start">
-        <form style="margin: auto" th:object="${member}">
-            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
-            <input type="hidden" th:id="memberId" th:value="*{member_id}">
-            <h3>아이디</h3>
-            <div class="input-group input-group-static mb-4">
-                <label style="font-weight: bold" th:for="memId">아이디</label>
-                <input type="text" th:field="*{memId}" th:value="*{memId}" class="form-control"
-                       th:id="username" readonly>
-            </div>
-            <h3>이메일</h3>
-            <div class="input-group input-group-static mb-4">
-                <label style="font-weight: bold" th:for="email">이메일</label>
-                <input type="text" th:field="*{email}" th:value="*{email}" class="form-control"
-                       th:id="email" readonly>
-            </div>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  &lt;!&ndash; 헤드 컨텐츠 추가 &ndash;&gt;-->
+<!--</head>-->
+<!--<body>-->
 
-            <h3>비밀번호 변경</h3>
-            <div class="input-group input-group-static mb-4">
-                <label style="font-weight: bold" th:for="password">변경할 비밀번호 입력</label>
-                <input type="password" th:id="password" th:name="password"
-                       placeholder="변경할 비밀번호를 입력하세요." class="form-control" >
-            </div>
-        </form>
-        <button id="memberUpdate" class="btn bg-gradient-primary" value="회원 정보 수정"
-                th:onclick="memberUpdate()">회원 정보 수정</button>
+<!--&lt;!&ndash; 회원 수정 폼 컨텐츠 &ndash;&gt;-->
+<!--<form th:object="${member}" th:action="@{/members/update}" method="post">-->
+<!--  &lt;!&ndash; 회원 정보 수정을 위한 폼 필드 추가 &ndash;&gt;-->
+<!--  <label for="name">이름:</label>-->
+<!--  <input type="text" id="name" name="name" th:field="*{name}" required>-->
 
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-</body>
-</html>
+<!--  <label for="phonenumber">전화번호:</label>-->
+<!--  <input type="text" id="phonenumber" name="phonenumber" th:field="*{phonenumber}" required>-->
+
+<!--  <label for="address">주소:</label>-->
+<!--  <input type="text" id="address" name="address" th:field="*{address}" required>-->
+
+<!--  <button type="submit">수정</button>-->
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->

@@ -17,7 +17,7 @@ public interface TripRepository extends JpaRepository<Trip, Long>, QuerydslPredi
             "where t.theme like %:theme% " +
             "and t.address like %:address% " +
             "order by t.id desc")
-    Page<MainItemDto> findByCategory(@Param("theme") String theme, @Param("address") String address, Pageable pageable);
+    Page<Trip> findByCategory(@Param("theme") String theme, @Param("address") String address, Pageable pageable);
 
 }
 

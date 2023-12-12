@@ -84,7 +84,6 @@ public class OrderItem {
 
     private int count; // 숙박일수
 
-    // 추가된 부분
     private Date checkInDate;  //체크인 날짜
     private Date checkOutDate;   //체크아웃 날짜
 
@@ -93,11 +92,9 @@ public class OrderItem {
 
     public static OrderItem createOrderItem(Stay stay, int count, Date checkInDate, Date checkOutDate) {
         OrderItem orderItem = new OrderItem();
-        orderItem.setStay(stay); // 예약할 숙소
+        orderItem.setStay(stay);        // 예약할 숙소
         orderItem.setCount(count);          //숙박일수
         orderItem.setOrderPrice(stay.getPrice());
-
-        // 추가된 부분
         orderItem.setCheckInDate(checkInDate);
         orderItem.setCheckOutDate(checkOutDate);
 

@@ -68,7 +68,7 @@ public class StayService {
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
 
-    public Page<StayItemDto> findByCategory(String category, String address, Pageable pageable) {
+    public Page<Stay> findByCategory(String category, String address, Pageable pageable) {
         return stayRepository.findByCategory(category, address, pageable);
     }
 

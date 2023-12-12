@@ -41,7 +41,7 @@
             font-family: 'Pretendard-Regular';
         }
         td,th{
-            padding:7px;
+            padding:10px;
         }
     </style>
 </head>
@@ -116,29 +116,27 @@
             <!-- container -->
             <div class="container">
                 <div class="table-responsive">
-                    <table class="table">
-                        <colgroup>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                        </colgroup>
+                    <table class="table" style="width:90%;">
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>숙소명</th>
                             <th>숙소번호</th>
-                            <th>승인번호</th>
+<!--                            <th>승인번호</th>-->
                             <th>거래번호</th>
+                            <th>숙소금액</th>
                             <th>결제상태</th>
-                            <th></th>
+                            <th>기타</th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr th:each="pay : ${payList}">
                                 <td th:text="${pay.id}"></td>
+                                <td th:text="${pay.productNm}"></td>
                                 <td th:text="${pay.ordNo}"></td>
-                                <td th:text="${pay.authNo}"></td>
+<!--                                <td th:text="${pay.authNo}"></td>-->
                                 <td th:text="${pay.trNo}"></td>
+                                <td th:text="${pay.trPrice}"></td>
                                 <th:block th:switch="${pay.payStatus}">
                                     <td th:case="${'P'}">결제완료</td>
                                     <td th:case="${'C'}">결제취소완료</td>
@@ -157,44 +155,6 @@
     </form>
 </div>
 
-<!-- FOOTER -->
-<footer class="footer section">
-    <div class="footer__container container grid">
-        <div class="footer__content grid">
-            <div class="footer__data">
-                <h3 class="footer__title">Developer</h3>
-                <div>
-                    <a href="https://www.facebook.com/" target="_blank" class="footer__social">
-                        <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
-                    </a>
-                    <a href="https://twitter.com/" target="_blank" class="footer__social">
-                        <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="footer__data">
-                <h3 class="footer__subtitle">Company</h3>
-                <ul>
-                    <li class="footer__item">
-                        <a href="" class="footer__link">Team</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="" class="footer__link">Plan y Pricing</a>
-                    </li>
-                    <li class="footer__item">
-                        <a href="" class="footer__link">Become a member</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer__rights">
-            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
-        </div>
-    </div>
-</footer>
 </body>
 
 <script th:inline="javascript">

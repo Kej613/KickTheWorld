@@ -67,7 +67,6 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(stay, orderDto.getCount(), checkInDate, checkOutDate);
         orderItemList.add(orderItem);
 
-        // 수정된 부분
         Order order = Order.createOrder(member, orderItemList, checkInDate, checkOutDate);
 
         orderRepository.save(order);

@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
     <link rel="stylesheet" th:href="@{/css/boardList.css}">
-    <link th:href="@{/css/stay.css}" rel="stylesheet">
+<!--    <link th:href="@{/css/stay.css}" rel="stylesheet">-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
 
@@ -89,8 +89,8 @@
             return year + '-' + month + '-' + day;
         }
 
-        //예약
-        function order(){           //post 방식의 CSRF 토큰 값 전달
+        //예약과정
+        function order(){
 
             var url = "/order";
             var paramData = {
@@ -112,11 +112,9 @@
                 dataType : "json",
                 cache   : false,
                 success  : function(result, status){
-                    alert("결제창으로 이동");
                     location.href='/orders';
                 },
                 error : function(jqXHR, status, error){
-
                     if(jqXHR.status == '401'){
                         alert('로그인 후 이용해주세요');
                         location.href='/members/login';
@@ -206,6 +204,7 @@
             height:auto;
             width:70%;
             margin-left:10px;
+            padding:10px;
             background-color:#FFFFFF;
             border-radius:20px;
         }
@@ -272,7 +271,7 @@
                     <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
                 </li>
                 <li class="nav__item">
-                    <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+                    <a href="/search" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
                 </li>
             </ul>
         </div>
@@ -281,11 +280,11 @@
 
 
 <body>
-<div class="content" style="margin-left:25%;margin-right:25%; margin-top: 300px;">
+<div class="content" style="margin-left:25%;margin-right:25%; margin-top: 200px;">
     <input type="hidden" id="id" th:value="${stay.id}">
     <div class="d-flex">
-        <div class="img_div">
-            <img th:src="${stay.stayImgDtoList[0].imgUrl}" class = "rounded-1 repImg" th:alt="${stay.name}" style=" width: 500px;">
+        <div class="img_div" style="margin-right:20px; text-align:center;">
+            <img th:src="${stay.stayImgDtoList[0].imgUrl}" class = "rounded-1 repImg" th:alt="${stay.name}" style=" width: 600px; height:auto;">
         </div><br><br>
         <div class="wd50">
             <span th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="badge badge-primary mgb-15" >
@@ -302,17 +301,24 @@
             <div class="text-right">
                 <div>
                     <div>
-                        <span>체크인</span>
+                        <span style="color:blue;">입실날짜</span><br>
+                        <input type="date" name="checkInDate" id="checkInDate" ><br>
                     </div>
-                    <input type="date" name="checkInDate" id="checkInDate">
-                    <div>
-                        <span>체크아웃</span>
-                    </div>
-                    <input type="date" name="checkOutDate" id="checkOutDate">
 
+                    <div>
+                        <span style="color:blue;">퇴실날짜</span><br>
+                        <input type="date" name="checkOutDate" id="checkOutDate"><br><br>
+                    </div>
+                    <div>
+                        <span>숙박일</span>
+                    </div>
+                    <input type="number" name="count" id="count" class="form-control" th:value="count" min="1">
+                    <div>
                         <span>인원수</span>
                     </div>
                     <input type="number"  id="people" class="form-control" value="2" min="2">
+
+
                 </div>
 <!--                  <a style="text-align:right"> 숙박일: <p id="stay">일</p></a>-->
 
@@ -324,12 +330,6 @@
 <!--                </div>-->
 
             <hr class="my-4">
-                <div>
-                    <div>
-                        <span>숙박일</span>
-                    </div>
-                    <input type="number" name="count" id="count" class="form-control" th:value="count" min="1">
-                </div>
 
             <div class="text-right mgt-50">
                 <div style="text-align:right;">
@@ -351,19 +351,13 @@
     </div>
 </div>
 <hr><br><br>
-<div class="stay-details">
-<div class="stay-details">
+<div class="stay-details" style="width:80%; background-color: white; padding:10px; margin-left:auto; margin-right:auto; ">
     <hr class="my-4">
     <strong>[상세 이미지]</strong>
     <hr class="my-4"><br>
     <div class="slider-container">
-<!--        <div class="slider">-->
-<!--            <div th:each="stayImg: ${stay.stayImgDtoList}" class="slide">-->
-<!--                <img th:if="${not #strings.isEmpty(stayImg.imgUrl)}" th:src="@{${stayImg.imgUrl}}" alt="slide-image"  class = "rounded-1 repImg">-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="slider">
-            <div th:each="stayImg: ${stay.reversedStayImgDtoList}" class="slide">
+            <div th:each="stayImg: ${stay.reversedStayImgDtoList}" class="slide" style="text-align:center;">
                 <img th:if="${not #strings.isEmpty(stayImg.imgUrl)}" th:src="@{${stayImg.imgUrl}}" alt="slide-image" class="rounded-1 repImg">
             </div>
         </div>
@@ -398,18 +392,7 @@
         <span id="amenityElement" th:text="${stay.amenity}"></span>
     </div>
 
-<!--    <div class="detail-item">-->
-<!--        <strong>숙소 이미지:</strong>-->
-<!--        <img th:src="@{'/getImage?name=' + ${stay.imageFileName}}" alt="Stay Image"/>-->
-<!--    </div>-->
-<!--  -->
 </div>
-
-<!--<div class="button" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">-->
-<!--<button type="button" id="stay-modify-btn" th:onclick="|location.href='/stays/edit/{id}'|" th:attr="data-stayid=${stay.id}" >수정</button>-->
-<!--<form th:if="${#authorization.expression('hasRole(''ADMIN'')')}" id="deleteStayForm" th:action="@{'/stays/delete/' + ${stay.id}}" method="post">-->
-<!--<button type="submit" >삭제</button>-->
-<!--</form>-->
 
 <form th:action="@{'/admin/stay/delete/' + ${stay.id}}"  th:if="${stay != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
     <button type="submit" class="btn btn-outline-dark">삭제</button>

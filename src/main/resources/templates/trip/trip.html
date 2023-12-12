@@ -154,14 +154,14 @@
     </nav>
 </header>
 <div>
-    <div class="main_content" style="margin-top:250px;">
+    <div class="main_content" style="margin-top:200px; background-color:white; padding:20px;">
     <input type="hidden" id="id" th:value="${trip.id}">
         <div class="d-flex">
             <div class="repImgDiv" >
-
-                <b><h2 th:text="${trip.name}" style="text-align:center;"></h2></b>
+                <h2 th:text="${trip.name}" style="text-align:center;font-size:25px; font-weight: bold;"></h2>
+                <hr style="width: 20%; height : 5px; background-color : pink; border : 0; text-align:center; ">
                 <hr class="my-4">
-                <h2>여행지 소개</h2><hr class="my-4">
+                <h2><b>여행지 소개</b></h2><hr class="my-4">
                 <div>
                 <p th:text="${trip.detail}" ></p>
                 </div>
@@ -179,7 +179,6 @@
         </div>
 
         <hr class="my-4">
-
         <div class="text-center">
         <h2><b>위치 </b></h2>
             <hr class="my-4">
@@ -187,7 +186,7 @@
             <span th:text="${trip.address}"></span>
         </div>
         <hr class="my-4">
-        <h2>이용안내</h2>
+        <h2><b>이용안내</b></h2>
         <hr class="my-4">
         <div class="row">
             <div class="col-md-6">
@@ -201,7 +200,7 @@
         </div>
         <hr class="my-4">
         <div>
-            <a th:href="@{/admin/trip/edit/{id}(id=${trip.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>
+<!--            <a th:href="@{/admin/trip/edit/{id}(id=${trip.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>-->
             <form th:action="@{'/admin/trip/delete/' + ${trip.id}}" th:if="${trip != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
                 <button type="submit" class="btn btn-outline-dark">삭제</button>
             </form>

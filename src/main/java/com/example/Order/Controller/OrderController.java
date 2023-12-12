@@ -39,18 +39,12 @@ public class OrderController {
             for (FieldError fieldError : fieldErrors) {
                 sb.append(fieldError.getDefaultMessage());
             }
-
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        String memId = principal.getName();
+        String memId = principal.getName(); // 현재 로그인된 회원의 아이디를 받음
         Long orderId;
 
-//        try {
-//            orderId = orderService.order(orderDto, memId);
-//        } catch (Exception e) {
-//            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
         try {
             // 체크인과 체크아웃 날짜를 받아와서 orderService에 전달
             orderId = orderService.order(orderDto, memId, orderDto.getCheckInDate(), orderDto.getCheckOutDate());
