@@ -1,12 +1,15 @@
 package com.example.Eatery.Entity;
 
 import com.example.Eatery.Dto.EateryFormDto;
+import com.example.Trip.Entity.TripImg;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -50,6 +53,9 @@ public class Eatery {
     @Lob
     @Column(columnDefinition =  "LONGTEXT")
     private String menu;  //메뉴
+
+    @OneToMany(mappedBy = "eatery", fetch = FetchType.EAGER)
+    private List<EateryImg> eateryImgs;
 
     @Builder
     public Eatery(Long id, String eaterycategory, String name, String parking, String telephone, String service, String menu, String guide,

@@ -19,6 +19,6 @@ public interface EateryRepository extends JpaRepository<Eatery, Long>, QuerydslP
             "where e.eaterycategory like %:eaterycategory% " +
             "and e.address like %:address% " +
             "order by e.id desc")
-    Page<EateryItemDto> findByAddressAndEateryCategory(@Param("eaterycategory") String eaterycategory, @Param("address") String address, Pageable pageable);
+    Page<Eatery> findByAddressAndEateryCategory(@Param("eaterycategory") String eaterycategory, @Param("address") String address, Pageable pageable);
 
 }
