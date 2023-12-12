@@ -1,3 +1,4 @@
+<!-- 숙소 등록 페이지 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -100,17 +101,17 @@
 
     <div class="input-group">
       <div class="input-group-prepend">
-        <span class="input-group-text">서비스</span>
+        <span class="input-group-text">시설 및 서비스</span>
       </div>
-      <textarea th:field="*{service}" class="form-control" placeholder="이용안내를 입력해주세요"></textarea>
+      <textarea th:field="*{service}" class="form-control" placeholder="시설 및 서비스 정보를 입력해주세요"></textarea>
     </div>
     <p th:if="${#fields.hasErrors('service')}" th:errors="*{service}" class="fieldError">Incorrect data</p>
 
     <div class="input-group">
       <div class="input-group-prepend">
-        <span class="input-group-text">편의시설</span>
+        <span class="input-group-text">객실정보</span>
       </div>
-      <textarea th:field="*{amenity}" class="form-control" placeholder="이용안내를 입력해주세요"></textarea>
+      <textarea th:field="*{amenity}" class="form-control" placeholder="객실정보를 입력해주세요"></textarea>
     </div>
     <p th:if="${#fields.hasErrors('amenity')}" th:errors="*{amenity}" class="fieldError">Incorrect data</p>
 
