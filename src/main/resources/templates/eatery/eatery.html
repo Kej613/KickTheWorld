@@ -151,13 +151,13 @@
             <div class="repImgDiv">
                 <b><h2 th:text="${eatery.name}" style="text-align:center;"></h2></b>
                 <hr class="my-4">
-                <h2>가게 소개</h2>
+                <h2><b>가게 소개</b></h2>
                 <hr class="my-4">
                 <div>
                     <p th:text="${eatery.detail}" ></p>
                 </div>
                 <hr class="my-4">
-                <h2>내부사진</h2>
+                <h2><b>내부사진</b></h2>
                 <hr class="my-4">
             </div>
 
@@ -180,7 +180,8 @@
             <span th:text="${eatery.address}"></span>
         </div>
         <hr class="my-4">
-        <h2>이용안내</h2>
+
+        <h2><b>이용안내</b></h2>
         <hr class="my-4">
         <div class="row">
             <div class="col-md-6">
@@ -193,6 +194,11 @@
             </div>
         </div>
         <hr class="my-4">
+        <h2><b>메뉴</b></h2>
+        <hr class="my-4">
+        <div>
+            <p th:text="${eatery.menu}" ></p>
+        </div>
         <div>
 <!--            <a th:href="@{/admin/eatery/edit/{id}(id=${eatery.id})}"><button type="submit" class="btn btn-outline-dark">수정</button></a>-->
             <form th:action="@{'/admin/eatery/delete/' + ${eatery.id}}" th:if="${eatery != null and #authorization.expression('hasRole(''ROLE_ADMIN'')')}" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
