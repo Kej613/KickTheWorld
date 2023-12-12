@@ -101,7 +101,8 @@ public class EateryController {
             model.addAttribute("errorMessage", "여행지 등록중 오류 발생");
             return "eatery/eateryForm";
         }
-        return "redirect:/";
+//        return "redirect:/";
+        return "redirect:/main/eaterys";
     }
 
 

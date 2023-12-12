@@ -181,6 +181,48 @@
         </div>
     </section>
 
+    <!--SIDE BAR-->
+    <div class="side_menu" style="margin-top:30px;">
+        <div id="s_left"></div>
+        <div id="contents" >
+            <ul>
+                <li class="side_li">
+                    <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지도로 검색 >></b></a><br>
+                </li>
+                <li class="side_li">
+                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지역</b></a><br>
+                    <select>
+                        <option value="address"th:checked="${param.address == '서울'}">서울</option>
+                        <option value="address"th:checked="${param.address == '경기'}">경기</option>
+                        <option value="address"th:checked="${param.address == '강원'}">강원</option>
+                        <option value="address"th:checked="${param.address == '부산'}">부산</option>
+                        <option value="address"th:checked="${param.address == '제주'}">제주</option>
+                        <option value="address"th:checked="${param.address == '전북'}">전북</option>
+                        <option value="address"th:checked="${param.address == '경남'}">경남</option>
+                        <option value="address"th:checked="${param.address == '인천'}">인천</option>
+                        <option value="address"th:checked="${param.address == '경북'}">경북</option>
+                    </select>
+                </li>
+                <li class="side_li">
+                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>숙소유형</b></a>
+                    <label>
+                        <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}">호텔
+                        <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}">펜션
+                        <input type="radio" name="category" value="게하" th:checked="${param.category == '게하'}">게하
+                        <input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}">캠핑
+                    </label>
+                </li>
+                <li class="side_li">
+                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>가격</b></a>
+
+                </li>
+            </ul>
+            <div class="btn1" style="text-align:center;">
+                <button type="submit" class="btn btn-outline-dark">검색</button></div>
+        </div>
+    </div>
+    </div>
+
     <div class="stay_main">
         <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">
         <div class="side_menu" style="margin-top:30px;">
