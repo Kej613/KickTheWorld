@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mariadb://121.134.218.34:13306/kicktheworld
+    url: jdbc:mariadb://211.62.99.58:8306/kicktheworld
     driver-class-name: org.mariadb.jdbc.Driver
     username: 'kicktheworld'
-    password: 'kicktheworld1!'
+    password: 'dmldusdmswjd1!'
   h2:
     console:
       enabled: true
@@ -33,7 +33,7 @@ spring:
 #    url : http://localhost:9090/oauth2/code/kakao
 
 server:
-  port: 9090
+  port: 8080
 
 jasypt:
   encryptor:
