@@ -19,10 +19,10 @@
         <h2 style="color: white"> 안녕하세요, 관리자님! </h2>
     </div>
     <ul>
-        <li><i class="ri-dashboard-line" style="font-size: 1.5rem;"></i> &nbsp 대시보드 </li>
-        <li><i class="ri-money-dollar-circle-line" style="font-size: 1.5rem;"></i> &nbsp 예약/결제 </li>
-        <li><i class="ri-funds-box-line" style="font-size: 1.5rem;"></i> &nbsp 통계 </li>
-        <li><i class="ri-settings-4-line" style="font-size: 1.5rem;"></i> &nbsp 설정 </li>
+        <li><i class="ri-dashboard-line" style="font-size: 1.5rem;"></i><a th:href="@{/admin}"> &nbsp 대시보드</a></li>
+        <li><i class="ri-money-dollar-circle-line" style="font-size: 1.5rem;"></i><a th:href="@{/adminlist}"> &nbsp 예약/결제</a></li>
+        <li><i class="ri-funds-box-line" style="font-size: 1.5rem;"></i><a th:href="@{/notready}"> &nbsp 통계</a></li>
+        <li><i class="ri-settings-4-line" style="font-size: 1.5rem;"></i><a th:href="@{/notready}"> &nbsp 설정</a></li>
     </ul>
 </div>
 
@@ -59,7 +59,7 @@
             <!-- CARD 1 - STAY -->
             <div class="card">
                 <div class="box">
-                    <h2>숙소등록(사업자)</h2>
+                    <h3>숙소 등록(사업자)</h3>
                     <p>Accommodation</p>
                 </div>
                 <div class="icon-design">
@@ -72,12 +72,12 @@
             <!-- CARD 1 - STAY -->
             <div class="card">
                 <div class="box">
-                    <h2>숙소결제내역(사업자)</h2>
-                    <p>Accommodation</p>
+                    <h3>숙소 결제내역(사업자)</h3>
+                    <p>Payment Detail</p>
                 </div>
                 <div class="icon-design">
                     <a th:href="@{/adminlist}" class="link">
-                        <img th:src="@{/images/admin/admin-stay.png}" alt="">
+                        <img th:src="@{/images/admin/admin-pay.png}" alt="">
                     </a>
                     <!--                    <a th:href="@{/admin/stay/new}" class="link"><i class="ri-hotel-bed-line"></i></a>-->
                 </div>
@@ -85,7 +85,7 @@
             <!-- CARD 2 - TRIP -->
             <div class="card">
                 <div class="box">
-                    <h2>여행지 등록</h2>
+                    <h3>여행지 등록</h3>
                     <p>Destination</p>
                 </div>
                 <div class="icon-design">
@@ -98,7 +98,7 @@
             <!-- CARD 3 - EATERY -->
             <div class="card">
                 <div class="box">
-                    <h2>음식점 등록</h2>
+                    <h3>음식점 등록</h3>
                     <p>Restaurant</p>
                 </div>
                 <div class="icon-design">
