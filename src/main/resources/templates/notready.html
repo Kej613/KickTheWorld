@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/notready.css}" rel="stylesheet" type="text/css">
+    <title>not ready</title>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        <p>해당 서비스를 준비 중입니다.</p>
+        <h1>서비스 <span>출시 예정</span>입니다.</h1>
+        <div class="countdown">
+            <div>
+                <p id="days">00</p>
+                <span class="date">Days</span>
+            </div>
+
+            <div>
+                <p id="hours">00</p>
+                <span class="date">Hours</span>
+            </div>
+
+            <div>
+                <p id="minutes">00</p>
+                <span class="date">Minutes</span>
+            </div>
+
+            <div>
+                <p id="seconds">00</p>
+                <span class="date">Seconds</span>
+            </div>
+        </div>
+        <a th:href="@{/}" class="link">
+            <button type="button" class="home">홈으로</button>
+        </a>
+    </div>
+    <img th:src="@{/images/rocket.png}" class="rocket">
+</div>
+
+<script>
+    var countDownDate = new Date("Jan 1, 2024 00:00:00").getTime();
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerHTML=days;
+        document.getElementById("hours").innerHTML=hours;
+        document.getElementById("minutes").innerHTML=minutes;
+        document.getElementById("seconds").innerHTML=seconds;
+
+        if (distance < 0 ){
+            clearInterval(x);
+            document.getElementById("days").innerHTML= "00";
+            document.getElementById("hours").innerHTML= "00";
+            document.getElementById("minutes").innerHTML= "00";
+            document.getElementById("seconds").innerHTML= "00";
+        }
+    }, 1000);
+</script>
+</body>
+</html>

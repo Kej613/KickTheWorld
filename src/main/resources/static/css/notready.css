@@ -1,0 +1,126 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard-Regular';
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../images/login__bg.jpg');
+    background-position: center;
+    background-size: cover;
+    filter : brightness(96%);
+    padding: 0 8%;
+    position: relative;
+}
+
+
+.content {
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+    color: #fff;
+}
+
+.content p {
+    font-size: 40px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}
+
+.content h1 {
+    font-size: 64px;
+    font-weight: 600;
+}
+
+.content h1 span {
+    font-size: 70px;
+    color:#ff3753;
+}
+
+.content button {
+    background: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    padding: 12px 25px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.countdown {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.countdown div {
+    flex-basis: 100px;
+}
+
+.countdown div p {
+    font-size: 60px;
+    margin-bottom: -14px;
+}
+
+.countdown .date {
+    font-size: 20px;
+    margin-left: 9px;
+}
+
+#days {
+    margin-left: -2px;
+}
+
+#minutes {
+    margin-left: 6px;
+}
+
+#seconds {
+    margin-left: 4px;
+
+}
+
+.home {
+    font-size: 25px;
+}
+
+.home:hover {
+
+}
+
+.link {
+    text-decoration: none;
+}
+
+.rocket {
+    width: 250px;
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    animation: rocket 6s linear infinite;
+}
+
+
+@keyframes rocket {
+    0% {
+        bottom: 0;
+        opacity: 0;
+    }
+    100% {
+        bottom: 105%;
+        opacity: 1;
+    }
+}
