@@ -32,22 +32,18 @@ public class MainController {
         return "adminPage_test";
     }
 
-
     @GetMapping("/")
     public String mainPage() {
         return "mainPage_test";
     }
-
 
     @GetMapping("/mypage")
     public String myPage() {
         return "myPage";
     }
 
-
     @GetMapping("/kakao")
     public String kakaoPage() { return "kakaomap"; }
-
 
     @GetMapping("/search")
     public String search(@RequestParam(value = "address", required = false) String address,
@@ -70,6 +66,9 @@ public class MainController {
         return "recommendPage";
     }
 
-
+    @GetMapping("/notready")
+    public String notReady() {
+        return "notready";
+    }
 
 }
