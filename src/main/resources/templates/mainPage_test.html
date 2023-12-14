@@ -135,68 +135,73 @@
       <div class="swiper-wrapper">
         <!-- DISCOVER1 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover1.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">경주</h2>
             <span class="discover__img-description">경상북도 경주시</span>
-          </div>
+          </div></a>
         </div>
 
         <!-- DISCOVER2 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover2.png}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">부산</h2>
             <span class="discover__img-description">부산광역시</span>
-          </div>
+          </div></a>
         </div>
 
         <!-- DISCOVER3 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover3.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">강릉</h2>
             <span class="discover__img-description">강원특별자치도 강릉시</span>
-          </div>
+          </div></a>
         </div>
 
         <!-- DISCOVER4 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover4.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">제주</h2>
             <span class="discover__img-description">제주특별자치도</span>
-          </div>
+          </div></a>
         </div>
 
         <!-- DISCOVER5 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover5.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">안산</h2>
             <span class="discover__img-description">경기도 안산시</span>
-          </div>
+          </div></a>
         </div>
 
         <!-- DISCOVER6 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover6.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">창원</h2>
             <span class="discover__img-description">경상남도 창원시</span>
-          </div>
+          </div></a>
         </div>
 
         <!-- DISCOVER7 -->
         <div class="discover__card swiper-slide">
+          <a th:href="@{'/main/trips' }">
           <img th:href="@{/main/trips}" th:src="@{images/main/discover7.jpg}" alt="discover image" class="discover__img">
           <div class="discover__data">
             <h2 class="discover__img-title">함안</h2>
             <span class="discover__img-description">경상남도 함안군</span>
-          </div>
+          </div></a>
         </div>
-
-
       </div>
     </div>
   </section>
@@ -208,7 +213,8 @@
 
       <!-- PLACES CARD 1 -->
       <div class="place__card">
-        <img th:href="@{/main/stays}"  th:src="@{images/main/place1.jpg}" alt="" class="place__img">
+        <a th:href="@{'/main/stays' }">
+        <img th:src="@{images/main/place1.jpg}" alt="" class="place__img">
 
         <div class="place__content">
           <span class="place__rating">
@@ -225,7 +231,7 @@
 
         <button class="button button--flex place__button">
           <a th:href="@{/main/stays}"><i class="ri-arrow-right-line"></i></a>
-        </button>
+        </button></a>
 
       </div>
 

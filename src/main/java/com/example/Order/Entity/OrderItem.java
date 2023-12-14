@@ -68,7 +68,7 @@ import java.util.Date;
 @Setter
 public class OrderItem {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_stay_id")
     private Long id; // 예약한 숙소 아이디
 

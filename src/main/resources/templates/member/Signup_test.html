@@ -17,7 +17,34 @@
             if(errorMessage != null){
                 alert(errorMessage);
             }
+
         });
+        function checkUsername() {
+            var username = $("#memId").val();
+            console.log("전송된 아이디:" +username);
+
+            if (username) {
+                $.ajax({
+                    type: "GET",
+                    url: "/members/checkUsername",
+                    data: { memId: username },
+                    success: function(response) {
+                        alert("사용가능한 아이디입니다.");
+                        if (response === "이미 존재하는 아이디입니다.") {
+                            alert("이미 존재하는 아이디입니다.");
+                            console.log("이미 존재하는 아이디입니다. 재입력요청");
+                        } else {
+                            alert("사용가능한 아이디입니다.")
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX 요청 실패:", status, error);
+                        console.log("응답:", xhr.responseText);
+                    }
+                });
+            }
+        }
+
     </script>
 <body>
 <div class="signup">
@@ -60,6 +87,10 @@
                 <i class="ri-account-circle-line"></i>
                 <p th:if="${#fields.hasErrors('memId')}" th:errors="*{memId}" class="fieldError">Incorrect data</p>
             </div>
+            <div> <button type="button" class="btn btn-outline-dark" onclick="checkUsername()"
+            style="width:300px; height:auto; padding:5px;">아이디 중복확인</button></div>
+<!--            <div id="usernameMessage"></div>-->
+
 
             <!-- PASSWORD -->
             <div class="signup__box">
@@ -88,11 +119,8 @@
                 <i class="ri-home-2-line"></i>
                 <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">Incorrect data</p>
             </div>
-
         </div>
-
         <button type="submit" class="signup__button">회원가입</button>
-<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 
         <div class="signup__register">
             이미 회원이신가요? &nbsp&nbsp <a th:href="@{/}"> 로그인 </a>

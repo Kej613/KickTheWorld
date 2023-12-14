@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 @AllArgsConstructor
 public class PageRequestDTO {
 
-
     private String type;
     private String keyword;
 

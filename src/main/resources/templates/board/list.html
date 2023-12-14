@@ -114,7 +114,6 @@
     </div>
   </div>
 </form>
-
 <div class="table-container">
 <table class="table custom-table">
   <thead style="background-color: #eeeeee;">
@@ -128,12 +127,11 @@
   </thead>
   <tbody>
   <tr th:each="dto : ${result.dtoList}" th:if="${#authorization.expression('isAuthenticated()')}">
-
     <th scope="row">
         [[${dto.bno}]]
     </th>
     <td><a th:href="@{/board/read(bno=${dto.bno}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-     [[${dto.title}]]</a></td>
+    <b> [[${dto.title}]]</b></a></td>
     <td>[[${dto.writer}]]</td>
     <td>[[${dto.category}]]</td>
     <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
@@ -164,66 +162,26 @@
   </li>
 </ul>
 
-<!--모달팝업창-->
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">게시글 업로드 완료</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>게시글이 업데이트 되었습니다.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">변경내용 저장</button>
-        <button type="button" class="btn btn-secondary close" data-dismiss="modal">닫기</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--&lt;!&ndash; FOOTER &ndash;&gt;-->
-<!--<footer class="footer section">-->
-<!--  <div class="footer__container container grid">-->
-<!--    <div class="footer__content grid">-->
-<!--      <div class="footer__data">-->
-<!--        <h3 class="footer__title">Developer</h3>-->
-<!--        <div>-->
-<!--          <a href="https://www.facebook.com/" target="_blank" class="footer__social">-->
-<!--            <span class="footer__name">김은정</span><i class="ri-github-fill"></i>-->
-<!--          </a>-->
-<!--          <a href="https://twitter.com/" target="_blank" class="footer__social">-->
-<!--            <span class="footer__name">박의연</span><i class="ri-github-fill"></i>-->
-<!--          </a>-->
-<!--        </div>-->
+<!--&lt;!&ndash;모달팝업창&ndash;&gt;-->
+<!--<div class="modal" tabindex="-1" role="dialog">-->
+<!--  <div class="modal-dialog" role="document">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title">게시글 업로드 완료</h5>-->
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
 <!--      </div>-->
-
-
-<!--      <div class="footer__data">-->
-<!--        <h3 class="footer__subtitle">Company</h3>-->
-<!--        <ul>-->
-<!--          <li class="footer__item">-->
-<!--            <a href="" class="footer__link">Team</a>-->
-<!--          </li>-->
-<!--          <li class="footer__item">-->
-<!--            <a href="" class="footer__link">Plan y Pricing</a>-->
-<!--          </li>-->
-<!--          <li class="footer__item">-->
-<!--            <a href="" class="footer__link">Become a member</a>-->
-<!--          </li>-->
-<!--        </ul>-->
+<!--      <div class="modal-body">-->
+<!--        <p>게시글이 업데이트 되었습니다.</p>-->
 <!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="footer__rights">-->
-<!--      <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-primary">변경내용 저장</button>-->
+<!--        <button type="button" class="btn btn-secondary close" data-dismiss="modal">닫기</button>-->
+<!--      </div>-->
 <!--    </div>-->
 <!--  </div>-->
-<!--</footer>-->
-
+<!--</div>-->
 
 <script th:inline="javascript">
   var msg = [[${msg}]];

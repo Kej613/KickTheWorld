@@ -52,6 +52,7 @@
         }
 
 
+        @Transactional
         // 회원 수정
         public Member updateMember(Long id, MemberFormDto memberFormDto) {
             Member member = memberRepository.findById(id)
@@ -65,8 +66,7 @@
             return memberRepository.save(member);
         }
 
-
-
+        @Transactional
         // 회원 삭제
         public void deleteMember(Long id) {
             memberRepository.deleteById(id);
@@ -76,4 +76,15 @@
         public Optional<Member> findById(Long id) {
             return memberRepository.findById(id);
         }
+
+        // 아이디가 존재하는지 확인
+        public boolean isUsernameExists(String memId) {
+            return memberRepository.existsByMemId(memId);
+        }
+
+        public Member findMemberById(String memId) {
+            return memberRepository.findByMemId(memId);
+
+        }
+
     }

@@ -6,6 +6,7 @@ import com.example.Board.Dto.PageResultDTO;
 import com.example.Board.Entity.Board;
 
 public interface BoardService {
+
     Long register(BoardDto dto);
 
     PageResultDTO<BoardDto, Board> getList(PageRequestDTO requestDTO);
@@ -15,6 +16,11 @@ public interface BoardService {
 
     //아래 매퍼(dto->entity) 메서드 추가
     default Board dtoToEntity(BoardDto dto) {
+
+        if (dto == null) {  //null값이 존재할때
+            return null;
+        }
+
         Board entity = Board.builder()
                 .bno(dto.getBno())
                 .title(dto.getTitle())
@@ -26,6 +32,10 @@ public interface BoardService {
     }
 
     default BoardDto EntityToDto(Board entity) {
+        if (entity == null) {
+            return null;
+        }
+
         BoardDto dto = BoardDto.builder()
                 .bno(entity.getBno())
                 .title(entity.getTitle())
@@ -41,4 +51,11 @@ public interface BoardService {
 
     void remove(Long bno);
     void modify(BoardDto dto);
+
+
+    //조회수
+//    @Transactional
+//    void increaseViews(Long bno);
+
+    Long updateViewCount(Long bno);
 }

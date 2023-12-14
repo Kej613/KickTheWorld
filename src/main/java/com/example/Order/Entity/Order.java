@@ -1,6 +1,5 @@
 package com.example.Order.Entity;
 
-
 import com.example.Order.Constant.OrderStatus;
 import com.example.Member.entity.Member;
 import jakarta.persistence.*;
@@ -17,7 +16,7 @@ import java.util.List;
 @Getter@Setter
 public class Order {        // 예약정보
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private Long id;
 

@@ -118,10 +118,16 @@ body {
   <div class="form-group">
     <label>작성자</label>
     <input type="text" class="form-control" name="writer" placeholder="작성자를 입력하세요">
+
   </div>
   <div class="form-group">
-    <label>카테고리</label>
-    <input type="text" class="form-control" name="category" placeholder="카테고리를 입력하세요">
+    <label for="category">카테고리</label>
+    <select class="form-control" name="category" id="category">
+      <option value="여행후기">여행후기</option>
+      <option value="여행동행자모집">여행동행자모집</option>
+      <option value="여행지추천">여행지추천</option>
+      <option value="기타">기타</option>
+    </select>
   </div>
   <div class="form-group">
     <label>내용</label>

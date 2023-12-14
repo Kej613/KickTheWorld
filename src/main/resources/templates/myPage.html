@@ -13,7 +13,6 @@
     <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-
 <!--- SIDE BAR -->
 <div class="side-bar">
     <div class="logo-name">
@@ -57,22 +56,15 @@
     <div class="content">
         <div class="cards">
             <!-- CARD 1 - STAY -->
-            <div class="card">
-                <div class="box">
-<!--                    <a th:href="@{/members/update(id=${member.id})}" class="link "> 회원 수정 </a>-->
-                    <h2>회원정보수정</h2>
-                    <p>Member</p></a>
-                </div>
-
-            </div>
-            <!-- CARD 2 - TRIP -->
-<!--            <div class="card" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
+<!--            <div class="card">-->
 <!--                <div class="box">-->
-<!--                    <a th:href="@{/orders}" class="link" >-->
-<!--                        <h2>예약대기</h2>-->
-<!--                        <p>Reservation</p></a>-->
+<!--&lt;!&ndash;                    <a th:with="memberId=${member.id}" th:href="@{'/members/update/' + memberId}" class="link"></a>&ndash;&gt;-->
+<!--                    <h2>회원정보수정</h2>-->
+<!--                    <p>Member</p></a>-->
 <!--                </div>-->
+
 <!--            </div>-->
+
             <div class="card" >
                 <div class="box">
                     <a th:href="@{/orders}" class="link" >

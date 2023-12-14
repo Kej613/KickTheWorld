@@ -1,6 +1,7 @@
 package com.example.Member.entity;
 
 
+import com.example.Board.Entity.Board;
 import com.example.Member.constant.Role;
 import com.example.Member.dto.MemberFormDto;
 import jakarta.persistence.*;
@@ -8,6 +9,8 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="member")
@@ -19,15 +22,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_id")
     private Long id;
-
     private String memId;   // 로그인 아이디
     private String name;    //이름
     @Column(unique = true)
     private String email;   //이메일
-
     private String phonenumber; //핸드폰번호
     private String password; //비밀번호
     private String address;  //주소
@@ -36,6 +37,10 @@ public class Member {
     private Role role;
 
     private LocalDateTime createdAt; //가입시간
+
+//    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL) //멤버가 삭제되면 글도 삭제되게
+//    private List<Board> boards = new ArrayList<>();
+
 
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder, Role role){

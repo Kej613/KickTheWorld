@@ -2,15 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <title>게시글 조회</title>
 
   <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
   <link rel="stylesheet" th:href="@{/css/boardList.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+  <script th:inline="javascript">
+    $(document).ready(function() {
+      var bno = [[${dto.bno}]];
+      var viewCountElement = $("#viewCount");
+
+      // 조회수 갱신을 위한 AJAX 요청 보내기
+      $.post('/board/updateViewCount', { bno: bno }, function(updatedViewCount) {
+        console.log('조회수가 성공적으로 갱신되었습니다');
+        // 조회수 업데이트
+        viewCountElement.text(updatedViewCount);
+      });
+    });
+  </script>
 
   <style>
     @font-face {
@@ -139,6 +151,7 @@
 </header>
 
 <form>
+
   <table class="table" style="border: solid 1px #ccc; ">
     <tr>
       <td><b>글 번호<p class="p1" th:text="${dto.bno}"></p></b></td>
@@ -157,6 +170,8 @@
       <td><p class="p1" th:text="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"></p></td>
       <td><label>수정일</label></td>
       <td><p class="p1" th:text="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}"></p></td>
+      <td><label>조회수</label></td>
+      <td colspan="3"><p class="p1" id="viewCount" th:text="${dto.viewCount}"></p></td>
     </tr>
   </table>
 </form>
@@ -176,7 +191,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">댓글</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <button type="button" class="btn btn-outline-dark replyClose" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

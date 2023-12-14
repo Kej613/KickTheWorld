@@ -58,6 +58,7 @@
             // 숙박일수에 따라 총 가격 계산
             calculateTotalPrice();
         }
+
         //전체 결제 금액
         function calculateTotalPrice(){
             var count = $("#count").val();
@@ -283,8 +284,8 @@
 <div class="content" style="margin-left:25%;margin-right:25%; margin-top: 200px;">
     <input type="hidden" id="id" th:value="${stay.id}">
     <div class="d-flex">
-        <div class="img_div" style="margin-right:20px; text-align:center;">
-            <img th:src="${stay.stayImgDtoList[0].imgUrl}" class = "rounded-1 repImg" th:alt="${stay.name}" style=" width: 600px; height:auto;">
+        <div class="img_div" style="margin-right:20px; text-align:center;margin:auto;">
+            <img th:src="${stay.stayImgDtoList[0].imgUrl}" class = "rounded-1 repImg" th:alt="${stay.name}" style=" width: 700px; height:500px;">
         </div><br><br>
         <div class="wd50">
             <span th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="badge badge-primary mgb-15" >
@@ -294,7 +295,7 @@
                 예약마감
             </span>
             <div class="stay_name">
-               <b><p class="p_title" th:text="${stay.name}"></p></b></div>
+               <b><p th:text="${stay.name}" style="font-size:28px; text-align:center;"></p></b></div>
             <hr class="my-4">
             <p id="detail" th:text="${stay.detail}">
             <hr class="my-4">

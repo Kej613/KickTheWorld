@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
-<!--  <link th:href="@{/css/stay.css}" rel="stylesheet">-->
-
   <title>예약</title>
   <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
   <link rel="stylesheet" th:href="@{/css/boardList.css}">
@@ -41,8 +37,8 @@
         dataType : "json",
         cache   : false,
         success  : function(result, status){
-          alert("예약이 취소 되었습니다.");
-          // 해당 주문 정보를 삭제
+          alert("예약을 취소했습니다.");
+          // 해당 예약 정보를 삭제
           $("#order-" + orderId).fadeOut('slow', function () {
             // 애니메이션이 완료되면 페이지 리로드
             location.reload();
@@ -60,16 +56,11 @@
     }
 
     function deleteOrder(orderId) {
-      // var token = $("meta[name='_csrf']").attr("content");
-      // var header = $("meta[name='_csrf_header']").attr("content");
       var url = "/order/" + orderId;
-
       $.ajax({
         url: url,
         type: "DELETE",
-        // beforeSend: function(xhr) {
-        //   xhr.setRequestHeader(header, token);
-        // },
+
         success: function(result, status) {
           alert("삭제 되었습니다.");
         },
@@ -88,21 +79,18 @@
       font-weight: 400;
       font-style: normal;
     }
-    body,h2 {
+    body,h2{
       font-family: 'Pretendard-Regular';
     }
-
     .main {
       width: 80%;
       margin-left:auto;
       margin-right: auto;
-
     }
 
   </style>
 </head>
 <body>
-
 <!-- HEADER -->
 <header class="header" id="header">
   <!--NAV CONTAINER 1-->
@@ -165,36 +153,44 @@
     </div>
   </nav>
 </header>
-<div class="main" style="margin-top:200px;">
+<div>
+<h2 style="margin-bottom: 200px; margin-left:auto; margin-right:auto; text-align:center; ">결제대기현황</h2>
+</div>
+<div class="main" style="margin-top:200px; margin-left:auto; margin-right:auto; text-align:center; background-color:#FFFFFF; border-radius:20px; width:80%;">
   <div th:each="order : ${orders.getContent()}">
     <div>
-      <h2 th:text="${order.orderDate}"></h2>
+      <p th:text="${order.orderDate}" style="font-size:23px;"></p>
       <div>
-        <div th:if="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
-          <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">취소</button>
-        </div>
         <div th:unless="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
           <h4>(취소 완료)</h4>
         </div>
        </div>
       </div>
-
     <div>
       <div th:each="orderItem : ${order.orderItemDtoList}">
         <div>
           <img th:src="${orderItem.imgUrl}" th:alt="${orderItem.name}" style="width:300px;">
         </div>
-
         <div>
           <span th:text="${orderItem.name}" ></span>
           <div>
-            결제 예정 금액: <span th:text="${orderItem.orderPrice * orderItem.count} +'원'"></span>
-          </div>
+            <div>
+              <span th:text="${'입실날짜: '+#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}" ></span>
+              <div>
+                <div>
+                  <span th:text="${'퇴실날짜: '+#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}" ></span>
+                  <div>
+            결제 예정 금액: <span th:text="${#strings.replace(#numbers.formatDecimal(orderItem.orderPrice * orderItem.count, 0, 'COMMA',2,'POINT'),'.00','')+'원'}" style="color: #ee4643;"></span>
+                  </div>
 
-<!--          <a th:href="@{/pay}" class="btn btn-outline-dark">결제하기</a>-->
+                  <!--          <a th:href="@{/pay}" class="btn btn-outline-dark">결제하기</a>-->
 <!--          <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${orderItem.checkInDate}, checkOutDate=${orderItem.checkOutDate})}" class="btn btn-outline-dark">결제하기</a>-->
-          <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제하기</a>
-        </div>
+                  <div th:if="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
+                    <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">예약취소</button>
+                    <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제요청</a>
+
+                  </div>
+         </div>
       </div>
     </div>
   </div>
@@ -218,7 +214,10 @@
 <!--      </li>-->
 <!--    </ul>-->
 <!--  </div>-->
-
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
