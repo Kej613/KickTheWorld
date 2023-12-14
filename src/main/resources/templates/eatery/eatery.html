@@ -34,11 +34,15 @@
         .slider {
             display: flex;
             transition: transform 0.5s ease-in-out;
+            justify-content: center;
         }
 
         .slide {
             min-width: 100%;
             box-sizing: border-box;
+            display: flex; /* 이미지를 수직으로 가운데 정렬 */
+            align-items: center;
+            justify-content: center;
         }
 
         img {
@@ -93,7 +97,6 @@
                 <li class="nav__item">
                     <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
                 </li>
-
                 <!-- 8번 브랜치에서 추가-->
                 <li class="nav__item">
                     <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
@@ -105,17 +108,14 @@
                     <a class="nav__link" href="/members/login" th:href="@{/members/login}"
                        th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
                 </li>
-
                 <li class="nav__item">
                     <a class="nav__link" href="/members/new" th:href="@{/members/new}"
                        th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
                 </li>
-
                 <li class="nav__item">
                     <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
                        th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
                 </li>
-
                 <i class="ri-close-line nav__close" id="nav-close"></i>
             </ul>
         </div>
@@ -145,7 +145,7 @@
     </nav>
 </header>
 <div>
-    <div class="main_content" style="width:70%; margin-left:auto; margin-right: auto; margin-top: 300px; background-color: white;">
+    <div class="main_content" style="width:70%; margin-left:auto; margin-right: auto; margin-top: 200px; background-color: white;">
         <input type="hidden" id="id" th:value="${eatery.id}">
         <!--        대표이미지-->
             <div class="repImgDiv">
@@ -170,9 +170,7 @@
             <button class="prev-btn" onclick="prevSlide()">&#8249;</button>
             <button class="next-btn" onclick="nextSlide()">&#8250;</button>
         </div>
-
         <hr class="my-4">
-
         <div class="text-center">
             <h2><b>위치 </b></h2>
             <hr class="my-4">

@@ -114,9 +114,9 @@
 <div>
 <form method="post" action="" id="payForm" name="payForm" >
     <div style="margin-top:200px;">
-        <h2>결제 명세서</h2>
+        <h2>결제내역확인</h2>
         <!-- container -->
-        <div class="container">
+        <div class="container" style="margin-top: 20px;">
             <div class="table-responsive">
                 <table class="table">
                     <colgroup>
@@ -156,7 +156,7 @@
         </div>
         <!-- //container -->
         <!-- fixed bottom button -->
-        <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayAuth();">결제요청</button></div>
+        <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayAuth();" style="margin-top: 20px; padding:10px;">결제하기</button></div>
 <!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
         <!-- //fixed bottom button -->
     </div>

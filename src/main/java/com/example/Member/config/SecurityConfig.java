@@ -57,9 +57,7 @@ public class SecurityConfig {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))    // 로그아웃 URL
                 .logoutSuccessUrl("/")                  // 로그아웃- 이동할 URL
         ;
-//        http.exceptionHandling()
-//                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
-        // 인증되지 않은 사용자가 리소스에 접근했을 때 수행되는 핸들러 등록
+
         return http.build();
     }
 

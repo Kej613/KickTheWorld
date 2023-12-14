@@ -1,7 +1,9 @@
 package com.example.Board.Entity;
 
+import com.example.Member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -23,7 +25,15 @@ public class Board extends BaseEntity {
 
     @Column
     private String category;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id", nullable = false)
     private String writer;
+
+    @ColumnDefault("0")
+    private int viewCount;
+//    @Column
+//    private Long views = 0L; // 조회수 필드 추가
 
     //추가
     public void changeTitle(String title) {
@@ -34,4 +44,15 @@ public class Board extends BaseEntity {
     }
 
     public void changeCategory(String category) { this.category = category; }
+
+
+//    public void increaseViews() {
+//        this.views++;
+//    }
+
+    @PreUpdate
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
+
 }

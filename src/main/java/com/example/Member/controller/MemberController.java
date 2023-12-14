@@ -6,14 +6,13 @@ import com.example.Member.entity.Member;
 import com.example.Member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -67,15 +66,27 @@ public class MemberController {
 
 
     // 회원 수정 폼
-    @GetMapping(value = "/update")
+    @GetMapping(value = "/update/{id}")
     public String updateMemberForm(@RequestParam Long id, Model model) {
-        Optional<Member> member = memberService.findById(id);
-        model.addAttribute("member", member);
-        return "member/UpdateForm";
+        Optional<Member> optionalMember = memberService.findById(id);
+
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            model.addAttribute("member", member);
+            return "member/UpdateForm";
+        } else {
+            // 회원을 찾을 수 없는 경우 처리 (Optional이 비어있는 경우)
+            // 적절한 오류 페이지로 리다이렉트하거나 응용 프로그램에 맞게 처리하세요.
+            model.addAttribute("errorMessage", "회원을 찾을 수 없습니다."); // 에러 메시지 추가
+            return "error";
+        }
+//        Optional<Member> member = memberService.findById(id);
+//        model.addAttribute("member", member);
+//        return "member/UpdateForm";
     }
 
     // 회원 수정
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/update/{id}")
     public String updateMember(@RequestParam Long id, @Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류 처리
@@ -98,6 +109,17 @@ public class MemberController {
         memberService.deleteMember(id);
         return "redirect:/";
     }
+
+    // 아이디중복검사
+    @RequestMapping("/checkUsername")
+    @ResponseBody
+    public ResponseEntity<String> checkUsername(@RequestParam String memId) {
+        if (memberService.isUsernameExists(memId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 아이디입니다.");
+        }
+        return ResponseEntity.ok("사용가능한 아이디입니다.");
+    }
+
 
 }
 

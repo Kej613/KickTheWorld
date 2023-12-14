@@ -1,5 +1,6 @@
 package com.example.Board.Dto;
 
+import com.example.Member.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,10 @@ public class BoardDto {
     private String writer;      //작성자
     private LocalDateTime regDate, modDate;
     private int replyCount; //댓글 수
+    private int viewCount; //조회수
+
+
+
+
+
 }

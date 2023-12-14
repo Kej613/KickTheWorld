@@ -53,14 +53,12 @@
                 <i class="ri-lock-2-line"></i>
             </div>
         </div>
-        <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
+        <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}" style="color:red;"></p>
         <button type="submit" class="login__button">로그인</button>
 
         <div class="login__register">
             아직 회원이 아니신가요? &nbsp&nbsp <a th:href="@{/members/new}">회원가입</a>
         </div>
-
-<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 
         <div class="login__social">
             <i class="ri-kakao-talk-fill"></i>
