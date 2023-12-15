@@ -44,10 +44,12 @@ a{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
 .side-bar a{
-    color: white;
+    color: inherit;
 }
 
 .side-bar .logo-name {
@@ -62,7 +64,6 @@ a{
     padding: 10px 40px;
     display: flex;
     align-items: center;
-    color: white;
 }
 
 .side-bar li:hover {
@@ -70,7 +71,6 @@ a{
     color: var(--first-color);
     transition: margin-left 0.3s ease-in-out;
     margin-left: 25px;
-    /* 글씨 크기도 키울까 scale 어쩌구 속성 이용하면 될 듯*/
 }
 
 /* CONTAINER */
@@ -78,9 +78,9 @@ a{
     position: absolute;
     right: 0;
     width: 80vw;
-    width: 80vw;
     height: 100vh;
     background-color: #FDFAFF;
+    margin-left: 0;
 }
 
 /* HEADER */
@@ -101,7 +101,6 @@ a{
 .container .header .nav {
     width: 50%;
     display: flex;
-
 }
 
 .container .header .nav ul {
@@ -109,6 +108,7 @@ a{
     display: flex;
     margin: 0;
     padding: 0;
+    justify-content: space-between;
 }
 
 .container .header .nav li {
@@ -119,7 +119,6 @@ a{
 .container .header .nav a {
     text-decoration: none;
     color: black;
-    /* font-size, font-weight 추가 필요 */
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-semi-bold);
 }
@@ -135,7 +134,7 @@ a{
     padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -150,14 +149,14 @@ a{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/*.container .content .cards .card .icon-design .link i {*/
-/*    font-size: 3.5rem;*/
-/*}*/
+.container .content .cards .card h3,
+.container .content .cards .card p {
+    color: black;
+}
 
 .container .content .cards .card .icon-design img {
     width: 60px;
     height: 60px;
-
 }
 
 .container .content .content-ii {
