@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/main_test.css}">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -47,7 +48,7 @@
         }
         h2{
             font-family: 'Pretendard-Regular';
-            font-size: 23px;
+            font-size: 27px;
             text-align:center;
         }
         input {
@@ -80,10 +81,7 @@
             margin-top: 10px;
             text-display: none;
             color:black;
-
         }
-
-
     </style>
 </head>
 <body>
@@ -96,35 +94,27 @@
         <!--NAV MENU-->
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
-                <li class="nav__item">
-                    <a class="nav__link" href="/mypage" ><b>마이페이지</b></a>
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+                </li>
+                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+                    <a class="nav__link" href="/admin" th:href="@{/mypage}" ><b>마이페이지</b></a>
                 </li>
                 <li class="nav__item">
                     <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
                 </li>
-                <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                    <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
-                </li>
                 <li class="nav__item">
-                    <a class="nav__link" href="/members/login" th:href="@{/members/login}"
-                       th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+                    <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
                 </li>
 
                 <li class="nav__item">
-                    <a class="nav__link" href="/members/new" th:href="@{/members/new}"
-                       th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+                    <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
                 </li>
-
                 <li class="nav__item">
-                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
-                       th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+                    <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                        <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b>로그아웃</b></a>
                 </li>
-
-                <i class="ri-close-line nav__close" id="nav-close"></i>
             </ul>
-        </div>
-        <div class="nav__toggle" id="nav-toggle">
-            <i class="ri-function-line"></i>
         </div>
     </nav>
 
@@ -175,20 +165,11 @@
                     <a th:href="'/admin/trip/'+${trip.id}">
                         <img th:src="${trip.imgUrl}" th:alt="${trip.name}" class="rounded-1 repImg">
                         <p th:text="${trip.name}" class="trip-name"></p>
-<!--                        <p th:text="${trip.theme}" ></p>-->
                     </a>
                 </div>
             </div>
 
-<!--            <div class="card-container" style="margin-top:50px;">-->
-<!--                <div th:each="trip, status: ${trips.getContent()}">-->
-<!--                    <a th:href="'/admin/trip/'+${trip.id}">-->
-<!--                    <img th:src="${trip.imgUrl}" th:alt="${trip.name}"  class = "rounded-1 repImg" >-->
-<!--                    <a th:text="${trip.name}"></a></a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <!--        페이징처리-->
+            <!-- 페이징처리-->
             <div class="paging" style="margin-top:300px;" >
             <div th:with="start=${(trips.number/maxPage)*maxPage + 1}, end=(${(trips.totalPages == 0) ? 1 : (start + (maxPage - 1) < trips.totalPages ? start + (maxPage - 1) : trips.totalPages)})" >
                 <ul class="pagination justify-content-center">
@@ -214,9 +195,6 @@
             </div>
         </form>
     </div>
-            </div>
-        </div>
-    </section>
 </main>
 
 

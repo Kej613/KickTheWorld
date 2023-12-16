@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ICON -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.7.0/remixicon.css">
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/login_test.css}">
     <!-- JQUERY -->
@@ -27,6 +27,19 @@
 <!--LOGIN-->
 <div class="login">
 
+    <div class="info">
+        <div class="info__logo"><i class="ri-information-2-line"></i></div>
+        <h1>Test Account Info</h1>
+        <p>관리자
+            <span>admin1</span>
+            <span>12345678</span>
+        </p>
+        <p>사용자
+            <span>user1</span>
+            <span>12345678</span>
+        </p>
+    </div>
+    <!--LOGIN FORM-->
     <form role="form" method="post" th:action="@{/members/login}" class="login__form">
         <div class="login__logo">
             <a th:href="@{/}">
@@ -37,9 +50,6 @@
         <p class="login__logo-subtitle">함께하는 여행, 킥더월드</p>
 
         <h1 class="login__title">Login</h1>
-        <p>[test계정]</p>
-        <p>일반사용자: user1/12345678</p>
-        <p>관리자: admin1/12345678</p>
         <div class="login__inputs">
             <!-- ID -->
             <div class="login__box">

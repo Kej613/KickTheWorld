@@ -29,12 +29,18 @@
                     url: "/members/checkUsername",
                     data: { memId: username },
                     success: function(response) {
-                        alert("사용가능한 아이디입니다.");
-                        if (response === "이미 존재하는 아이디입니다.") {
+                        // alert 중복 제거
+                        // alert("사용가능한 아이디입니다.");
+                        console.log("응답", response);
+
+                        if (response === "duplicate") {
                             alert("이미 존재하는 아이디입니다.");
                             console.log("이미 존재하는 아이디입니다. 재입력요청");
-                        } else {
-                            alert("사용가능한 아이디입니다.")
+                        } else if (response === "available") {
+                            alert("사용가능한 아이디입니다.");
+                        }
+                        else {
+                            alert("서버 응답 오류");
                         }
                     },
                     error: function(xhr, status, error) {
