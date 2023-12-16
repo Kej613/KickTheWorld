@@ -22,32 +22,27 @@
     <!--NAV MENU-->
     <div class="nav__menu" id="nav-menu">
       <ul class="nav__list">
-        <li class="nav__item">
-          <a class="nav__link" href="/mypage"><b>마이페이지</b></a>
+        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+          <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+        </li>
+        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+          <a class="nav__link" href="/admin" th:href="@{/mypage}" ><b>마이페이지</b></a>
         </li>
         <li class="nav__item">
           <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
         </li>
-        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-          <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
-        </li>
         <li class="nav__item">
-          <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>[로그인]</b></a>
+          <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
         </li>
 
         <li class="nav__item">
-          <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>[회원가입]</b></a>
+          <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
         </li>
         <li class="nav__item">
           <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-            <p th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></p> <b>로그아웃</b></a>
+            <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b>로그아웃</b></a>
         </li>
-
-        <i class="ri-close-line nav__close" id="nav-close"></i>
       </ul>
-    </div>
-    <div class="nav__toggle" id="nav-toggle">
-      <i class="ri-function-line"></i>
     </div>
   </nav>
   <!--NAV CONTAINER 2-->
@@ -106,7 +101,6 @@
         <h2 class="section__title about__title">당신에게 보여주고 싶은 곳 </h2>
         <p class="about__description">
           Kick The World는 여러분들을 위한 장소들을 찾아 안내하며,<br>여행 중 최고의 순간이 되도록 도와드립니다.<br>
-<!--          우리는 여러분의 여행을 향한 모든 순간을 함께하겠습니다.-->
           <br>함께하는 여행, 지금 떠날 준비를 해보세요.
         </p>
         <a th:href="@{/main/trips}" class="button">여행지 검색</a>
@@ -206,45 +200,59 @@
     </div>
   </section>
 
+  <!-- VIDEO -->
+  <section class="video section">
+    <h2 class="section__title">영상으로 느껴보는 여유로운 여행</h2>
+
+    <div class="video__container container">
+      <p class="video__description">
+<!--        뭐라고 쓰지-->
+        새로운 세상의 아름다움과 다양함을 만날 수 있습니다
+      </p>
+
+      <div class="video__content">
+        <video id="video-file">
+          <source th:src="@{video/video.mp4}" type="video/mp4">
+        </video>
+
+        <button class="button button--flex video__button" id="video-button">
+          <i class="ri-play-line video__button-icon" id="video-icon"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- PLACE -->
   <section class="place section" id="place">
     <h2 class="section__title">원하는 숙소를 선택하세요</h2>
+    <p class="discover__description">
+      어디서든 편히 쉴 수 있도록, 전국의 숙소가 준비되어 있습니다
+    </p>
+
     <div class="place__container container grid">
 
       <!-- PLACES CARD 1 -->
       <div class="place__card">
-        <a th:href="@{'/main/stays' }">
-        <img th:src="@{images/main/place1.jpg}" alt="" class="place__img">
+        <img th:src="@{images/main/place1-hotel.jpg}" alt="" class="place__img">
 
         <div class="place__content">
-          <span class="place__rating">
-            <i class="ri-star-line place__rating-icon"></i>
-            <span class="place__rating-number">4.8</span>
-          </span>
-
           <div class="place__data">
             <h3 class="place__title">호텔</h3>
-            <span class="place__subtitle">서울/부산</span>
-            <span class="place__price">₩259,000~</span>
+            <span class="place__subtitle">서울</span>
+            <span class="place__price">₩129,000~</span>
           </div>
         </div>
 
         <button class="button button--flex place__button">
           <a th:href="@{/main/stays}"><i class="ri-arrow-right-line"></i></a>
-        </button></a>
-
+        </button>
       </div>
 
-      <!-- PLACES CARD 3 -->
+      <!-- PLACES CARD 2 -->
       <div class="place__card">
-        <img th:href="@{/main/stays}" th:src="@{images/main/place3.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place2-pension.jpg}" alt="" class="place__img">
 
         <div class="place__content">
-          <span class="place__rating">
-            <i class="ri-star-line place__rating-icon"></i>
-            <span class="place__rating-number">4,9</span>
-          </span>
-
           <div class="place__data">
             <h3 class="place__title">펜션</h3>
             <span class="place__subtitle">경기/인천</span>
@@ -257,19 +265,14 @@
         </button>
       </div>
 
-      <!-- PLACES CARD 4 -->
+      <!-- PLACES CARD 3 -->
       <div class="place__card">
-        <img th:href="@{/main/stays}" th:src="@{images/main/place4.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place3-pool.jpg}" alt="" class="place__img">
 
         <div class="place__content">
-          <span class="place__rating">
-            <i class="ri-star-line place__rating-icon"></i>
-            <span class="place__rating-number">4,8</span>
-          </span>
-
           <div class="place__data">
             <h3 class="place__title">풀빌라</h3>
-            <span class="place__subtitle">여수</span>
+            <span class="place__subtitle">전남</span>
             <span class="place__price">₩390,000~</span>
           </div>
         </div>
@@ -279,16 +282,11 @@
         </button>
       </div>
 
-      <!-- PLACES CARD 5 -->
+      <!-- PLACES CARD 4 -->
       <div class="place__card">
-        <img  th:href="@{/main/stays}" th:src="@{images/main/place5.jpg}" alt="" class="place__img">
+        <img  th:href="@{/main/stays}" th:src="@{images/main/place4-risort.jpg}" alt="" class="place__img">
 
         <div class="place__content">
-          <span class="place__rating">
-            <i class="ri-star-line place__rating-icon"></i>
-            <span class="place__rating-number">4,8</span>
-          </span>
-
           <div class="place__data">
             <h3 class="place__title">리조트</h3>
             <span class="place__subtitle">경남/부산</span>
@@ -302,16 +300,11 @@
 
       </div>
 
-      <!-- PLACES CARD 6 -->
+      <!-- PLACES CARD 5 -->
       <div class="place__card">
-        <img th:href="@{/main/stays}" th:src="@{images/main/place2.jpg}" alt="" class="place__img">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place5-camping.jpg}" alt="" class="place__img">
 
         <div class="place__content">
-          <span class="place__rating">
-            <i class="ri-star-line place__rating-icon"></i>
-            <span class="place__rating-number">4,8</span>
-          </span>
-
           <div class="place__data">
             <h3 class="place__title">글램핑/캠핑</h3>
             <span class="place__subtitle">경기</span>
@@ -323,6 +316,50 @@
           <a th:href="@{/stays}"><i class="ri-arrow-right-line"></i></a>
         </button>
       </div>
+
+      <!-- PLACES CARD 6 -->
+      <div class="place__card">
+        <img th:href="@{/main/stays}" th:src="@{images/main/place6-guest.jpg}" alt="" class="place__img">
+
+        <div class="place__content">
+          <div class="place__data">
+            <h3 class="place__title">게스트 하우스</h3>
+            <span class="place__subtitle">제주</span>
+            <span class="place__price">₩69,000~</span>
+          </div>
+        </div>
+
+        <button class="button button--flex place__button">
+          <a th:href="@{/main/stays}"><i class="ri-arrow-right-line"></i></a>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONSOR -->
+  <section class="sponsor section">
+    <h2 class="section__title">도움 주신 분께 감사한 마음을 전합니다</h2>
+    <p class="sponsor__description">
+      도움에 힘입어, 더 나은 Kick The World가 되도록 노력하겠습니다
+    </p>
+
+    <div class="sponsor__container container grid">
+
+      <div class="sponsor__content">
+        <img th:src="@{images/main/sponsor1.png}" alt="" class="sponsor__img">
+      </div>
+      <div class="sponsor__content">
+        <img th:src="@{images/main/sponsor2.png}" alt="" class="sponsor__img">
+      </div>
+      <div class="sponsor__content">
+        <img th:src="@{images/main/sponsor3.png}" alt="" class="sponsor__img">
+      </div>
+      <div class="sponsor__content">
+        <img th:src="@{images/main/sponsor4.png}" alt="" class="sponsor__img">
+      </div>
+      <div class="sponsor__content">
+        <img th:src="@{images/main/sponsor5.png}" alt="" class="sponsor__img">
+      </div>
     </div>
   </section>
 </main>
@@ -333,6 +370,9 @@
     <div class="footer__content grid">
       <div class="footer__data">
         <h3 class="footer__title">Developer</h3>
+        <p class="footer__description">
+          SKUniv<br>Software<br>
+        </p>
         <div>
           <a href="https://www.facebook.com/" target="_blank" class="footer__social">
             <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
@@ -341,6 +381,21 @@
             <span class="footer__name">박의연</span><i class="ri-github-fill"></i>
           </a>
         </div>
+      </div>
+
+      <div class="footer__data">
+        <h3 class="footer__subtitle">About</h3>
+        <ul>
+          <li class="footer__item">
+            <a href="" class="footer__link">About Us</a>
+          </li>
+          <li class="footer__item">
+            <a href="" class="footer__link">Features</a>
+          </li>
+          <li class="footer__item">
+            <a href="" class="footer__link">New & Blog</a>
+          </li>
+        </ul>
       </div>
 
       <div class="footer__data">
@@ -357,10 +412,25 @@
           </li>
         </ul>
       </div>
+
+      <div class="footer__data">
+        <h3 class="footer__subtitle">Support</h3>
+        <ul>
+          <li class="footer__item">
+            <a href="" class="footer__link">FAQs</a>
+          </li>
+          <li class="footer__item">
+            <a href="" class="footer__link">Support Center</a>
+          </li>
+          <li class="footer__item">
+            <a href="" class="footer__link">Contact Us</a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="footer__rights">
-      <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
+      <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
     </div>
   </div>
 </footer>
