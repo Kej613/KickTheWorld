@@ -1,5 +1,7 @@
 package com.example.Pay.controller;
 
+import com.example.Member.entity.Member;
+import com.example.Order.Repository.OrderRepository;
 import com.example.Pay.domain.Pay;
 import com.example.Pay.repository.PayRepository;
 import com.example.Pay.util.DateUtil;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -28,19 +31,24 @@ import java.util.List;
 public class PayController {
 
 	private final PayRepository payRepo;
+	private final OrderRepository orderRepository;
+
 	/**
 	 * 기본 화면 로드
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/pay", method = RequestMethod.GET)
-	public String index(Model model, HttpServletRequest request) throws Exception {
+	public String index(Model model, Principal principal, HttpServletRequest request) throws Exception {
 		String mercntId = "M2266037"; 	//가맹점 아이디
+
+		Member loginMember = orderRepository.findMemberByOrder(principal.getName());
 
 		model.addAttribute("mercntId", mercntId);
 		model.addAttribute("ordNo", DateUtil.getDateTimeMillisecond() + "M_"+request.getParameter("loginUser"));
 		model.addAttribute("baseUrl", request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
 		model.addAttribute("productNm", "테스트 상품");
+		model.addAttribute("loginMember", loginMember);
 
 		return "pay/index";
 	}

@@ -31,6 +31,8 @@ public class MainController {
     public String adminPage() {
         return "adminPage_test";
     }
+    @GetMapping("/admin/statistics")
+    public String staticsPage() { return "admin_statistics"; }
 
     @GetMapping("/")
     public String mainPage() {
@@ -60,8 +62,6 @@ public class MainController {
         model.addAttribute("trips", trips);
         model.addAttribute("eaterys", eaterys);
 
-//        SearchResult result = new SearchResult(stays, trips, eaterys);
-//        model.addAttribute("result", result);
 
         return "recommendPage";
     }

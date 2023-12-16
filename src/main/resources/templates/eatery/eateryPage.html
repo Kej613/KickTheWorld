@@ -204,6 +204,21 @@
                         <div>
                         <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>
                     </div>
+                    <div style="margin-top: 20px;">
+                        <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>음식점유형 </b></a><br>
+                        <label style="display: inline-block; margin-right: 10px;">
+                            한식 <input type="radio" name="category" value="한식" th:checked="${param.category == '한식'}" onclick="filterEaterys()"></label>
+                        <label style="display: inline-block; margin-right: 10px;">
+                            일식 <input type="radio" name="category" value="일식" th:checked="${param.category == '일식'}" onclick="filterEaterys()"></label>
+                        <label style="display: inline-block; margin-right: 10px;">
+                            중식<input type="radio" name="category" value="중식"th:checked="${param.category == '중식'}"  onclick="filterEaterys()"></label>
+                        <label style="display: inline-block; margin-right: 10px;">
+                            양식<input type="radio" name="category" value="양식" th:checked="${param.category == '양식'}" onclick="filterEaterys()"></label>
+                    </div>
+
+                    <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b>
+                        <div id="map" style="width:300px;height:300px;"></div>
+                    </a><br>
 
 
 
@@ -319,6 +334,23 @@
     </div>
 </footer>
 <script th:inline="javascript">
+    // function filterEaterys() {
+    //     // 현재 선택된 라디오 버튼의 값을 가져오기
+    //     var selectedCategory = $("input[name='eaterycategory']:checked").val();
+    //
+    //     // 서버에 필터 값 전송
+    //     $.ajax({
+    //         url: "/main/stays/filter",
+    //         type: "GET",
+    //         data: { category: selectedCategory },
+    //         success: function (data) {
+    //             updateResults(data);
+    //         },
+    //         error: function (error) {
+    //             console.error("Error during filtering: " + error);
+    //         }
+    //     });
+    // }
     $(document).ready(function(){
         $("#searchBtn").on("click",function(e) {
             e.preventDefault();

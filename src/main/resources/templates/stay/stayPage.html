@@ -61,8 +61,8 @@
             border: 1px solid #ccc;
         }
         #s_left {
-            width:80px;
-            height:700px;
+            width:100px;
+            height:1000px;
             background-color: #FDFAFF;
             float:left;
             margin:10px;
@@ -92,7 +92,7 @@
         .card-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
         }
         .trip-card {
             width: 25%;
@@ -240,29 +240,33 @@
         <div id="s_left"></div>
         <div id="contents" >
             <div th:object="${staySearchDto}" style="margin-top:10px; padding: 5px;">
+                <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>통합 검색 </b></a><br>
+                <div style="display: flex; align-items: center; margin-top:3px;">
                 <select th:field="*{searchBy}" style="width:auto; border-radius: 10px;">
                     <option value="address">지역</option>
-                    <option value="name">여행지</option>
+                    <option value="name">숙소명</option>
                 </select>
-                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:300px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
-
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:200px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
+                </div>
                <div style="text-align:center; padding:10px;">
                 <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>
 
-                <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b></a><br>
+                <div style="margin-top: 20px;">
+                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>숙소유형 </b></a><br>
+                    <label style="display: inline-block; margin-right: 10px;">
+                        호텔 <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}" onclick="filterStays()"></label>
+                    <label style="display: inline-block; margin-right: 10px;">
+                        펜션 <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}" onclick="filterStays()"></label>
+                    <label style="display: inline-block; margin-right: 10px;">
+                        게스트하우스<input type="radio" name="category" value="게스트하우스"th:checked="${param.category == '게스트하우스'}"  onclick="filterStays()"></label>
+                    <label style="display: inline-block; margin-right: 10px;">
+                        캠핑<input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}" onclick="filterStays()"></label>
+                </div>
 
-                <label>전체</label>
-                    <input type="radio" name="category" value="all" checked="checked" onclick="filterStays()">
+                <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b>
+                    <div id="map" style="width:300px;height:300px;"></div>
+                </a><br>
 
-                <label>호텔 </label>
-                    <input type="radio" name="category" value="hotel" onclick="filterStays()">
-
-                <label>펜션 </label>
-                    <input type="radio" name="category" value="pension" onclick="filterStays()">
-                <label>게스트하우스 </label>
-                     <input type="radio" name="category" value="pension" onclick="filterStays()">
-                <label>캠핑 </label>
-                      <input type="radio" name="category" value="pension" onclick="filterStays()">
             </div>
 
 
@@ -338,7 +342,6 @@
                                 <span aria-hidden='true'>>></span>
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -390,69 +393,20 @@
 </footer>
 <!-- SWIPER JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2e5cdc145feeac77effa91283d46a6e"></script>
+<script>
+    var container = document.getElementById('map');
+    var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+
+    var map = new kakao.maps.Map(container, options);
+</script>
 <!-- MAIN JS -->
 <script th:src="@{/js/main_test.js}"></script>
 <script>
-    // function search() {
-    //     var address = $("#addressFilter").val();
-    //     var category = $("#categoryFilter").val();
-    //     var people = $("#peopleFilter").val();
-    //     var price = $("#priceFilter").val();
-    //
-    //     // 서버에 필터 값 전송
-    //     $.ajax({
-    //         url: "/main/stays/search",
-    //         type: "GET",
-    //         data: {
-    //             address: address,
-    //             category: category,
-    //             people: people,
-    //             price: price
-    //         },
-    //         success: function (data) {
-    //             // 비동기적으로 결과를 화면에 업데이트
-    //             updateResults(data);
-    //         },
-    //         error: function (error) {
-    //             console.error("Error during search: " + error);
-    //         }
-    //     });
-    // }
-    // function updateResults(data) {
-    //     // 결과를 이용하여 화면 업데이트
-    //     // 예시: 각 숙소에 대한 정보를 가지고 있는 data를 이용하여 동적으로 업데이트
-    //     $(".main_div").empty(); // 기존 숙소 목록 비우기
-    //
-    //     data.forEach(function (stay) {
-    //         // 각 숙소에 대한 화면 업데이트 로직
-    //         var stayHtml = "<div>";
-    //         stayHtml += "<img src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
-    //         stayHtml += "<p>" + stay.name + "</p>";
-    //         stayHtml += "<p>" + stay.address + "</p>";
-    //         stayHtml += "<p>" + stay.price + "</p>";
-    //         stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
-    //         stayHtml += "</div>";
-    //
-    //         $(".main_div").append(stayHtml);
-    //     });
-    // }
-
-    // function filterStays() {
-    //     var category = document.querySelector('input[name="category"]:checked').value;
-    //
-    //     // 서버에 필터 값 전송
-    //     $.ajax({
-    //         url: "/main/stays/filter",  // 실제 서버 엔드포인트로 변경
-    //         type: "GET",
-    //         data: { category: category },
-    //         success: function (data) {
-    //             // 비동기적으로 결과를 화면에 업데이트
-    //             updateResults(data);
-    //         },
-    //         error: function (error) {
-    //             console.error("Error during filtering: " + error);
-    //         }
-    //     });
     function filterStays() {
         // 현재 선택된 라디오 버튼의 값을 가져오기
         var selectedCategory = $("input[name='category']:checked").val();
@@ -463,7 +417,6 @@
             type: "GET",
             data: { category: selectedCategory },
             success: function (data) {
-                // 비동기적으로 결과를 화면에 업데이트
                 updateResults(data);
             },
             error: function (error) {
@@ -471,49 +424,21 @@
             }
         });
     }
-        function updateResults(data) {
-            // 결과를 이용하여 화면 업데이트
-            $(".card-container").empty(); // 기존 숙소 목록 비우기
+    function updateResults(data) {
+        $(".card-container").empty(); // 기존 숙소 비우기
 
-            /*[# th:each="stay : ${data}"]*/
-            /*[# th:src="${stay.imgUrl}" th:alt="${stay.name}"]*/
-            /*[# th:text="${stay.name}"]*/
-            /*[# th:text="${stay.address}"]*/
-            /*[# th:text="${stay.price}"]*/
-            /*[# th:href="'/admin/stay/' + ${stay.id}"]*/
-            /*[# th:text="'숙소 둘러보기'"]*/
+        data.forEach(function (stay) {
+            var stayHtml = "<div>";
+            stayHtml += "<img src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
+            stayHtml += "<p>" + stay.name + "</p>";
+            stayHtml += "<p>" + stay.address + "</p>";
+            stayHtml += "<p>" + stay.price + "</p>";
+            stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
+            stayHtml += "</div>";
 
-            data.forEach(function (stay) {
-                // 각 숙소에 대한 화면 업데이트 로직
-                var stayHtml = "<div>";
-                stayHtml += "<img th:src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
-                stayHtml += "<p>" + stay.name + "</p>";
-                stayHtml += "<p>" + stay.address + "</p>";
-                stayHtml += "<p>" + stay.price + "</p>";
-                stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
-                stayHtml += "</div>";
-
-                $(".card-container").append(stayHtml);
-            });
-
+            $(".card-container").append(stayHtml);
+        });
     }
-
-    // function updateResults(data) {
-    //     // 결과를 이용하여 화면 업데이트
-    //     $(".card-container").empty(); // 기존 숙소 목록 비우기
-    //
-    //     data.forEach(function (stay) {
-    //         // 각 숙소에 대한 화면 업데이트 로직
-    //         var stayHtml = "<div>";
-    //         stayHtml += "<img th:src='" + stay.imgUrl + "' alt='" + stay.name + "'>";
-    //         stayHtml += "<p>" + stay.name + "</p>";
-    //         stayHtml += "<p>" + stay.address + "</p>";
-    //         stayHtml += "<p>" + stay.price + "</p>";
-    //         stayHtml += "<button onclick='viewStay(" + stay.id + ")'>숙소 둘러보기</button>";
-    //         stayHtml += "</div>";
-    //
-    //         $(".card-container").append(stayHtml);
-    //     });
 
 
 </script>

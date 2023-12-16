@@ -15,11 +15,11 @@ public class Reply extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rno;
+    private Long rno;       //댓글번호
 
-    private String text;
+    private String text;        //댓글내용
 
-    private String replier;
+    private String writer;      //작성자
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;

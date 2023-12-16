@@ -37,7 +37,6 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void modify(ReplyDTO replyDTO) {
         Reply reply = dtoToEntity(replyDTO);
-
         replyRepository.save(reply);
     }
 

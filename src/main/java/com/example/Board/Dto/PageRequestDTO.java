@@ -15,6 +15,8 @@ public class PageRequestDTO {
     private String type;
     private String keyword;
 
+    private String category;
+
     private int page;
     private int size;
 

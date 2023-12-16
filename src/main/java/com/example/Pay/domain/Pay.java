@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @ToString
-@Table(indexes = {@Index(name = "idx_pay_ord_no", columnList = "ord_no")})
+//@Table(indexes = {@Index(name = "idx_pay_ord_no", columnList = "ord_no")})
 public class Pay {
     // 결제인증
     @Id

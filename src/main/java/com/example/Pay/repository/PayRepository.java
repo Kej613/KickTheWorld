@@ -20,4 +20,6 @@ public interface PayRepository extends CrudRepository<Pay, String> {
 
     @Query("SELECT p FROM Pay p WHERE p.ordNo LIKE %:memId% AND p.payStatus IN ('P', 'C')")
     List<Pay> findPayByMemId(@Param("memId") String memId);
+
+
 }

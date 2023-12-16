@@ -5,6 +5,8 @@ import com.example.Board.Dto.PageRequestDTO;
 import com.example.Board.Dto.PageResultDTO;
 import com.example.Board.Entity.Board;
 
+import java.util.List;
+
 public interface BoardService {
 
     Long register(BoardDto dto);
@@ -58,4 +60,6 @@ public interface BoardService {
 //    void increaseViews(Long bno);
 
     Long updateViewCount(Long bno);
+
+    List<BoardDto> getFilteredBoardList(String category);
 }

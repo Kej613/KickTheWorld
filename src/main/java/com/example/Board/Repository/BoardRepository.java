@@ -14,4 +14,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, QuerydslPre
 //
 //    @Query("select b, r from Board b left join Reply r on r.board = b where b.bno = :bno")
 //    List<Object[]> getBoardWithReply(@Param("bno") Long bno);
+
+    List<Board> findByCategory(String category);
 }

@@ -154,15 +154,15 @@
   </nav>
 </header>
 <div>
-<h2 style="margin-bottom: 200px; margin-left:auto; margin-right:auto; text-align:center; ">결제대기현황</h2>
+<h2 style="margin-top: 200px; margin-left:auto; margin-right:auto; text-align:center; ">나의 관심 숙소</h2>
 </div>
-<div class="main" style="margin-top:200px; margin-left:auto; margin-right:auto; text-align:center; background-color:#FFFFFF; border-radius:20px; width:80%;">
+<div class="main" style="margin-top:50px; margin-left:auto; margin-right:auto; text-align:center; background-color:#FFFFFF; border-radius:20px; width:80%;">
   <div th:each="order : ${orders.getContent()}">
     <div>
       <p th:text="${order.orderDate}" style="font-size:23px;"></p>
       <div>
         <div th:unless="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
-          <h4>(취소 완료)</h4>
+          <h4>(삭제 완료)</h4>
         </div>
        </div>
       </div>
@@ -186,8 +186,8 @@
                   <!--          <a th:href="@{/pay}" class="btn btn-outline-dark">결제하기</a>-->
 <!--          <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${orderItem.checkInDate}, checkOutDate=${orderItem.checkOutDate})}" class="btn btn-outline-dark">결제하기</a>-->
                   <div th:if="${order.orderStatus == T(com.example.Order.Constant.OrderStatus).ORDER}">
-                    <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">예약취소</button>
-                    <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제요청</a>
+                    <button type="button" class="btn btn-outline-dark" th:value="${order.orderId}" onclick="cancelOrder(this.value)">삭제</button>
+                    <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제하기</a>
 
                   </div>
          </div>

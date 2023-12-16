@@ -66,14 +66,12 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
         return StringUtils.isEmpty(searchQuery) ? null : QStay.stay.name.like("%" + searchQuery + "%");
     }
 
-
     @Override
     public Page<StayItemDto> getStayPage (StaySearchDto staySearchDto, Pageable pageable) {
         QStay stay = QStay.stay;
         QStayImg stayImg = QStayImg.stayImg;
 
-        QueryResults<StayItemDto> results = queryFactory
-                .select(
+        QueryResults<StayItemDto> results = queryFactory.select(
                         new QStayItemDto(
                                 stay.id,
                                 stay.name,

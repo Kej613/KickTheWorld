@@ -34,6 +34,9 @@
   body {
     background-color: #FDFAFF;
   }
+    header {
+      background-color: #FDFAFF;
+    }
     h1 {
       font-family: 'Pretendard-Regular';
       text-align:center;
@@ -41,6 +44,7 @@
     .p1,p1_subtitle, p1_title {
       font-family: 'Pretendard-Regular';
       text-size:25px;
+      padding:5px;
     }
 
     form {
@@ -77,9 +81,9 @@
       margin-left:auto;
       margin-right:auto;
       text-align: left;
-      boder: solid 1px #ccc;
+      border: solid 1px #ccc;
       border-radius: 20px;
-      background-color: #ffffff;
+      padding:10px;
     }
   </style>
 
@@ -87,7 +91,7 @@
 <body>
 
 <!-- HEADER -->
-<header class="header" id="header">
+<header class="header" id="header" style=" background-color: #FDFAFF;">
   <!--NAV CONTAINER 1-->
   <nav class="nav container">
     <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
@@ -143,7 +147,7 @@
           <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
         </li>
         <li class="nav__item">
-          <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+          <a href="/search" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
         </li>
       </ul>
     </div>
@@ -152,13 +156,11 @@
 
 <form>
 
-  <table class="table" style="border: solid 1px #ccc; ">
-    <tr>
-      <td><b>글 번호<p class="p1" th:text="${dto.bno}"></p></b></td>
-      <td><b>제목<p class="p1" th:text="${dto.title}"></p></b></td>
-      <td><b>작성자<p class="p1" th:text="${dto.writer}"></p></b></td>
-    </tr>
-  </table>
+
+<!--  <b>글 번호<p class="p1" th:text="${dto.bno}"></p></b>-->
+  <b><p class="p1" th:text="${dto.title}" style="text-align:left; font-size:28px;"></b>
+  <p class="p1" th:text="${dto.writer}" style="text-align:left; font-size:20px;"></p>
+
 
   <div class="form-group" style="height: 300px; border: solid 1px #ccc;">
     <p class="p1" th:text="${dto.content}"></p>
@@ -191,18 +193,17 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">댓글</h5>
-          <button type="button" class="btn btn-outline-dark replyClose" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <input class="form-control" type="textarea" name="replyText" placeholder="댓글내용">
-          </div>
-          <div class="form-group">
-            <input class="form-control" type="text" name="replier" placeholder="작성자">
+            <input class="form-control" type="text" name="writer" th:value="${#authentication.principal.username}" placeholder="작성자" readonly>
             <input type="hidden" name="rno">
           </div>
+          <div class="form-group">
+            <textarea class="form-control"  name="replyText" placeholder="댓글내용"></textarea>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-dark replyRemove">삭제</button>
@@ -227,7 +228,7 @@
   </div>
 </div>
 <!-- FOOTER -->
-<footer class="footer section">
+<footer class="footer section" style="margin-top:300px; ">
   <div class="footer__container container grid">
     <div class="footer__content grid">
       <div class="footer__data">
@@ -260,7 +261,7 @@
     </div>
 
     <div class="footer__rights">
-      <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+      <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -270,8 +271,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script th:inline="javascript">
-
-  // var csrfToken = $("meta[name='_csrf']").attr("content");
 
   var bno = [[${dto.bno}]];  //게시글 번호
   var listGroup = $(".replyList");
@@ -294,7 +293,7 @@
         $.each(arr, function(idx, reply) {
           console.log(reply);
           str += '   <div class="reply_content" data-rno = "'+reply.rno+'">';   //card-body = reply_content
-          str += '   <p class="p1_subtitle"><b>'+reply.replier+'<b></p>';
+          str += '   <p class="p1_subtitle"><b>'+reply.writer+'<b></p>';
           str += '   <p class="p1_title">'+reply.text+'</p>';
           str += '   <p>'+ formatTime(reply.regDate)+'</p>';
           str += '  </div>';
@@ -327,8 +326,8 @@
       modal.modal('show');
 
       //댓글 입력하는 부분 초기화 시키기
-      $('input[name="replyText"]').val('');
-      $('input[name="replier"]').val('');
+      $('textarea[name="replyText"]').val('');
+      // $('input[name="writer"]').val('');
 
       $(".modal-footer .btn").hide();
       $(".replySave, .replyClose").show();
@@ -338,8 +337,8 @@
   $(document).on("click", '.replyList .reply_content', function() {
     var rno = $(this).data("rno");
 
-    $("input[name='replyText']").val($(this).find('.p1_title').html());
-    $("input[name='replier']").val($(this).find('.p1_subtitle').html());
+    $("textarea[name='replyText']").val($(this).find('.p1_title').html());
+    $("input[name='writer']").val($(this).find('.p1_subtitle').html());
     $("input[name='rno']").val(rno);
 
     $(".modal-footer .btn").hide();
@@ -354,9 +353,7 @@
     $.ajax({
       url: '/replies/' + rno, // 서버 엔드포인트에 따라 URL 조정
       method: 'delete',
-      // beforeSend: function(xhr) {
-      //   xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-      // },
+
       success: function(result) {
         console.log("result: " + result);
         if(result === 'success') {
@@ -379,8 +376,8 @@
 
       var reply = {
         bno: bno,
-        text: $('input[name="replyText"]').val(),
-        replier: $('input[name="replier"]').val()
+        text: $('textarea[name="replyText"]').val(),
+        writer: $('input[name="writer"]').val()
       }
       console.log(reply);
 
@@ -391,9 +388,6 @@
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
 
-        // beforeSend: function (xhr) {
-        //   xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-        // },
 
         success: function(data) {
           console.log(data);

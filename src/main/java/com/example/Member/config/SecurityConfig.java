@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .requestMatchers("/orders").hasAnyRole("USER")
                 .requestMatchers("/list").hasAnyRole("USER")
                 .requestMatchers("/pay").hasAnyRole("USER")
+                .requestMatchers("/board/register").hasAnyRole("USER")
                 .requestMatchers("/members/login").anonymous()
                 .requestMatchers("/members/signup").anonymous()
                 .requestMatchers("/members/logout").authenticated()

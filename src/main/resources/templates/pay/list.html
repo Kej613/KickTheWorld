@@ -41,7 +41,7 @@
             font-family: 'Pretendard-Regular';
         }
         td,th{
-            padding:5px;
+            padding:10px;
         }
     </style>
 </head>
@@ -112,13 +112,13 @@
 <div>
     <form method="post" action="" id="payForm" name="payForm" >
         <div>
-            <h2>숙소결제내역</h2>
+            <h2>내 결제내역</h2><br>
             <!-- container -->
             <div class="container">
-                <div class="table-responsive">
-                    <table class="table" style="width:90%;">
-                        <thead>
-                        <tr>
+                <div class="table-responsive" >
+                    <table class="table" style="width:120%; margin-left:auto; margin-right:auto;">
+                        <thead >
+                        <tr style=" border-bottom: 1px solid black;">
                             <th>ID</th>
                             <th>숙소명</th>
                             <th>숙소예약번호</th>
@@ -129,20 +129,23 @@
                             <th>기타</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody style=" border-bottom: 1px solid #ccc;">
                             <tr th:each="pay : ${payList}">
                                 <td th:text="${pay.id}"></td>
                                 <td th:text="${pay.productNm}"></td>
                                 <td th:text="${pay.ordNo}"></td>
 <!--                                <td th:text="${pay.authNo}"></td>-->
                                 <td th:text="${pay.trNo}"></td>
-                                <td th:text="${pay.trPrice}"></td>
+<!--                                <td th:text="${pay.trPrice+'원'}"></td>-->
+<!--                                <td th:text="${#numbers.formatDecimal(pay.trPrice, 2, 'COMMA')} + '원'"></td>-->
+                                <td th:text="${#strings.replace(#numbers.formatDecimal(pay.trPrice, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" ></td>
+
                                 <th:block th:switch="${pay.payStatus}">
                                     <td th:case="${'P'}">결제완료</td>
                                     <td th:case="${'C'}">결제취소완료</td>
                                 </th:block>
                                 <td th:if="${pay.payStatus == 'P'}">
-                                    <button type="button" th:onclick="goCancel([[${pay.ordNo}]], [[${pay.trNo}]])">결제취소</button>
+                                    <button type="button" th:onclick="goCancel([[${pay.ordNo}]], [[${pay.trNo}]])" style="padding:5px; border-radius:5px;">결제취소</button>
                                 </td>
                                 <td th:if="${pay.payStatus == 'C'}"></td>
                             </tr>

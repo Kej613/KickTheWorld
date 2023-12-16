@@ -57,26 +57,41 @@
 
             // 숙박일수에 따라 총 가격 계산
             calculateTotalPrice();
+
         }
 
-        //전체 결제 금액
-        function calculateTotalPrice(){
+        function calculateTotalPrice() {
             var count = $("#count").val();
             var price = $("#price").val();
-            var totalPrice = price*count;
-            $("#totalPrice").html(totalPrice + '원');
+            var totalPrice = price * count;
+
+            // Format totalPrice with comma
+            var formattedTotalPrice = numberWithCommas(totalPrice);
+
+            $("#totalPrice").html(formattedTotalPrice + '원');
+        }
+
+        // 숫자에 콤마를 추가하는 함수
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         // 날짜 선택 시 처리 함수
         function handleDateSelection(){
             var currentDate = new Date();
             var selectedCheckInDate = new Date($("#checkInDate").val());
+            var selectedCheckOutDate = new Date($("#checkOutDate").val());
 
             // 선택한 날짜가 현재 날짜보다 과거인지 확인
             if (selectedCheckInDate < currentDate) {
-                // 경고 메시지 표시하고 체크인 날짜를 현재 날짜로 재설정
+
                 alert("체크인 날짜는 오늘 날짜 이후로 선택해주세요.");
                 $("#checkInDate").val(formatDate(currentDate));
+            }
+            if (selectedCheckOutDate < selectedCheckInDate) {
+
+                alert("퇴실날짜는 입실날짜 이후로 선택해주세요.");
+                $("#checkOutDate").val(formatDate(selectedCheckInDate));
             }
 
             calculateStayDuration();
@@ -92,6 +107,14 @@
 
         //예약과정
         function order(){
+
+            var checkInDate = $("#checkInDate").val();
+            var checkOutDate = $("#checkOutDate").val();
+
+            if (!checkInDate || !checkOutDate) {
+                alert("입실날짜와 퇴실날짜를 선택해주세요.");
+                return;
+            }
 
             var url = "/order";
             var paramData = {
@@ -203,14 +226,52 @@
         .wd50{
             font-family: 'Pretendard-Regular';
             height:auto;
-            width:70%;
-            margin-left:10px;
+            width:60%;
             padding:10px;
             background-color:#FFFFFF;
             border-radius:20px;
+            margin-left: auto;
+            margin-right:auto;
         }
+
         select{
             margin-right:10px;
+        }
+        .image-gallery {
+            display: flex;
+            margin-top: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align:center;
+            width:80%;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            flex-direction: row;
+            margin-left: auto;
+            margin-tight:auto;
+            text-align: center;
+            padding:10px;
+
+        }
+
+        .thumbnail {
+            margin-bottom: 10px; /* 적절한 간격을 조절하세요 */
+        }
+        .stay_p {
+            font-size: 25px;
+        }
+        .flex-container {
+            display: flex;
+            align-items: center; /* 세로 중앙 정렬, 필요에 따라 조절하세요 */
+            text-align:center;
+        }
+
+        .flex-container > div,
+        .flex-container > input,
+        .flex-container > p {
+            margin-right: 20px; /* 각 항목 사이 간격, 필요에 따라 조절하세요 */
         }
 
     </style>
@@ -281,12 +342,22 @@
 
 
 <body>
-<div class="content" style="margin-left:25%;margin-right:25%; margin-top: 200px;">
+<div class="image-gallery">
+
+    <!-- 작은 이미지 목록 -->
+    <div class="thumbnail-list">
+        <div th:each="stayImg: ${stay.reversedStayImgDtoList}" class="thumbnail" style="text-align:center; padding:10px;">
+            <img th:if="${not #strings.isEmpty(stayImg.imgUrl)}" th:src="@{${stayImg.imgUrl}}" alt="thumbnail-image" class="rounded-1 repImg">
+        </div>
+    </div>
+</div>
+
+
+<div class="content" style="margin-top:50px;">
     <input type="hidden" id="id" th:value="${stay.id}">
-    <div class="d-flex">
-        <div class="img_div" style="margin-right:20px; text-align:center;margin:auto;">
-            <img th:src="${stay.stayImgDtoList[0].imgUrl}" class = "rounded-1 repImg" th:alt="${stay.name}" style=" width: 700px; height:500px;">
-        </div><br><br>
+<!--        <div class="img_div" style="margin-right:50px; text-align:center; width:90%; margin-top:auto; margin-bottom:auto; ">-->
+<!--            <img th:src="${stay.stayImgDtoList[0].imgUrl}" class = "rounded-1 repImg" th:alt="${stay.name}" style=" width: 700px; height:400px;">-->
+<!--        </div><br><br>-->
         <div class="wd50">
             <span th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="badge badge-primary mgb-15" >
                 예약가능
@@ -295,54 +366,59 @@
                 예약마감
             </span>
             <div class="stay_name">
-               <b><p th:text="${stay.name}" style="font-size:28px; text-align:center;"></p></b></div>
+               <b><p th:text="${stay.name}" style="font-size:25px; text-align:center;"></p></b></div>
             <hr class="my-4">
             <p id="detail" th:text="${stay.detail}">
             <hr class="my-4">
             <div class="text-right">
                 <div>
-                    <div>
-                        <span style="color:blue;">입실날짜</span><br>
-                        <input type="date" name="checkInDate" id="checkInDate" ><br>
+                    <div style="text-align:right; display: flex; justify-content: center;">
+                    <div style="text-align:right;">
+                        <span style="color:white; text-align:center;  background-color: #5D446F; padding:5px; border-radius: 10px;">입실날짜</span><br>
+                        <input type="date" name="checkInDate" id="checkInDate" style="margin-right:20px;" > ~
                     </div>
 
-                    <div>
-                        <span style="color:blue;">퇴실날짜</span><br>
-                        <input type="date" name="checkOutDate" id="checkOutDate"><br><br>
+                    <div style="text-align:right;">
+                        <span style="color:white; text-align:center; background-color: #5D446F; padding:5px; border-radius: 10px;">퇴실날짜</span><br>
+                        <input type="date" name="checkOutDate" id="checkOutDate" style="margin-left:20px;">
                     </div>
-                    <div>
-                        <span>숙박일</span>
                     </div>
-                    <input type="number" name="count" id="count" class="form-control" th:value="count" min="1">
-                    <div>
-                        <span>인원수</span>
+                    <div class="flex-container">
+                        <div>
+                            <span>인원수</span>
+                        </div>
+                        <input type="text" id="people" class="form-control" value="2" min="2" style="width:60px;">
+                        <div>
+                            <span>숙박일수</span>
+                        </div>
+                        <input type="number" name="count" id="count" class="form-control" th:value="count" min="1" style="width:60px;" readonly>
+
+                        <div>
+                            <span>남은객실</span>
+                        </div>
+                        <input type="text" id="room" class="form-control" th:value="${stay.room}">개</input>
                     </div>
-                    <input type="number"  id="people" class="form-control" value="2" min="2">
 
 
-                </div>
-<!--                  <a style="text-align:right"> 숙박일: <p id="stay">일</p></a>-->
-
-<!--                <div class="input-group w-50">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">숙박일</span>-->
-<!--                    </div>-->
-<!--&lt;!&ndash;                    <input type="number" name="count" id="count" class="form-control" value="1" min="1">&ndash;&gt;-->
-<!--                </div>-->
-
-            <hr class="my-4">
+                    <hr class="my-4">
 
             <div class="text-right mgt-50">
                 <div style="text-align:right;">
-                    <input type="hidden" th:value="${stay.price}" id="price" name="price">
-                    <p>숙박 15:00~ </p><br>
-                    <h2 name="totalPrice" id="totalPrice" class="font-weight-bold" style="text-align:right;"></h2>
+                    <p>입실: 15:00 ~ 퇴실: 11:00</p><br>
+                    1박가격: <input type="text" th:value="${stay.price}" id="price" name="price" style="width:60px;"><br>
+                    결제 금액:
+<!--                    <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>-->
+                    <h2 name="totalPrice" id="totalPrice" class="font-weight-bold" style="text-align:right; font-size:22px; color:red;"></h2><br>
+                </div>
                 </div>
             </div>
-            <div th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" style="text-align:right;">
+            <div th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" style="text-align:center;">
                 <!--        <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>-->
-                <button type="button" class="btn btn-outline-dark" onclick="order()" style="text-align:right;">숙소예약</button>
-<!--                <button type="button" class="btn btn-outline-dark" href="/pay">찜하기</button>-->
+                <button type="button" class="btn btn-outline-dark" onclick="order()" style="text-align:right; ">담기</button>
+<!--                <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제요청</a>-->
+
+<!--                <a th:href="@{/pay(trPricePlain=${totalPrice}, productNm=${stay.name}, checkInDate=${#dates.format(checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">숙소예약</a>-->
+
             </div>
             <div th:unless="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" class="text-right">
                 <button type="button" class="btn btn-danger btn-lg">예약마감</button>
@@ -352,9 +428,9 @@
     </div>
 </div>
 <hr><br><br>
-<div class="stay-details" style="width:80%; background-color: white; padding:10px; margin-left:auto; margin-right:auto; ">
+<div class="stay-details" style="width:80%; background-color: white; margin-left:auto; margin-right:auto; ">
     <hr class="my-4">
-    <strong>[상세 이미지]</strong>
+    <p class="stay_p">[숙소 이미지]</p>
     <hr class="my-4"><br>
     <div class="slider-container">
         <div class="slider">
@@ -368,27 +444,27 @@
 
     <hr class="my-4">
     <div class="detail-item">
-        <strong>[위치]</strong><br>
+        <p class="stay_p">[위치]</p>
         <hr class="my-4">
-        <span th:text="${stay.address}"></span>
         <div id="map" style="width:80%;height:300px; border-radius:10px; margin-left:auto; margin-right:auto;"></div>
+        <span th:text="${stay.address}"></span>
     </div>
     <hr class="my-4">
     <div class="detail-item">
-        <strong>[이용안내]</strong><br>
+        <p class="stay_p">[이용안내]</p>
         <hr class="my-4">
         <span id="use_guideElement" th:text="${stay.use_guide}"></span>
     </div>
     <hr class="my-4">
 
     <div class="detail-item">
-        <strong>[시설 및 서비스]</strong><br>
+        <p class="stay_p">[시설 및 서비스]</p>
         <hr class="my-4">
         <span id="serviceElement" th:text="${stay.service}"></span>
     </div>
     <hr class="my-4">
     <div class="detail-item">
-        <strong>[객실정보]</strong><br>
+        <p class="stay_p">[객실정보]</p>
         <hr class="my-4">
         <span id="amenityElement" th:text="${stay.amenity}"></span>
     </div>
@@ -433,7 +509,7 @@
         </div>
 
         <div class="footer__rights">
-            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+            <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
         </div>
     </div>
 </footer>
@@ -502,7 +578,7 @@
                 position: coords
             });
             var infowindow = new kakao.maps.InfoWindow({
-                content: '<div style="width:150px;text-align:center;padding:6px 0;">위치</div>'
+                content: '<div style="width:150px;text-align:center;padding:6px 0; border-radius:20px; background-color: #5D446F; color: white;"> 숙소위치</div>'
             });
             infowindow.open(map, marker);
             map.setCenter(coords);
