@@ -103,7 +103,7 @@ body {
           <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
         </li>
         <li class="nav__item">
-          <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+          <a href="/search" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
         </li>
       </ul>
     </div>
@@ -117,9 +117,9 @@ body {
   </div>
   <div class="form-group">
     <label>작성자</label>
-    <input type="text" class="form-control" name="writer" placeholder="작성자를 입력하세요">
-
+    <input type="text" class="form-control" name="writer" th:value="${#authentication.principal.username}" placeholder="작성자를 입력하세요" readonly>
   </div>
+
   <div class="form-group">
     <label for="category">카테고리</label>
     <select class="form-control" name="category" id="category">
@@ -152,8 +152,6 @@ body {
           </a>
         </div>
       </div>
-
-
       <div class="footer__data">
         <h3 class="footer__subtitle">Company</h3>
         <ul>
@@ -169,9 +167,8 @@ body {
         </ul>
       </div>
     </div>
-
     <div class="footer__rights">
-      <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>
+      <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>
     </div>
   </div>
 </footer>

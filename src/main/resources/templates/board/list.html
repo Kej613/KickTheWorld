@@ -1,203 +1,228 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>boardlist</title>
-  <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
-  <link rel="stylesheet" th:href="@{/css/boardList.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>boardlist</title>
+    <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
+    <link rel="stylesheet" th:href="@{/css/boardList.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
+  <style>
+    table {
+      background-color: #FFFFFF;
+      margin-left: auto;
+      margin-right: auto;
+      text-align:center;
+    }
+    header, body {
+      background-color: #FDFAFF;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+    }
 
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<style>
-  table {
-    background-color: #FFFFFF;
-    margin-left: auto;
-    margin-right: auto;
-    text-align:center;
-  }
-  body,header {
-    background-color: #FDFAFF;
-  }
-  a {
-    text-decoration: none;
-    color: black;
-  }
+  </style>
+  </head>
+  <body>
 
-</style>
-</head>
-<body>
+  <!-- HEADER -->
+  <header class="header" id="header" style=" background-color: #FDFAFF;">
+    <!--NAV CONTAINER 1-->
+    <nav class="nav container">
+      <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
 
-<!-- HEADER -->
-<header class="header" id="header">
-  <!--NAV CONTAINER 1-->
-  <nav class="nav container">
-    <a href="/" class="nav__logo-eng"> <i class="ri-earth-line"></i> Kick The World </a>
+      <!--NAV MENU-->
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a class="nav__link" href="/" ><b>마이페이지</b></a>
+          </li>
 
-    <!--NAV MENU-->
-    <div class="nav__menu" id="nav-menu">
-      <ul class="nav__list">
-        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-          <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
-        </li>
-        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-          <a class="nav__link" href="/admin" th:href="@{/mypage}" ><b>마이페이지</b></a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
-        </li>
+          <!-- 8번 브랜치에서 추가-->
+          <li class="nav__item">
+            <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
+          </li>
+          <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+            <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="/members/login" th:href="@{/members/login}"
+               th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+          </li>
 
-        <li class="nav__item">
-          <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-            <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b>로그아웃</b></a>
-        </li>
-      </ul>
+          <li class="nav__item">
+            <a class="nav__link" href="/members/new" th:href="@{/members/new}"
+               th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+          </li>
+
+          <li class="nav__item">
+            <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
+               th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+          </li>
+
+          <i class="ri-close-line nav__close" id="nav-close"></i>
+        </ul>
+      </div>
+      <div class="nav__toggle" id="nav-toggle">
+        <i class="ri-function-line"></i>
+      </div>
+    </nav>
+
+    <!--NAV CONTAINER 2-->
+    <nav class="nav__container-main">
+      <div class="nav__menu" id="nav-menu-main">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
+          </li>
+          <li class="nav__item">
+            <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
+          </li>
+          <li class="nav__item">
+            <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
+          </li>
+          <li class="nav__item">
+            <a href="/search" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- boardList.css -->
+  <!-- SEARCH -->
+  <form action="/board/list" method="get" id="searchForm">
+    <div class="input-group">
+      <input type="hidden" name="page" value="1">
+      <div class="input-group-prepend" style="padding: 10px; border-radius: 20px;">
+        <select class="custom-select" name="type" style="border-radius:20px; ">
+<!--          <option th:selected="${pageRequestDTO != null && pageRequestDTO.type == null}">검색</option>-->
+          <option value="title" th:selected="${pageRequestDTO.type == 'title'}">제목</option>
+          <option value="content" th:selected="${pageRequestDTO.type == 'content'}">내용</option>
+          <option value="writer" th:selected="${pageRequestDTO.type == 'writer'}">작성자</option>
+          <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목+내용</option>
+          <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목+내용+작성자</option>
+        </select>
+      </div>
+      <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}" style="height:30px; border-radius: 20px;">
+      <div class="input-group-append" id="button-addon4" style="padding:10px;">
+        <button class="btn btn-outline-dark btn-search" type="button" >검색</button>
+        <button class="btn btn-outline-dark btn-clear" type="button">초기화</button>
+      </div>
     </div>
-  </nav>
-
-  <!--NAV CONTAINER 2-->
-  <nav class="nav__container-main">
-    <div class="nav__menu" id="nav-menu-main">
-      <ul class="nav__list">
-        <li class="nav__item">
-          <a href="/main/trips" class="nav__link"><i class="ri-map-pin-line"></i> 여행지</a>
-        </li>
-        <li class="nav__item">
-          <a href="/main/stays" class="nav__link"><i class="ri-hotel-bed-line"></i> 숙소</a>
-        </li>
-        <li class="nav__item">
-          <a href="/main/eaterys" class="nav__link"><i class="ri-restaurant-line"></i> 맛집</a>
-        </li>
-        <li class="nav__item">
-          <a href="/" class="nav__link"><i class="ri-heart-3-line"></i> 추천코스</a>
-        </li>
-      </ul>
+    <div class="category-tabs">
+      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '전체'} ? 'active' : ''">전체</button>
+      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '문의사항'} ? 'active' : ''">문의사항</button>
+      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '여행후기'} ? 'active' : ''">여행후기</button>
+      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '여행동행자모집'} ? 'active' : ''">여행동행자모집</button>
+      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '여행지추천'} ? 'active' : ''">여행지추천</button>
+      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '기타'} ? 'active' : ''">기타</button>
+      <!-- Add more buttons for each category -->
     </div>
-  </nav>
-</header>
-
-<!-- boardList.css -->
-<!-- SEARCH -->
-<form action="/board/list" method="get" id="searchForm">
-  <div class="input-group">
-    <input type="hidden" name="page" value="1">
-    <div class="input-group-prepend" style="padding: 10px; border-radius: 10px;">
-      <select class="custom-select" name="type">
-        <option th:selected="${pageRequestDTO.type == null}">검색</option>
-        <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
-        <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
-        <option value="w" th:selected="${pageRequestDTO.type == 'w'}">작성자</option>
-        <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목+내용</option>
-        <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목+내용+작성자</option>
-      </select>
-    </div>
-    <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
-    <div class="input-group-append" id="button-addon4" style="padding:10px;">
-      <button class="btn btn-outline-dark btn-search" type="button">검색</button>
-      <button class="btn btn-outline-dark btn-clear" type="button">초기화</button>
+  </form>
+  <div class="table-container" style="width:80%; margin-left:auto; margin-right:auto;">
+  <table class="table custom-table">
+    <thead style=" border-bottom: 1px solid black;">
+    <tr>
+      <th scope="col">게시물번호</th>
+      <th scope="col">제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">카테고리</th>
+      <th scope="col">등록일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dto : ${result.dtoList}" >
+      <th scope="row">
+          [[${dto.bno}]]
+      </th>
+      <td><a th:href="@{/board/read(bno=${dto.bno}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+      <b> [[${dto.title}]]</b></a></td>
+      <td>[[${dto.writer}]]</td>
+      <td>[[${dto.category}]]</td>
+      <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+    </tr>
+    </tbody>
+  </table>
+    <div class="write_btn" >
+      <a th:href="@{/board/register}">
+        <button type="button" class="btn btn-outline-dark">글 쓰기</button>
+      </a>
     </div>
   </div>
-</form>
-<div class="table-container">
-<table class="table custom-table">
-  <thead style="background-color: #eeeeee;">
-  <tr>
-    <th scope="col">게시물번호</th>
-    <th scope="col">제목</th>
-    <th scope="col">작성자</th>
-    <th scope="col">카테고리</th>
-    <th scope="col">등록일</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="dto : ${result.dtoList}" th:if="${#authorization.expression('isAuthenticated()')}">
-    <th scope="row">
-        [[${dto.bno}]]
-    </th>
-    <td><a th:href="@{/board/read(bno=${dto.bno}, page=${result.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-    <b> [[${dto.title}]]</b></a></td>
-    <td>[[${dto.writer}]]</td>
-    <td>[[${dto.category}]]</td>
-    <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
-  </tr>
-  </tbody>
-</table>
-  <div class="write_btn" th:if="${#authorization.expression('isAuthenticated')}">
-    <a th:href="@{/board/register}">
-      <button type="button" class="btn btn-outline-dark">글 쓰기</button>
-    </a>
-  </div>
-</div>
 
-<!--페이징-->
-<ul class="pagination h-100 justify-content-center align-items-center">
-  <li class="page-item" th:if="${result.prev}">
-    <a class="page-link" th:href="@{/board/list(page=${result.start - 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
-  </li>
+  <!--페이징-->
+  <ul class="pagination h-100 justify-content-center align-items-center">
+    <li class="page-item" th:if="${result.prev}">
+      <a class="page-link" th:href="@{/board/list(page=${result.start - 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
+    </li>
 
-  <li th:class=" 'page-item ' + ${result.page == page ? 'active' : ''} " th:each="page: ${result.pageList}">
-    <a class="page-link" th:href="@{/board/list(page=${page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-      [[${page}]]
-    </a>
-  </li>
+    <li th:class=" 'page-item ' + ${result.page == page ? 'active' : ''} " th:each="page: ${result.pageList}">
+      <a class="page-link" th:href="@{/board/list(page=${page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+        [[${page}]]
+      </a>
+    </li>
 
-  <li class="page-item" th:if="${result.next}">
-    <a class="page-link" th:href="@{/board/list(page=${result.end + 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
-  </li>
-</ul>
+    <li class="page-item" th:if="${result.next}">
+      <a class="page-link" th:href="@{/board/list(page=${result.end + 1}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
+    </li>
+  </ul>
 
-<!--&lt;!&ndash;모달팝업창&ndash;&gt;-->
-<!--<div class="modal" tabindex="-1" role="dialog">-->
-<!--  <div class="modal-dialog" role="document">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h5 class="modal-title">게시글 업로드 완료</h5>-->
-<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--          <span aria-hidden="true">&times;</span>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <p>게시글이 업데이트 되었습니다.</p>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-primary">변경내용 저장</button>-->
-<!--        <button type="button" class="btn btn-secondary close" data-dismiss="modal">닫기</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 
-<script th:inline="javascript">
-  var msg = [[${msg}]];
+  <script th:inline="javascript">
+    var msg = [[${msg}]];
 
-  console.log(msg);
+    console.log(msg);
 
-  const $modal = $(".modal")
+    const $modal = $(".modal")
 
-  if(msg) {
-    $('.modal').show();
-  }
+    if(msg) {
+      $('.modal').show();
+    }
 
-  $(".close").on("click", () => {
-    $modal.hide()
-  })
+    $(".close").on("click", () => {
+      $modal.hide()
+    })
 
-  var searchForm = $("#searchForm");
+    var searchForm = $("#searchForm");
 
-  $('.btn-search').click(function(e) {
-    searchForm.submit();
-  });
+    $('.btn-search').click(function(e) {
+      searchForm.submit();
+    });
 
-  $('.btn-clear').click(function(e) {
-    searchForm.empty().submit();
-  });
+    $('.btn-clear').click(function(e) {
+      searchForm.empty().submit();
+    });
 
-</script>
-</body>
-</html>
+    // $(".category-tab").on("click", function() {
+    //   var category = $(this).data("category");
+    //
+    //   // Hide all rows initially
+    //   $("tbody tr").hide();
+    //
+    //   // Show rows based on the selected category
+    //   if (category === "전체") {
+    //     $("tbody tr").show();
+    //   } else{
+    //     $("tbody tr[data-category='" + category + "']").show();
+    //   }
+    // });
+    // $(".category-tab").on("click", function() {
+    //   var category = $(this).data("category");
+    //
+    //   // 서버로부터 해당 카테고리에 해당하는 게시물 목록을 가져오는 요청
+    //   $.get("/board/list/" + category, function(data) {
+    //     // 서버에서 받은 데이터로 테이블 업데이트 또는 리로드 로직 작성
+    //     // 예: 테이블의 tbody를 새로운 데이터로 업데이트
+    //     $("tbody").html(data);
+    //
+    //     // 아래 두 줄은 페이지네이션 부분을 다시 초기화하는 부분입니다.
+    //     $(".pagination").empty();
+    //     $(".pagination").append(data.pagination);
+    //   });
+    // });
+
+  </script>
+  </body>
+  </html>

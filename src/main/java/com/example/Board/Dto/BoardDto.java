@@ -20,8 +20,4 @@ public class BoardDto {
     private int replyCount; //댓글 수
     private int viewCount; //조회수
 
-
-
-
-
 }

@@ -1,7 +1,6 @@
 package com.example.Member.entity;
 
 
-import com.example.Board.Entity.Board;
 import com.example.Member.constant.Role;
 import com.example.Member.dto.MemberFormDto;
 import jakarta.persistence.*;
@@ -9,9 +8,6 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name="member")
 @Getter
@@ -40,8 +36,6 @@ public class Member {
 
 //    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL) //멤버가 삭제되면 글도 삭제되게
 //    private List<Board> boards = new ArrayList<>();
-
-
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder, Role role){
         Member member = new Member();

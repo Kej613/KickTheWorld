@@ -1,7 +1,5 @@
 package com.example.Trip.Dto;
 
-import com.example.Stay.Entity.Stay;
-import com.example.Stay.dto.StayItemDto;
 import com.example.Trip.Entity.Trip;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;

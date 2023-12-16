@@ -17,7 +17,7 @@ public class ReplyDTO {
 
     private String text;  //내용
 
-    private String replier;     //작성자
+    private String writer;     //작성자
 
     private Long bno;        //게시글번호
 

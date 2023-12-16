@@ -16,6 +16,7 @@ import com.example.Board.Dto.PageRequestDTO;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -121,30 +122,29 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-//    @Autowired
-//    public BoardController(BoardService boardService) {
-//        this.boardService = boardService;
-//    }
-//
-//    @PostMapping("/increaseViews/{bno}")
-//    public ResponseEntity<Void> increaseViews (@PathVariable Long bno) {
-//        boardService.increaseViews(bno);
-//        return ResponseEntity.ok().build();
-//    }
 
-//    @PostMapping("/updateViewCount")
-//    @ResponseBody
-//    public ResponseEntity<String> updateViewCount(@RequestParam Long bno) {
-//        boardService.updateViewCount(bno);
-//        return ResponseEntity.ok().build();
-//    }
-
+    //조회수
     @PostMapping("/updateViewCount")
     @ResponseBody
     public ResponseEntity<Long> updateViewCount(@RequestParam Long bno) {
         Long updatedViewCount = boardService.updateViewCount(bno);
         return ResponseEntity.ok(updatedViewCount);
     }
+
+
+//    @GetMapping("/board/list/{category}")
+//    public String getFilteredBoardList(@PathVariable String category, Model model) {
+//        // 서버 측에서 해당 카테고리에 해당하는 게시물을 필터링하여 가져옴
+//        List<BoardDto> filteredList = boardService.getFilteredBoardList(category);
+//
+//        // 모델에 필터링된 목록을 추가
+//        model.addAttribute("result", filteredList);
+//
+//        return "board/list";
+//    }
+
+
+
 
 }
 

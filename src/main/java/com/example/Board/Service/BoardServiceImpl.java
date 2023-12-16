@@ -16,8 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -91,13 +93,13 @@ public class BoardServiceImpl implements BoardService{
         }
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if(type.contains("t")) {
+        if(type.contains("title")) {
             conditionBuilder.or(qBoard.title.contains(keyword));
         }
-        if(type.contains("c")) {
+        if(type.contains("content")) {
             conditionBuilder.or(qBoard.content.contains(keyword));
         }
-        if(type.contains("w")) {
+        if(type.contains("writer")) {
             conditionBuilder.or(qBoard.writer.contains(keyword));
         }
 
@@ -129,6 +131,15 @@ public class BoardServiceImpl implements BoardService{
             boardRepository.save(board);
         });
         return bno;
+    }
+
+    //카테고리별로 해당 게시물 필터링
+    @Override
+    public List<BoardDto> getFilteredBoardList(String category) {
+        List<Board> filteredBoards = boardRepository.findByCategory(category);
+        return filteredBoards.stream()
+                .map(this::EntityToDto)
+                .collect(Collectors.toList());
     }
 
 }

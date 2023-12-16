@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,17 +64,6 @@ public class StayController {
 //    }
 
 
-
-//    @GetMapping("/stays/category")
-//    public String getStaysByCategory(@RequestParam(value = "category", required = false) String category,
-//                                     @RequestParam(value = "address", required = false) String address,
-//                                     @RequestParam(value = "offset", required = false, defaultValue = "0") long offset,
-//                                     @RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
-//                                     Model model) {
-//        List<Stay> staysByCategory = stayService.findByCategory(category, address, offset, limit);
-//        model.addAttribute("stays", staysByCategory);
-//        return "stay/stayPage";
-//    }
 
     //조건별로 숙소 페이징처리
     @GetMapping(value = {"/main/stays", "/main/stays/{page}"})
@@ -187,10 +177,11 @@ public class StayController {
 //                    return "stay/stayMng";
 //
 //    }
-        @GetMapping("/main/stays/filter")
-        public ResponseEntity<List<Stay>> filterStays(@RequestParam String category) {
-            // category에 따라 숙소 필터링 로직 수행 (예: 숙소 서비스에서 필터링 메소드 호출)
-            List<Stay> filteredStays = stayService.findStaysByCategory(category);
-            return ResponseEntity.ok(filteredStays);
-        }
+    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<Stay>> filterStays(@RequestParam String category) {
+        List<Stay> filteredStays = stayService.findStaysByCategory(category);
+        return ResponseEntity.ok(filteredStays);
+    }
 }
+

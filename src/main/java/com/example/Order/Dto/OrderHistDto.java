@@ -1,5 +1,6 @@
 package com.example.Order.Dto;
 
+import com.example.Member.entity.Member;
 import com.example.Order.Constant.OrderStatus;
 import com.example.Order.Entity.Order;
 import lombok.Getter;

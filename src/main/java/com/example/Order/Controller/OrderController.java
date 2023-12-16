@@ -1,7 +1,9 @@
 package com.example.Order.Controller;
 
+import com.example.Member.entity.Member;
 import com.example.Order.Dto.OrderDto;
 import com.example.Order.Dto.OrderHistDto;
+import com.example.Order.Repository.OrderRepository;
 import com.example.Order.Service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+
+    private final OrderRepository orderRepository;
 
     @PostMapping(value = "/order")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult, Principal principal) {
@@ -68,23 +72,16 @@ public class OrderController {
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
         Page<OrderHistDto> ordersHistDtoList = orderService.getOrderList(principal.getName(), pageable);
+        Member loginMember = orderRepository.findMemberByOrder(principal.getName());
 
         model.addAttribute("orders", ordersHistDtoList);
         model.addAttribute("page", pageable.getPageNumber());
         model.addAttribute("maxPage", 5);
+        model.addAttribute("loginMember", loginMember);
+
 
         return "order/orderHist";
     }
-
-
-//    @PostMapping("/order/{orderId}/cancel")
-//    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
-//        if(!orderService.validateOrder(orderId, principal.getName())) {
-//            return new ResponseEntity<String> ("예약 취소 권한이 없습니다", HttpStatus.FORBIDDEN);  //다른 사용자가 주문을 취소하지못하게 막기위함
-//        }
-//        orderService.cancelOrder(orderId);
-//        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
-//    }
 
 
     @PostMapping("/order/{orderId}/cancel")
@@ -95,7 +92,7 @@ public class OrderController {
 
         try {
             orderService.cancelOrder(orderId);
-            return new ResponseEntity<>("주문이 취소되었습니다.", HttpStatus.OK);
+            return new ResponseEntity<>("예약이 취소되었습니다.", HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
