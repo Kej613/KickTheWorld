@@ -52,31 +52,23 @@
             <!-- CARD 1 - STAY -->
             <div class="card">
                 <div class="box">
-<!--                    <a th:with="memberId=${member.id}" th:href="@{'/members/update/' + memberId}" class="link"></a>-->
-                    <h2>내 정보</h2>
+                   <h3>회원 정보</h3>
                     <p>Member</p></a>
                 </div>
-
             </div>
-            <div class="card" >
-                <div class="box">
-                    <a th:href="@{/orders}" class="link" >
-                        <h2>관심숙소</h2>
             <!-- CARD 1 -->
             <div class="card" >
                 <div class="box">
                     <a th:href="@{/orders}" class="link" >
-                        <h3>예약 대기</h3>
+                        <h3>결제 대기</h3>
                         <p>Reservation</p>
                     </a>
-<!--                    <div th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">-->
-<!--                        <button onclick="showLoginAlert()">예약대기</button>-->
-<!--                    </div>-->
                 </div>
                 <div class="icon-design">
                     <img th:src="@{/images/admin/admin-waiting.png}" alt="">
                 </div>
             </div>
+
             <!-- CARD 2 -->
             <div class="card" >
                 <div class="box">
@@ -252,7 +244,7 @@
 <!--        </div>-->
 
 <!--        <div class="footer__rights">-->
-<!--            <p class="footer__copy">&#169; 2023 Balance Booster. All rigths reserved.</p>-->
+<!--            <p class="footer__copy">&#169; 2023 Balance Booster. All rights reserved.</p>-->
 <!--        </div>-->
 <!--    </div>-->
 <!--</footer>-->
