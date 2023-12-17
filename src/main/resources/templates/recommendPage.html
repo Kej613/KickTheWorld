@@ -231,7 +231,7 @@
                <a th:href="@{'/admin/trip/' + ${trip.id}}">
                    <img th:src="${repImg.imgUrl}" th:alt="${trip.name}" class="rounded-1 repImg" style="width:300px; height:300px;border-radius:50px;"></a>
             </th:block><br>
-            <a th:text="'#'+${trip.theme}" style="background-color: #5D446F; color:white; padding:5px; margin-left:80px; margin-bottom:7px; border-radius:5px; text-align:center; " ></a><br><br>
+            <a th:text="'#'+${trip.theme}" style="background-color: #5D446F; color:white; padding:5px; margin-top: 5px;margin-bottom:7px; border-radius:5px; text-align:center; " ></a><br><br>
             <div style="background-color:#FFFFFF; border-radius:20px;">
             <b><a th:text="${trip.name}"></a></b><br>
             <a th:text="${trip.address}"></a><br>
@@ -245,24 +245,27 @@
                 <a th:href="@{'/admin/stay/' + ${stay.id}}">
                     <img th:src="${repImg.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width:300px; height:300px;border-radius:50px;"></a>
             </th:block><br>
-            <a th:text="'#'+${stay.category}" style="background-color: #5D446F;color:white; padding:5px; margin-left:80px; margin-bottom:7px; border-radius:5px; text-align:center;" ></a><br><br>
+            <a th:text="'#'+${stay.category}" style="background-color: #5D446F; color:white; padding:5px; margin-top:5px; margin-bottom:7px; border-radius:5px; text-align:center;" ></a><br><br>
+            <div style="background-color:#FFFFFF; border-radius:20px;">
             <a th:text="${stay.name}"></a><br><br>
             <a th:text="${stay.address}"></a><br>
-            <a th:text="${stay.detail}"></a>
+                <a th:text="${stay.detail}"></a></div>
         </div>
         </div>
 
+        <div class="trip_content">
         <div th:each="eatery, status: ${eaterys.getContent()}" style="margin-top:30px;">
             <th:block th:each="repImg: ${eatery.eateryImgs.?[repimgYn == 'Y']}">
                 <a th:href="@{'/admin/eatery/' + ${eatery.id}}">
                     <img th:src="${repImg.imgUrl}" th:alt="${eatery.name}" class="rounded-1 repImg" style="width:300px; height:300px;border-radius:50px;"></a>
             </th:block><br>
-            <a  th:text="${eatery.eaterycategory}" style="background-color: #5D446F; color:white; padding:5px; margin-left:80px; margin-bottom:7px; border-radius:5px; text-align:center; " ></a><br>
+            <a th:text="'#'+${eatery.eaterycategory}" style="background-color: #5D446F; color:white; padding:5px; margin-left:80px; margin-bottom:7px; border-radius:5px; text-align:center; " ></a><br>
+            <div style="background-color:#FFFFFF; border-radius:20px;">
             <a th:text="${eatery.name}"></a><br>
             <a th:text="${eatery.address}"></a><br>
-            <a th:text="${eatery.guide}"></a>
+                <a th:text="${eatery.guide}"></a></div>
         </div>
-
+        </div>
     </div>
 
     </form>

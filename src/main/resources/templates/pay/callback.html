@@ -112,7 +112,7 @@
 <div>
     <form method="post" action="" id="payForm" name="payForm" >
         <div>
-            <h1>결제 승인요청</h1>
+            <h1>결제승인</h1>
             <!-- container -->
             <div class="container">
                 <div class="table-responsive">
@@ -157,7 +157,7 @@
             <!-- //container -->
 
             <!-- fixed bottom button -->
-            <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayApprov();">결제승인요청</button></div>
+            <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayApprov();" style="padding:5px; margin-top:5px; border-radius: 5px;">승인요청</button></div>
             <!-- //fixed bottom button -->
         </div>
         <input type="hidden" name="trTime" id="trTime" placeholder="거래시간" >
@@ -259,6 +259,7 @@
             success: function(data) {
                 if(data.resultCd == "0"){
                     alert("결제승인 성공 \n 거래번호 : " + data.trNo);
+                    window.location.href = '/list';
                 }else{
                     alert("결제승인 실패. " + data.resultMsg);
                 }

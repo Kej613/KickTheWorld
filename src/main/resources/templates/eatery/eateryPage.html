@@ -191,7 +191,7 @@
                             <option value="name">음식점명</option>
                             <option value="eaterycategory">음식점유형</option>
                         </select>
-                        <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style=" text-align: center; margin-right:auto; border-radius:10px;">
+                        <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:200px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
                         <div>
                         <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>
                     </div>
@@ -324,7 +324,18 @@
         </div>
     </div>
 </footer>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c2e5cdc145feeac77effa91283d46a6e"></script>
+<script>
+    var container = document.getElementById('map');
+    var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+
+    var map = new kakao.maps.Map(container, options);
+</script>
 <script th:inline="javascript">
+
     // function filterEaterys() {
     //     // 현재 선택된 라디오 버튼의 값을 가져오기
     //     var selectedCategory = $("input[name='eaterycategory']:checked").val();

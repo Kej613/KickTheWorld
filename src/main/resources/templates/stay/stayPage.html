@@ -241,9 +241,13 @@
                     <option value="name">숙소명</option>
                 </select>
                 <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:200px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
+                <button>
+                    <i class="ri-search-line" style="font-size: 1.7rem;"></i>
+                </button>
+
                 </div>
-               <div style="text-align:center; padding:10px;">
-                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>
+<!--               <div style="text-align:center; padding:10px;">-->
+<!--                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>-->
 
                 <div style="margin-top: 20px;">
                     <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>숙소유형 </b></a><br>
@@ -307,7 +311,10 @@
                     <input type="hidden" id="id" th:value="${stay.id}">
                     <a th:href="'/admin/stay/'+${stay.id}">
                         <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width: 500px; height: 300px; border-radius: 20px;" >
-                        <p th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size:20px;padding:10px;"></p>
+                        <div>
+                            <span th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size: 20px; padding: 10px;"></span>
+<!--                            <i class="ri-heart-3-line" style="vertical-align: middle; margin-left:100px; width:20%;"></i>-->
+                        </div>
                         <p th:text="${stay.address}" class="trip-name" style="padding:10px;" ></p>
                         <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>
                         <div style="text-align:right;">

@@ -260,19 +260,20 @@
             margin-bottom: 10px; /* 적절한 간격을 조절하세요 */
         }
         .stay_p {
-            font-size: 25px;
+            font-family: 'Pretendard-Regular';
+            font-size: 23px;
         }
         .flex-container {
-            display: flex;
-            align-items: center; /* 세로 중앙 정렬, 필요에 따라 조절하세요 */
-            text-align:center;
+            display:flex;
+            flex-direction: row; /* 세로 중앙 정렬, 필요에 따라 조절하세요 */
+            margin-left:auto;
+            margin-right:auto;
         }
 
-        .flex-container > div,
-        .flex-container > input,
-        .flex-container > p {
-            margin-right: 20px; /* 각 항목 사이 간격, 필요에 따라 조절하세요 */
-        }
+        /*.flex-container {*/
+        /*    text-align:right;*/
+        /*    padding:5px;*/
+        /*}*/
 
     </style>
 </head>
@@ -310,7 +311,6 @@
                     <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
                        th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
                 </li>
-
                 <i class="ri-close-line nav__close" id="nav-close"></i>
             </ul>
         </div>
@@ -373,30 +373,27 @@
             <div class="text-right">
                 <div>
                     <div style="text-align:right; display: flex; justify-content: center;">
-                    <div style="text-align:right;">
+                    <div style="text-align:center;">
                         <span style="color:white; text-align:center;  background-color: #5D446F; padding:5px; border-radius: 10px;">입실날짜</span><br>
                         <input type="date" name="checkInDate" id="checkInDate" style="margin-right:20px;" > ~
                     </div>
 
-                    <div style="text-align:right;">
+                    <div style="text-align:center;">
                         <span style="color:white; text-align:center; background-color: #5D446F; padding:5px; border-radius: 10px;">퇴실날짜</span><br>
                         <input type="date" name="checkOutDate" id="checkOutDate" style="margin-left:20px;">
                     </div>
                     </div>
-                    <div class="flex-container">
+                    <div class="flex-container" style="text-align:center;">
                         <div>
                             <span>인원수</span>
-                        </div>
-                        <input type="text" id="people" class="form-control" value="2" min="2" style="width:60px;">
+                        <input type="text" id="people" class="form-control" value="2" min="2" style="width:60px; margin-left:auto; margin-right:auto;"></div>
                         <div>
                             <span>숙박일수</span>
-                        </div>
-                        <input type="number" name="count" id="count" class="form-control" th:value="count" min="1" style="width:60px;" readonly>
+                        <input type="number" name="count" id="count" class="form-control" th:value="count" min="1" style="width:60px; margin-left:auto; margin-right:auto;" readonly></div>
 
                         <div>
-                            <span>남은객실</span>
-                        </div>
-                        <input type="text" id="room" class="form-control" th:value="${stay.room}">개</input>
+                            <span>남은 객실수</span>
+                        <input type="text" id="room" class="form-control" th:value="${stay.room}" style="width:60px; margin-left:auto; margin-right:auto;" readonly></input></div>
                     </div>
 
 
@@ -408,13 +405,13 @@
                     1박가격: <input type="text" th:value="${stay.price}" id="price" name="price" style="width:60px;"><br>
                     결제 금액:
 <!--                    <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>-->
-                    <h2 name="totalPrice" id="totalPrice" class="font-weight-bold" style="text-align:right; font-size:22px; color:red;"></h2><br>
+                    <h2 name="totalPrice" id="totalPrice" class="font-weight-bold" style="text-align:right; font-size:25px; color:red;"></h2><br>
                 </div>
                 </div>
             </div>
             <div th:if="${stay.staySellStatus == T(com.example.Stay.Constant.StaySellStatus).SELL}" style="text-align:center;">
                 <!--        <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>-->
-                <button type="button" class="btn btn-outline-dark" onclick="order()" style="text-align:right; ">담기</button>
+                <button type="button" class="btn btn-outline-dark" onclick="order()" style="text-align:right; ">숙소예약</button>
 <!--                <a th:href="@{/pay(trPricePlain=${orderItem.orderPrice * orderItem.count}, productNm=${orderItem.name}, checkInDate=${#dates.format(orderItem.checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(orderItem.checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">결제요청</a>-->
 
 <!--                <a th:href="@{/pay(trPricePlain=${totalPrice}, productNm=${stay.name}, checkInDate=${#dates.format(checkInDate, 'yyyy-MM-dd')}, checkOutDate=${#dates.format(checkOutDate, 'yyyy-MM-dd')}, loginUser=${#authentication.principal.username})}" class="btn btn-outline-dark">숙소예약</a>-->
@@ -430,7 +427,7 @@
 <hr><br><br>
 <div class="stay-details" style="width:80%; background-color: white; margin-left:auto; margin-right:auto; ">
     <hr class="my-4">
-    <p class="stay_p">[숙소 이미지]</p>
+    <p class="stay_p">[객실 이미지]</p>
     <hr class="my-4"><br>
     <div class="slider-container">
         <div class="slider">
@@ -447,7 +444,7 @@
         <p class="stay_p">[위치]</p>
         <hr class="my-4">
         <div id="map" style="width:80%;height:300px; border-radius:10px; margin-left:auto; margin-right:auto;"></div>
-        <span th:text="${stay.address}"></span>
+        <span th:text="${stay.address}" style="text-align:center;"></span>
     </div>
     <hr class="my-4">
     <div class="detail-item">
