@@ -149,9 +149,22 @@ img {
 }
 
 .signup__input,
-.signup__button {
+.signup__button,
+.check__button {
     border: none;
     outline: none;
+}
+
+.check__button {
+    width: 100%;
+    padding: 1rem;
+    /*margin-top: 1rem;*/
+    /*margin-bottom: 1rem;*/
+    background-color: var(--sig-color);
+    border-radius: 4rem;
+    color: var(--white-color);
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .signup__input {

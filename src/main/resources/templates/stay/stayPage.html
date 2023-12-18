@@ -178,55 +178,9 @@
     <section class="home" id="home">
         <img  th:src="@{/images/main/Stay.jpg}" alt="home main image" class="home__img">
         <div class="home__container container grid">
-            <div class="home__data">
-                <br><h3 class="home__data-title-kor" style="font-size:40px; text-shadow: 2px 2px 30px rgba(0, 0, 0, 0.3);">
-                <b>어떤 숙소를 찾으시나요?</b>
-            </h3>
-            </div>
         </div>
     </section>
-
-<!--    &lt;!&ndash;SIDE BAR&ndash;&gt;-->
-<!--    <div class="side_menu" style="margin-top:30px;">-->
-<!--        <div id="s_left"></div>-->
-<!--        <div id="contents" >-->
-<!--            <ul>-->
-<!--                <li class="side_li">-->
-<!--                    <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지도로 검색 >></b></a><br>-->
-<!--                </li>-->
-<!--                <li class="side_li">-->
-<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지역</b></a><br>-->
-<!--                    <select>-->
-<!--                        <option value="address"th:checked="${param.address == '서울'}">서울</option>-->
-<!--                        <option value="address"th:checked="${param.address == '경기'}">경기</option>-->
-<!--                        <option value="address"th:checked="${param.address == '강원'}">강원</option>-->
-<!--                        <option value="address"th:checked="${param.address == '부산'}">부산</option>-->
-<!--                        <option value="address"th:checked="${param.address == '제주'}">제주</option>-->
-<!--                        <option value="address"th:checked="${param.address == '전북'}">전북</option>-->
-<!--                        <option value="address"th:checked="${param.address == '경남'}">경남</option>-->
-<!--                        <option value="address"th:checked="${param.address == '인천'}">인천</option>-->
-<!--                        <option value="address"th:checked="${param.address == '경북'}">경북</option>-->
-<!--                    </select>-->
-<!--                </li>-->
-<!--                <li class="side_li">-->
-<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>숙소유형</b></a>-->
-<!--                    <label>-->
-<!--                        <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}">호텔-->
-<!--                        <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}">펜션-->
-<!--                        <input type="radio" name="category" value="게하" th:checked="${param.category == '게하'}">게하-->
-<!--                        <input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}">캠핑-->
-<!--                    </label>-->
-<!--                </li>-->
-<!--                <li class="side_li">-->
-<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>가격</b></a>-->
-
-<!--                </li>-->
-<!--            </ul>-->
-<!--            <div class="btn1" style="text-align:center;">-->
-<!--                <button type="submit" class="btn btn-outline-dark">검색</button></div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    </div>-->
+    <br><h2 style="font-size: 25px;">어떤 숙소에서 오늘을 보내고 싶으세요? </h2><br>
 
     <div class="stay_main">
         <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">
@@ -236,18 +190,17 @@
             <div th:object="${staySearchDto}" style="margin-top:10px; padding: 5px;">
                 <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>통합 검색 </b></a><br>
                 <div style="display: flex; align-items: center; margin-top:3px;">
-                <select th:field="*{searchBy}" style="width:auto; border-radius: 10px;">
+                <select th:field="*{searchBy}" style="width:auto; height: 30px; border-radius: 10px;">
                     <option value="address">지역</option>
                     <option value="name">숙소명</option>
                 </select>
-                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:200px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
-                <button>
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요"
+                       style="width:200px; margin-left:auto; margin-right:auto;
+                       border: 1px solid black; border-radius:10px; padding:10px;">
+                <button style="background-color: white">
                     <i class="ri-search-line" style="font-size: 1.7rem;"></i>
                 </button>
-
                 </div>
-<!--               <div style="text-align:center; padding:10px;">-->
-<!--                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>-->
 
                 <div style="margin-top: 20px;">
                     <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>숙소유형 </b></a><br>
@@ -311,10 +264,7 @@
                     <input type="hidden" id="id" th:value="${stay.id}">
                     <a th:href="'/admin/stay/'+${stay.id}">
                         <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width: 500px; height: 300px; border-radius: 20px;" >
-                        <div>
-                            <span th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size: 20px; padding: 10px;"></span>
-<!--                            <i class="ri-heart-3-line" style="vertical-align: middle; margin-left:100px; width:20%;"></i>-->
-                        </div>
+                        <p th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size:20px;padding:10px;"></p>
                         <p th:text="${stay.address}" class="trip-name" style="padding:10px;" ></p>
                         <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>
                         <div style="text-align:right;">

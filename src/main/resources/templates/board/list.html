@@ -23,6 +23,42 @@
       color: black;
     }
 
+    .inputGroup {
+      display: flex;
+      justify-content: center;
+      margin: auto 5px;
+    }
+
+    .customSelect{
+      width:auto;
+      height: 30px;
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+
+    .customInput {
+      width: 500px;
+      height: 30px;
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+
+    .customBtn{
+      width: 55px;
+      height: 30px;
+      text-align: center;
+      background: transparent;
+      border: 1px solid black;
+      border-radius: 10px;
+    }
+
+    .customBtn:hover{
+      background: hsl(275, 90%, 23%);
+      color: white;
+    }
+
+
   </style>
   </head>
   <body>
@@ -36,40 +72,29 @@
       <!--NAV MENU-->
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
-          <li class="nav__item">
-            <a class="nav__link" href="/" ><b>마이페이지</b></a>
-          </li>
-
-          <!-- 8번 브랜치에서 추가-->
-          <li class="nav__item">
-            <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
-          </li>
           <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
             <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
           </li>
+          <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+            <a class="nav__link" href="/admin" th:href="@{/mypage}" ><b>마이페이지</b></a>
+          </li>
           <li class="nav__item">
-            <a class="nav__link" href="/members/login" th:href="@{/members/login}"
-               th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+            <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
           </li>
 
           <li class="nav__item">
-            <a class="nav__link" href="/members/new" th:href="@{/members/new}"
-               th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+            <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
           </li>
-
           <li class="nav__item">
-            <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
-               th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+            <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+              <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b>로그아웃</b></a>
           </li>
-
-          <i class="ri-close-line nav__close" id="nav-close"></i>
         </ul>
       </div>
-      <div class="nav__toggle" id="nav-toggle">
-        <i class="ri-function-line"></i>
-      </div>
     </nav>
-
     <!--NAV CONTAINER 2-->
     <nav class="nav__container-main">
       <div class="nav__menu" id="nav-menu-main">
@@ -93,10 +118,12 @@
   <!-- boardList.css -->
   <!-- SEARCH -->
   <form action="/board/list" method="get" id="searchForm">
-    <div class="input-group">
+    <div class="inputGroup">
       <input type="hidden" name="page" value="1">
-      <div class="input-group-prepend" style="padding: 10px; border-radius: 20px;">
-        <select class="custom-select" name="type" style="border-radius:20px; ">
+
+      <div class="selectGroup">
+        <!--SELECT-->
+        <select class="customSelect" name="type">
 <!--          <option th:selected="${pageRequestDTO != null && pageRequestDTO.type == null}">검색</option>-->
           <option value="title" th:selected="${pageRequestDTO.type == 'title'}">제목</option>
           <option value="content" th:selected="${pageRequestDTO.type == 'content'}">내용</option>
@@ -105,12 +132,26 @@
           <option value="tcw" th:selected="${pageRequestDTO.type == 'tcw'}">제목+내용+작성자</option>
         </select>
       </div>
-      <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}" style="height:35px; border-radius: 20px;">
-      <div class="input-group-append" id="button-addon4" style="padding:10px;">
-        <button class="btn btn-outline-dark btn-search" type="button" >검색</button>
-        <button class="btn btn-outline-dark btn-clear" type="button">초기화</button>
+
+      <div class="inputGroup">
+        <!--INPUT-->
+        <input class="customInput" name="keyword" placeholder="검색어를 입력해주세요" th:value="${pageRequestDTO.keyword}">
       </div>
+
+      <div>
+        <!--BUTTON-->
+        <button class="customBtn btn-search" type="button" >검색</button>
+        <button class="customBtn btn-clear" type="button">초기화</button>
+      </div>
+
     </div>
+
+
+<!--      <div class="input-group-append" id="button-addon4" style="padding:10px;">-->
+<!--        <button class="customBtn" type="button" >검색</button>-->
+<!--        <button class="customBtn" type="button">초기화</button>-->
+<!--      </div>-->
+
 <!--    <div class="category-tabs">-->
 <!--      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '전체'} ? 'active' : ''">전체</button>-->
 <!--      <button class="btn btn-outline-dark category-tab" name="category" th:class="${pageRequestDTO.category == '문의사항'} ? 'active' : ''">문의사항</button>-->
