@@ -21,28 +21,25 @@
         <h2 style="color: white"> 안녕하세요, 회원님! </h2>
     </div>
     <ul>
-        <li><i class="ri-map-pin-line" style="font-size: 1.5rem;"></i><a th:href="@{/main/trips}"> &nbsp 여행지</a></li>
-        <li><i class="ri-hotel-bed-line" style="font-size: 1.5rem;"></i><a th:href="@{/main/stays}"> &nbsp 숙소</a></li>
-        <li><i class="ri-restaurant-line" style="font-size: 1.5rem;"></i><a th:href="@{/main/eaterys}"> &nbsp 맛집</a></li>
-        <li><i class="ri-heart-3-line" style="font-size: 1.5rem;"></i><a th:href="@{/search}"> &nbsp 추천코스</a></li>
-        <li><i class="ri-edit-line" style="font-size: 1.5rem;"></i><a th:href="@{/board/list}"> &nbsp 여행게시판</a></li>
-        <li><i class="ri-settings-4-line" style="font-size: 1.5rem;"></i><a th:href="@{/notready}"> &nbsp 회원정보 수정</a></li>
+        <li><a th:href="@{/}"> &nbsp 내 정보</a></li>
+<!--        <li><a th:href="@{/orders}"> &nbsp 예약목록 </a></li>-->
+        <li><a th:href="@{/list}"> &nbsp 결제내역</a></li>
     </ul>
 </div>
 <!-- HEADER -->
 <div class="container">
-    <div class="header">
+    <div class="header" style="width: 82vw;">
         <div class="nav">
+            <a th:href="@{/}" style="font-size: 1.5rem;"><i class="ri-earth-line"></i> Kick The World </a>
             <ul>
-                <li>
-                    <a th:href="@{/}"><i class="ri-earth-line"></i> Kick The World </a>
-                </li>
-
-                <li>
-                    <a th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-                        <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b>로그아웃</b></a>
-                </li>
+                <li><a th:href="@{/main/trips}"><i class="ri-map-pin-line" style="font-size: 1.5rem;"></i>여행지</a></li>
+                <li><a th:href="@{/main/stays}"><i class="ri-hotel-bed-line" style="font-size: 1.5rem;"></i>숙소</a></li>
+                <li><a th:href="@{/main/eaterys}"><i class="ri-restaurant-line" style="font-size: 1.5rem;"></i>맛집</a></li>
+                <li><a th:href="@{/search}"><i class="ri-heart-3-line" style="font-size: 1.5rem;"></i>추천코스</a></li>
+                <li><a th:href="@{/board/list}"><i class="ri-edit-line" style="font-size: 1.5rem;"></i>여행게시판</a></li>
             </ul>
+            <a th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b><span style="color: #6610f2;">로그아웃</span></b></a>
         </div>
     </div>
 
@@ -53,24 +50,12 @@
             <div class="card">
                 <div class="box">
                     <a th:href="@{/}" class="link" >
-                        <h3>회원 정보</h3>
-                        <p>Member</p>
-                    </a>
+                       <h3>내정보</h3>
+                          <p>Member</p></a>
                 </div>
                 <div class="icon-design">
                     <img th:src="@{/images/admin/admin-setting.png}" alt="">
-                </div>
-            </div>
-            <!-- CARD 1 -->
-            <div class="card" >
-                <div class="box">
-                    <a th:href="@{/orders}" class="link" >
-                        <h3>결제 대기</h3>
-                        <p>Reservation</p>
-                    </a>
-                </div>
-                <div class="icon-design">
-                    <img th:src="@{/images/admin/admin-waiting.png}" alt="">
+
                 </div>
             </div>
 

@@ -193,7 +193,9 @@
                 <select th:field="*{searchBy}" style="width:auto; height: 30px; border-radius: 10px;">
                     <option value="address">지역</option>
                     <option value="name">숙소명</option>
+                    <option value="category" > 숙소유형</option>
                 </select>
+
                 <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요"
                        style="width:200px; margin-left:auto; margin-right:auto;
                        border: 1px solid black; border-radius:10px; padding:10px;">
@@ -205,13 +207,17 @@
                 <div style="margin-top: 20px;">
                     <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>숙소유형 </b></a><br>
                     <label style="display: inline-block; margin-right: 10px;">
-                        호텔 <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}" onclick="filterStays()"></label>
+                        호텔 <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}" ></label>
                     <label style="display: inline-block; margin-right: 10px;">
-                        펜션 <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}" onclick="filterStays()"></label>
+                        펜션 <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}" ></label>
                     <label style="display: inline-block; margin-right: 10px;">
-                        게스트하우스<input type="radio" name="category" value="게스트하우스"th:checked="${param.category == '게스트하우스'}"  onclick="filterStays()"></label>
+                        게스트하우스<input type="radio" name="category" value="게스트하우스"th:checked="${param.category == '게스트하우스'}" ></label>
                     <label style="display: inline-block; margin-right: 10px;">
-                        캠핑<input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}" onclick="filterStays()"></label>
+                        캠핑<input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}" ></label>
+
+                    <button>
+                        <i class="ri-search-line" style="font-size: 1.7rem;"></i>
+                    </button>
                 </div>
 
                 <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b>

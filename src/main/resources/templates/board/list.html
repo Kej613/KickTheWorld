@@ -72,6 +72,7 @@
       <!--NAV MENU-->
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
+
           <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
             <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
           </li>

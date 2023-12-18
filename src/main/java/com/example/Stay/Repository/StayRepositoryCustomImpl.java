@@ -52,12 +52,15 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
 //        return QStay.stay.regTime.after(dateTime);
 //    }
 
-    private BooleanExpression searchByLike(String searchBy, String searchQuery) { // 검색어를 포함하고 있는 숙소 조회 & 반환
+    private BooleanExpression searchByLike(String searchBy, String searchQuery, String category) { // 검색어를 포함하고 있는 숙소 조회 & 반환
         if(StringUtils.equals("name",searchBy)) {
             return QStay.stay.name.like("%" + searchQuery + "%");
         }
         else if(StringUtils.equals("address", searchBy)) {
             return QStay.stay.address.like("%" + searchQuery+"%");
+        }
+        else if(StringUtils.equals("category", category)) {
+            return QStay.stay.category.like("%" + searchQuery + "%");
         }
         return null;
     }
@@ -84,7 +87,7 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
                 .from(stayImg)
                 .join(stayImg.stay, stay)
                 .where(stayImg.repimgYn.eq("Y"))
-                .where(searchByLike(staySearchDto.getSearchBy(), staySearchDto.getSearchQuery()))
+                .where(searchByLike(staySearchDto.getSearchBy(), staySearchDto.getSearchQuery(), staySearchDto.getCategory()))
                 .orderBy(stay.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

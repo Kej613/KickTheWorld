@@ -99,16 +99,17 @@ a{
 
 /* header nav 부분 -> 요소가 영역을 얼만큼 사용할지 */
 .container .header .nav {
-    width: 50%;
+    width: 100%;
     display: flex;
 }
 
 .container .header .nav ul {
     list-style: none;
     display: flex;
-    margin: 0;
-    padding: 0;
-    justify-content: space-between;
+    margin: auto;
+    padding: auto;
+    justify-content: center;
+    text-align:center;
 }
 
 .container .header .nav li {
@@ -131,11 +132,12 @@ a{
 }
 
 .container .content .cards {
-    padding: 10px;
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top:100px;
 }
 
 .container .content .cards .card {
