@@ -90,9 +90,11 @@
                 <i class="ri-account-circle-line"></i>
                 <p th:if="${#fields.hasErrors('memId')}" th:errors="*{memId}" class="fieldError">Incorrect data</p>
             </div>
-            <div> <button type="button" class="btn btn-outline-dark" onclick="checkUsername()"
-            style="width:300px; height:auto; padding:5px;">아이디 중복확인</button></div>
-<!--            <div id="usernameMessage"></div>-->
+            <div>
+                <button type="button" class="check__button" onclick="checkUsername()">
+                    아이디 중복확인
+                </button>
+            </div>
 
 
             <!-- PASSWORD -->
@@ -129,12 +131,6 @@
             이미 회원이신가요? &nbsp&nbsp <a th:href="@{/members/login}"> 로그인 </a>
         </div>
 
-        <div class="signup__social">
-            <i class="ri-kakao-talk-fill"></i>
-            <i class="ri-google-fill"></i>
-            <i class="ri-facebook-fill"></i>
-            <i class="ri-netflix-line"></i>
-        </div>
     </form>
 </div>
 </body>

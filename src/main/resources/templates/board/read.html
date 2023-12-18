@@ -7,7 +7,7 @@
   <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
   <link rel="stylesheet" th:href="@{/css/boardList.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <script th:inline="javascript">
@@ -78,13 +78,27 @@
     .reply_content {
       font-family: 'Pretendard-Regular';
       width:60%;
-      margin-left:auto;
-      margin-right:auto;
+      margin: 20px auto;
       text-align: left;
       border: solid 1px #ccc;
       border-radius: 20px;
       padding:10px;
       margin-bottom: 10px;
+    }
+
+    .iconGroup{
+      display: flex;
+      justify-content: right;
+      color: black;
+      font-size: 1.5rem;
+    }
+
+    .boardIcon{
+      margin: auto 6px;
+    }
+
+    .ri-heart-3-line:hover {
+      color: red;
     }
   </style>
 
@@ -100,37 +114,27 @@
     <!--NAV MENU-->
     <div class="nav__menu" id="nav-menu">
       <ul class="nav__list">
-        <li class="nav__item">
-          <a class="nav__link" href="/" ><b>마이페이지</b></a>
-        </li>
-
-        <!-- 8번 브랜치에서 추가-->
-        <li class="nav__item">
-          <a class="nav__link" href="/board/list" ><b>여행게시판</b></a>
-        </li>
         <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
           <a class="nav__link" href="/admin" th:href="@{/admin}" ><b>관리자페이지</b></a>
         </li>
+        <li class="nav__item" th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+          <a class="nav__link" href="/admin" th:href="@{/mypage}" ><b>마이페이지</b></a>
+        </li>
         <li class="nav__item">
-          <a class="nav__link" href="/members/login" th:href="@{/members/login}"
-             th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
+          <a class="nav__link" th:href="@{/board/list}" ><b>여행게시판</b></a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="/members/login" th:href="@{/members/login}" th:if="${#authorization.expression('isAnonymous()')}"><b>로그인</b></a>
         </li>
 
         <li class="nav__item">
-          <a class="nav__link" href="/members/new" th:href="@{/members/new}"
-             th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
+          <a class="nav__link" href="/members/new" th:href="@{/members/new}" th:if="${#authorization.expression('isAnonymous()')}"><b>회원가입</b></a>
         </li>
-
         <li class="nav__item">
-          <a class="nav__link" href="/members/logout" th:href="@{/members/logout}"
-             th:if="${#authorization.expression('isAuthenticated()')}"><b>로그아웃</b></a>
+          <a class="nav__link" href="/members/logout" th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+            <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b>로그아웃</b></a>
         </li>
-
-        <i class="ri-close-line nav__close" id="nav-close"></i>
       </ul>
-    </div>
-    <div class="nav__toggle" id="nav-toggle">
-      <i class="ri-function-line"></i>
     </div>
   </nav>
 
@@ -160,8 +164,20 @@
 
 <!--  <b>글 번호<p class="p1" th:text="${dto.bno}"></p></b>-->
   <b><p class="p1" th:text="${dto.title}" style="text-align:left; font-size:28px;"></b>
-  <p class="p1" th:text="${dto.writer}" style="text-align:left; font-size:20px;"></p>
+  <p style="text-align:left; font-size:20px;">
+    작성자&nbsp&nbsp
+    <span th:text="${dto.writer}" style="text-align:left; font-size:20px;"></span>
+  </p>
+  <div class="iconGroup">
+    <span class="boardIcon"><i class="ri-eye-line"></i></span>
+    <span class="viewCount" id="viewCount" th:text="${dto.viewCount}"></span>
 
+    <span class="boardIcon"><i class="ri-message-2-line"></i></span>
+    <span class="replyCount" th:text="${dto.replyCount}"></span>
+
+    <span class="boardIcon"><i class="ri-heart-3-line"></i></span>
+
+  </div>
 
   <div class="form-group" style="height: 300px; border: solid 1px #ccc;">
     <p class="p1" th:text="${dto.content}"></p>
@@ -173,8 +189,6 @@
       <td><p class="p1" th:text="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}"></p></td>
       <td><label>수정일</label></td>
       <td><p class="p1" th:text="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}"></p></td>
-      <td><label>조회수</label></td>
-      <td colspan="3"><p class="p1" id="viewCount" th:text="${dto.viewCount}"></p></td>
     </tr>
   </table>
 </form>
@@ -217,16 +231,20 @@
   </div>
 
   <div>
+
     <div class="comment_btn">
       <h5><button class="btn btn-outline-dark addReply"> 댓글 등록 </button></h5>
     </div>
-    <div style="text-align:center; ">
-      <h5 class="replyCount">댓글 [[${dto.replyCount}]] 개</h5>
-    </div>
-    <div class="replyList" >
 
+    <div style="text-align:center; ">
+      <h5>댓글 목록</h5>
     </div>
+
+    <div class="replyList">
+    </div>
+
   </div>
+
 </div>
 <!-- FOOTER -->
 <footer class="footer section" style="margin-top:300px; ">
@@ -289,7 +307,7 @@
           return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes();
         }
 
-        $('.replyCount').html("댓글  " + arr.length);
+        $('.replyCount').html(arr.length);
 
         $.each(arr, function(idx, reply) {
           console.log(reply);
@@ -369,8 +387,6 @@
     });
   });
 
-
-
   // 댓글저장
     $(".replySave").click(function() {
       var bno = [[${dto.bno}]];
@@ -400,6 +416,5 @@
       })
     })
 </script>
-
 </body>
 </html>
