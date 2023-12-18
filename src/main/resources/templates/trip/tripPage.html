@@ -82,6 +82,19 @@
             text-display: none;
             color:black;
         }
+
+        .customBtn {
+            width: 55px;
+            height: 30px;
+            text-align: center;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .customBtn:hover{
+            background-color: hsl(275, 90%, 23%);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -149,15 +162,16 @@
     </section>
 
     <div style="width:80%; margin-left:auto; margin-right:auto;">
-        <br><h2>어디로 떠나볼까요? </h2><br>
+        <br><h2 style="font-size: 25px;">어디로 떠나볼까요? </h2><br>
         <form th:action="@{'/main/trips/' + ${trips.number}}" role="form" method="get" th:object="${trips}">
             <div th:object="${tripSearchDto}" style="text-align: center;">
-                <select th:field="*{searchBy}" style="width:auto;">
+                <select th:field="*{searchBy}" style="width:auto; height:30px; border: 1px solid black; border-radius: 10px;">
                     <option value="address">지역</option>
                     <option value="name">여행지</option>
                 </select>
-                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:300px; margin-left:auto; margin-right:auto; border-radius:10px;">
-                <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button>
+                <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요"
+                       style="width:300px; padding: 10px; margin-left:auto; margin-right:auto; border: 1px solid black; border-radius:10px;">
+                <button id="searchBtn" type="submit" class="customBtn">검색</button>
             </div>
 
             <div class="card-container" style="margin-top:50px;">

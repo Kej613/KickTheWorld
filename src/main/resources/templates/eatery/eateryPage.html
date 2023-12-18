@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- REMIX ICONS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css">
     <!-- SWIPER CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <!-- CSS -->
@@ -179,22 +179,27 @@
         <div class="home__container container grid">
         </div>
     </section>
-    <br><h2>근처 맛집을 찾아볼까요 ? </h2><br>
+    <br><h2 style="font-size:25px;">근처 맛집을 찾아볼까요 ? </h2><br>
+
     <div class="eatery_main">
         <form th:action="@{'/main/eaterys/' + ${eaterys.number}}" role="form" method="get" th:object="${eaterys}">
             <div class="side_menu" style="margin-top:30px;">
                 <div id="s_left"></div>
                 <div id="contents" >
                     <div th:object="${eaterySearchDto}" style="margin-top:10px; padding: 5px;">
-                        <select th:field="*{searchBy}" style="width:auto; border-radius: 10px;">
+                        <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>통합 검색 </b></a><br>
+                        <div style="display: flex; align-items: center; margin-top:3px;">
+                        <select th:field="*{searchBy}" style="width:83px; height: 30px; border-radius: 10px;">
                             <option value="address">지역</option>
-                            <option value="name">음식점명</option>
-                            <option value="eaterycategory">음식점유형</option>
+                            <option value="name">업소명</option>
+                            <option value="eaterycategory">업소유형</option>
                         </select>
-                        <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요" style="width:200px; margin-left:auto; margin-right:auto; border-radius:10px;padding:10px;">
-                        <div>
-                        <button id="searchBtn" type="submit" class="btn btn-outline-dark">검색</button></div>
+                        <input th:field="*{searchQuery}" type="text"  placeholder="검색어를 입력해주세요"
+                               style="width:175px; margin-left:auto; margin-right:auto;
+                               border: 1px solid black; border-radius:10px; padding:10px;">
+                        <button style="background: transparent;"><i class="ri-search-line" style="color:black; font-size: 1.7rem;"></i></button>
                     </div>
+
                     <div style="margin-top: 20px;">
                         <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>음식점유형 </b></a><br>
                         <label style="display: inline-block; margin-right: 10px;">
@@ -210,7 +215,7 @@
                     <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b>
                         <div id="map" style="width:300px;height:300px;"></div>
                     </a><br>
-
+                    </div>
 
 
 <!--                    <ul>-->
@@ -244,6 +249,7 @@
 <!--                    <div class="btn1" style="text-align:center;">-->
 <!--                        <button type="submit" class="btn btn-outline-dark">검색</button></div>-->
 <!--                </div>-->
+            </div>
             </div>
 
             <div class="card-container" style="margin-top:3px; margin-right:20px; background-color: #FFFFFF; border-radius:20px;">
