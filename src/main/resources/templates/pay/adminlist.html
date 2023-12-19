@@ -92,7 +92,7 @@
                   <th>거래번호</th>
                   <th>숙소금액</th>
                   <th>결제상태</th>
-                  <th>기타</th>
+<!--                  <th>기타</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -108,10 +108,10 @@
                     <td th:case="${'P'}">결제완료</td>
                     <td th:case="${'C'}">결제취소완료</td>
                   </th:block>
-                  <td th:if="${pay.payStatus == 'P'}">
-                    <button type="button" th:onclick="goCancel([[${pay.ordNo}]], [[${pay.trNo}]])" style="padding:5px; border-radius:5px;">결제취소</button>
-                  </td>
-                  <td th:if="${pay.payStatus == 'C'}"></td>
+<!--                  <td th:if="${pay.payStatus == 'P'}">-->
+<!--                    <button type="button" th:onclick="goCancel([[${pay.ordNo}]], [[${pay.trNo}]])" style="padding:5px; border-radius:5px;">결제취소</button>-->
+<!--                  </td>-->
+<!--                  <td th:if="${pay.payStatus == 'C'}"></td>-->
                 </tr>
                 </tbody>
               </table>

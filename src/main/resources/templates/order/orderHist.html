@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>예약</title>
+  <title>예약확인</title>
   <link rel="stylesheet" th:href="@{/css/boardHeaderFooter.css}">
   <link rel="stylesheet" th:href="@{/css/boardList.css}">
 <!--  <link th:href="@{/css/stay.css}" rel="stylesheet">-->
@@ -154,7 +154,7 @@
   </nav>
 </header>
 <div>
-<h2 style="margin-top: 200px; margin-left:auto; margin-right:auto; text-align:center; "> 결제 대기 </h2>
+<h2 style="margin-top: 200px; margin-left:auto; margin-right:auto; text-align:center; "> <b>예약 확인</b> </h2>
 </div>
 <div class="main" style="margin-top:50px; margin-left:auto; margin-right:auto; text-align:center; background-color:#FFFFFF; border-radius:20px; width:80%;">
   <div th:each="order : ${orders.getContent()}">

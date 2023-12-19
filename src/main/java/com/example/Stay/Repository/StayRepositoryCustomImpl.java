@@ -81,7 +81,9 @@ public class StayRepositoryCustomImpl implements StayRepositoryCustom {
                                 stay.address,
                                 stay.category,
                                 stayImg.imgUrl,
-                                stay.price
+                                stay.price,
+                                stay.likeCount
+
                         )
                 )
                 .from(stayImg)

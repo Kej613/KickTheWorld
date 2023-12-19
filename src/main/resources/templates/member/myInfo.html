@@ -1,12 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>myInfo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css">
+    <!-- ADMIN CSS -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <title>my page</title>
+    <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
+<!--- SIDE BAR -->
+<div class="side-bar">
+    <div class="logo-name">
+        <h2 style="color: white"> 안녕하세요, 회원님! </h2>
+    </div>
+    <ul>
+        <li><a th:href="@{/members/info}"> &nbsp 내 정보</a></li>
+        <!--        <li><a th:href="@{/orders}"> &nbsp 예약목록 </a></li>-->
+        <li><a th:href="@{/list}"> &nbsp 결제내역</a></li>
+    </ul>
+</div>
+<!-- HEADER -->
+<div class="container">
+    <div class="header" style="width: 82vw;">
+        <div class="nav">
+            <a th:href="@{/}" style="font-size: 1.5rem;"><i class="ri-earth-line"></i> Kick The World </a>
+            <ul>
+                <li><a th:href="@{/main/trips}"><i class="ri-map-pin-line" style="font-size: 1.5rem;"></i>여행지</a></li>
+                <li><a th:href="@{/main/stays}"><i class="ri-hotel-bed-line" style="font-size: 1.5rem;"></i>숙소</a></li>
+                <li><a th:href="@{/main/eaterys}"><i class="ri-restaurant-line" style="font-size: 1.5rem;"></i>맛집</a></li>
+                <li><a th:href="@{/search}"><i class="ri-heart-3-line" style="font-size: 1.5rem;"></i>추천코스</a></li>
+                <li><a th:href="@{/board/list}"><i class="ri-edit-line" style="font-size: 1.5rem;"></i>여행게시판</a></li>
+            </ul>
+            <a th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b><span style="color: #6610f2;">로그아웃</span></b></a>
+        </div>
+    </div>
 
-
-
+    <!-- CONTENT -->
+    <div class="content">
+        <div style="margin-top:200px;">
+        <div style="padding: 5px;text-align:center;">
+            <a style="color:black; padding-left: 10px;"><b>이름</b> <input type="text" class="form-control" th:value="${loginMember.name}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" > </a><br><br>
+            <a style="color:black; padding-left: 10px;"><b> 전화번호</b> <input type="text" class="form-control" th:value="${loginMember.phonenumber}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></a><br><br>
+            <a style="color:black; padding-left: 10px;"><b> 이메일</b> <input type="text" class="form-control" th:value="${loginMember.email}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></a><br><br>
+            <a style="color:black; padding-left: 10px;"><b> 주소</b> <input type="text" class="form-control" th:value="${loginMember.address}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></a><br><br>
+        </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
+

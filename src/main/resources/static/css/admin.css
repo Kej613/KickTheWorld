@@ -40,7 +40,7 @@ a{
 .side-bar {
     position: fixed;
     background: var(--first-color);
-    width: 17vw;
+    width: 17.15vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
