@@ -6,6 +6,8 @@
     <title>StayPage</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- RateYo CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
     <!-- REMIX ICONS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
     <!-- SWIPER CSS -->
@@ -13,6 +15,10 @@
     <!-- CSS -->
     <link rel="stylesheet" th:href="@{/css/main_test.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- RateYo JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <!--    JQuery-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
@@ -22,6 +28,16 @@
                 e.preventDefault();
                 page(0);  //조회할때 페이지 번호를 0으로 설정해서 조회해야 함
             });
+
+            // RateYo 초기화
+            $("#rating").rateYo({
+                starWidth: "40px", // 각 별점의 너비 설정
+                rating: $("#rating").data("score"), // 초기 별점 설정 (서버에서 가져온 값)
+                fullStar: true, // 정수로만 별점을 허용할지 여부
+                readOnly: true // 읽기 전용 모드로 설정 (별점 변경 비활성화)
+            });
+
+
         });
 
         function page(page){
@@ -180,12 +196,11 @@
 <main class="main">
     <!-- HOME -->
     <section class="home" id="home">
-        <img  th:src="@{/images/main/Stay.jpg}" alt="home main image" class="home__img">
+        <img th:src="@{/images/main/stay.jpg}" alt="home main image" class="home__img">
         <div class="home__container container grid">
         </div>
     </section>
     <br><h2 style="font-size: 25px;">오늘은 어떤 숙소에서 하루를 보내고 싶으세요? </h2><br>
-
     <div class="stay_main">
         <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">
         <div class="side_menu" style="margin-top:30px;">
@@ -227,42 +242,6 @@
 
             </div>
 
-
-<!--            <ul>-->
-<!--                <li class="side_li">-->
-<!--                    <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지도로 검색 >></b></a><br>-->
-<!--                </li>-->
-<!--                <li class="side_li">-->
-<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;"><b>지역</b></a><br>-->
-<!--                    <select>-->
-<!--                        <option value="address"th:checked="${param.address == '서울'}">서울</option>-->
-<!--                        <option value="address"th:checked="${param.address == '경기'}">경기</option>-->
-<!--                        <option value="address"th:checked="${param.address == '강원'}">강원</option>-->
-<!--                        <option value="address"th:checked="${param.address == '부산'}">부산</option>-->
-<!--                        <option value="address"th:checked="${param.address == '제주'}">제주</option>-->
-<!--                        <option value="address"th:checked="${param.address == '전북'}">전북</option>-->
-<!--                        <option value="address"th:checked="${param.address == '경남'}">경남</option>-->
-<!--                        <option value="address"th:checked="${param.address == '인천'}">인천</option>-->
-<!--                        <option value="address"th:checked="${param.address == '경북'}">경북</option>-->
-<!--                    </select>-->
-<!--                </li>-->
-<!--                <li class="side_li">-->
-<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>숙소유형</b></a>-->
-<!--                    <label>-->
-<!--                        <input type="radio" name="category" value="호텔" th:checked="${param.category == '호텔'}">호텔-->
-<!--                        <input type="radio" name="category" value="펜션" th:checked="${param.category == '펜션'}">펜션-->
-<!--                        <input type="radio" name="category" value="게하" th:checked="${param.category == '게하'}">게하-->
-<!--                        <input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}">캠핑-->
-<!--                    </label>-->
-<!--                </li>-->
-<!--                <li class="side_li">-->
-<!--                    <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px;" ><b>가격</b></a>-->
-
-<!--                </li>-->
-<!--            </ul>-->
-<!--            <div class="btn1" style="text-align:center;">-->
-<!--                <button type="submit" class="btn btn-outline-dark">검색</button></div>-->
-<!--        </div>-->
     </div>
     </div>
 
@@ -273,9 +252,10 @@
                         <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width: 500px; height: 300px; border-radius: 20px;" >
                         <p th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size:20px;padding:10px;"></p>
                         <p th:text="${stay.address}" class="trip-name" style="padding:10px;" ></p>
+                        <div id="rating" data-score=3.5></div>
                         <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>
                         <div style="text-align:right;">
-                        <button th:href="'/admin/stay/'+${stay.id}" type="button" class="btn btn-outline-dark">>>숙소 둘러보기</button></div>
+                        <button th:href="'/admin/stay/'+${stay.id}" type="button" class="btn btn-outline-dark">숙소 둘러보기>></button></div>
                     </a>
                 </div>
             </div>
@@ -397,23 +377,25 @@
 <!-- MAIN JS -->
 <script th:src="@{/js/main_test.js}"></script>
 <script>
-    function filterStays() {
-        // 현재 선택된 라디오 버튼의 값을 가져오기
-        var selectedCategory = $("input[name='category']:checked").val();
 
-        // 서버에 필터 값 전송
-        $.ajax({
-            url: "/main/stays/filter",
-            type: "GET",
-            data: { category: selectedCategory },
-            success: function (data) {
-                updateResults(data);
-            },
-            error: function (error) {
-                console.error("Error during filtering: " + error);
-            }
-        });
-    }
+
+    // function filterStays() {
+    //     // 현재 선택된 라디오 버튼의 값을 가져오기
+    //     var selectedCategory = $("input[name='category']:checked").val();
+    //
+    //     // 서버에 필터 값 전송
+    //     $.ajax({
+    //         url: "/main/stays/filter",
+    //         type: "GET",
+    //         data: { category: selectedCategory },
+    //         success: function (data) {
+    //             updateResults(data);
+    //         },
+    //         error: function (error) {
+    //             console.error("Error during filtering: " + error);
+    //         }
+    //     });
+    // }
     function updateResults(data) {
         $(".card-container").empty(); // 기존 숙소 비우기
 

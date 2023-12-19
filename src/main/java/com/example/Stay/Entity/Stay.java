@@ -70,6 +70,13 @@ public class Stay {
     @OneToMany(mappedBy = "stay", fetch = FetchType.EAGER)
     private List<StayImg> stayImgs;
 
+    @Column(name = "like_count")
+    private int likeCount;  // 좋아요 수
+
+    private double grade; //평점
+
+
+
 
     public void removeStay(int room) {
         int restStay = this.room - room;
@@ -90,12 +97,14 @@ public class Stay {
             int price,
             int room,
             int people,
+            int likeCount,
             String detail,
             String address,
             String service,
             String use_guide,
             String amenity,
             StaySellStatus staySellStatus
+
     ) {
         this.name = name;
         this.category = category;
@@ -107,6 +116,7 @@ public class Stay {
         this.service = service;
         this.use_guide = use_guide;
         this.amenity = amenity;
+        this.likeCount = likeCount;
         this.staySellStatus = staySellStatus;
     }
 
@@ -124,6 +134,9 @@ public class Stay {
         this.use_guide = stayFormDto.getUse_guide();
     }
 
+    public void increaseLikeCount() {
+        this.likeCount++;
+    }
 
 
 }

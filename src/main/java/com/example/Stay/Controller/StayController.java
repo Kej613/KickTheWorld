@@ -70,6 +70,9 @@ public class StayController {
     public String stayManage(StaySearchDto staySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 
+        double rating = 3.5;
+        model.addAttribute("rating", rating);
+
         Page<StayItemDto> stays = stayService.getStayPage(staySearchDto, pageable);
         model.addAttribute("stays", stays);
         model.addAttribute("staySearchDto", staySearchDto);
@@ -120,6 +123,18 @@ public class StayController {
             return "stay/stay";
         }
         return "stay/stay";
+    }
+
+    @PostMapping(value = "/admin/stay/like/{id}")
+    @ResponseBody
+    public int likeStay(@PathVariable Long id) {
+        Stay stay = stayRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid stay ID"));
+
+        stay.increaseLikeCount();   //좋아요수 증가
+        stayRepository.save(stay);
+
+        return stay.getLikeCount();
     }
 
     // 숙소수정

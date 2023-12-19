@@ -61,5 +61,4 @@ public interface BoardService {
 
     Long updateViewCount(Long bno);
 
-    List<BoardDto> getFilteredBoardList(String category);
 }

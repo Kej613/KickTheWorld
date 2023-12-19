@@ -3,6 +3,7 @@ package com.example.Member.controller;
 import com.example.Member.constant.Role;
 import com.example.Member.dto.MemberFormDto;
 import com.example.Member.entity.Member;
+import com.example.Member.repository.MemberRepository;
 import com.example.Member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RequestMapping("/members")
@@ -23,25 +25,27 @@ public class MemberController {
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
 
     //회원가입
     @GetMapping(value = "/new")
-    public String memberForm(Model model){
+    public String memberForm(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());
         return "member/Signup_test";
     }
+
     @PostMapping(value = "/new")
-    public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model){
+    public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 
         //validation
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "member/Signup_test";
         }
 
         try {
             Member member = Member.createMember(memberFormDto, passwordEncoder, Role.USER);
             memberService.saveMember(member);
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/LoginForm_test";
         }
@@ -51,7 +55,7 @@ public class MemberController {
 
     //로그인
     @GetMapping(value = "/login")
-    public String loginMember(Model model){
+    public String loginMember(Model model) {
 //        model.addAttribute("kakaoUrl", kakaoLoginService.getKakaoLogin());
         return "member/LoginForm_test";
     }
@@ -59,7 +63,7 @@ public class MemberController {
 
     //로그인 에러시
     @GetMapping(value = "/login/error")
-    public String loginError(Model model){
+    public String loginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
         return "member/LoginForm_test";
     }
@@ -120,6 +124,16 @@ public class MemberController {
         return ResponseEntity.ok("사용가능한 아이디입니다.");
     }
 
+    @GetMapping(value = "/info")
+    public String memberInfo(Model model, Principal principal) {
+
+        Member loginMember = memberRepository.findByMemId(principal.getName());
+
+        model.addAttribute("loginMember", loginMember);
+
+        return "member/myInfo";
+    }
 
 }
+
 

@@ -91,7 +91,7 @@
                 <p th:if="${#fields.hasErrors('memId')}" th:errors="*{memId}" class="fieldError">Incorrect data</p>
             </div>
             <div>
-                <button type="button" class="check__button" onclick="checkUsername()">
+                <button type="button" class="check__button" onclick="checkUsername()" style="width:150px; ">
                     아이디 중복확인
                 </button>
             </div>
@@ -132,7 +132,6 @@
         <div class="signup__register">
             이미 회원이신가요? &nbsp&nbsp <a th:href="@{/members/login}"> 로그인 </a>
         </div>
-
     </form>
 </div>
 </body>

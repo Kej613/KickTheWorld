@@ -39,7 +39,7 @@
                 <li><a th:href="@{/board/list}"><i class="ri-edit-line" style="font-size: 1.5rem;"></i>여행게시판</a></li>
             </ul>
             <a th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-                <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b><span style="color: #6610f2;">로그아웃</span></b></a>
+                <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b><span style="color: #6610f2; margin-right:100px;">로그아웃</span></b></a>
         </div>
     </div>
 

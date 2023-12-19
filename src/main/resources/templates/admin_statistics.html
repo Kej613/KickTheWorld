@@ -41,18 +41,15 @@
                 <li><a th:href="@{/board/list}"><i class="ri-edit-line" style="font-size: 1.5rem;"></i>여행게시판</a></li>
             </ul>
             <a th:href="@{/members/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
-                <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b><span style="color: #6610f2;">로그아웃</span></b></a>
+                <span th:text="'[' + ${#authentication.principal.username} + ']' + '님 환영합니다! '"></span>&nbsp<b><span style="color: #6610f2; margin-right:100px;">로그아웃</span></b></a>
         </div>
     </div>
 
     <!-- CONTENT -->
-    <div class="content" style="margin-top:100px; text-align:center; ">
-
+    <div class="content" style="margin-top: 150px; text-align:center; ">
             <h2>숙소별 매출통계</h2><br><br>
-        <div style="width:70%; margin-left:auto; margin-right:auto;">
-            <canvas id="salesChart" width="300" height="150"></canvas></div>
-
-
+        <div style="width:80%; margin-left:auto; margin-right:auto; text-align:center; background-color:#FFFFFF;">
+            <canvas id="salesChart" width="800px" height="500px" ></canvas></div>
     </div>
 </div>
 <script th:inline="javascript">
@@ -65,8 +62,10 @@
         ["4", "", "", "", "", "", "M2266037", "2023-12-20", "2023-12-21", "20231216013241153M_user1", "", "", "O", "전주한옥마을숙박 다락", "b3b41636e4c647b69ff175c8adaf0cf9d87e0016e1e02b7b0d5f908031f32e65", "20231216", "", "56000", "013243", "self"],
         ["5", "PAR20231216000166171", "", "", "", "", "M2266037", "2023-12-20", "2023-12-21", "20231216013329178M_user1", "0", "", "P", "전주한옥마을숙박 다락", "f51dd602f61903335ccced4df5036b305f3c511ab096b96c82e545bab6197593", "20231216", "STFP_PNPTM226603700231216013442M1880770", "56000", "013334", "self"],
         ["6", "", "", "", "", "", "M2266037", "2023-12-19", "2023-12-21", "20231216191012961M_dmswjd0613", "", "", "O", "낯선하루", "f16aca1e897520368cbd9ed95bc3b3c5b46b0c05e72c93aba209a6de356419a0", "20231216", "", "56000", "191019", "self"],
-        ["7", "PAR20231216000166173", "CANCEL_20231216192744939M_dmswjd0613", "0", "", "STFP_PNPTM226603700231216195247M1447251", "M2266037", "2023-12-19", "2023-12-21", "20231216192744939M_dmswjd0613", "0", "", "C", "낯선하루", "94ad782b364f57bf64a5ca4b5000675f044347da1a89d49f831be0f7418f205e", "20231216", "STFP_PNPTM226603700231216193407M1818541", "56000", "192752", "self"]
-
+        ["7", "PAR20231216000166173", "CANCEL_20231216192744939M_dmswjd0613", "0", "", "STFP_PNPTM226603700231216195247M1447251", "M2266037", "2023-12-19", "2023-12-21", "20231216192744939M_dmswjd0613", "0", "", "C", "낯선하루", "94ad782b364f57bf64a5ca4b5000675f044347da1a89d49f831be0f7418f205e", "20231216", "STFP_PNPTM226603700231216193407M1818541", "56000", "192752", "self"],
+        ["8", "", "", "", "", "", "M2266037", "2023-12-20", "2023-12-23", "20231216220426769M_user1", "", "", "O", "모항레저타운", "47faf800bf83ad8add594d285bea9e92b0b8e46c42011e066196debbfc88809d", "20231216", "", "750000", "220428", "self"],
+        ["9", "", "", "", "", "", "M2266037", "2023-12-20", "2023-12-23", "20231216220426769M_user1", "", "", "O", "모항레저타운", "627e8b076264987b8aad33fb1504144931d8e895a5944ff4dbadef599ea8016c", "20231216", "", "750000", "220431", "self"],
+        // Add more rows as needed
     ];
 
     // 숙소별 판매금액을 저장할 객체

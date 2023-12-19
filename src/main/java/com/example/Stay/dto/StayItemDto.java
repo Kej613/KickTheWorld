@@ -18,15 +18,17 @@ public class StayItemDto {
     private String address;  //주소
 
     private String category;  //숙소유형
+    private int likeCount; //좋아수
 
     @QueryProjection
-    public StayItemDto(Long id, String name, String address, String imgUrl, String category, Integer price) {
+    public StayItemDto(Long id, String name, String address, String imgUrl, String category, Integer price, Integer likeCount) {
         this.id= id;
         this.name = name;
         this.imgUrl = "/stay/" + imgUrl + ".jpg";
         this.address = address;
         this.category = category;
         this.price = price;
+        this.likeCount = likeCount;
 
     }
 //    private static ModelMapper modelMapper = new ModelMapper();

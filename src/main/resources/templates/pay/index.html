@@ -36,10 +36,14 @@
             margin-left:auto;
             margin-right:auto;
             color:black;
-            background-color: #FFFFFF;
+            background-color: #f8f9fa;
         }
-        h1 {
+        h1,h2 {
             font-family: 'Pretendard-Regular';
+            color:black;
+        }
+        tr {
+            border-bottom: solid 1px #cccccc;
         }
         td,th{
             padding:7px;
@@ -113,71 +117,53 @@
 </header>
 <div>
 <form method="post" action="" id="payForm" name="payForm" >
-    <div style="display: flex; flex-direction: row; margin-top: 200px;">
-    <div style=" flex: 1; padding: 20px; text-align:left;">
+    <div style="display: flex; flex-direction: row; margin-top: 200px; padding:30px; background-color:#FFFFFF;">
+    <div style=" flex: 1; padding: 20px; text-align:left; background-color:#FFFFFF;">
         <h2 style="text-align:center"> 예약자 정보 </h2><br>
-        <div class="reservation_list" style="background-color:#FFFFFF;">
-        이름:  <input type="text" class="form-control" th:value="${loginMember.name}" style="width:300px;" ><br>
-        전화번호: <input type="text" class="form-control" th:value="${loginMember.phonenumber}" style="width:300px;" ><br><br>
-           ▶약관동의 <br> <p style="color:black;">서비스의 목적: 서비스나 웹사이트의 목적을 명확하게 설명합니다.<br>
-            이용자의 권리와 의무: 이용자가 서비스를 이용함에 있어서 지켜야 하는 규정과 서비스 제공자의 의무를 명시합니다.<br>
-            개인정보 처리 방침: 이용자의 개인정보 수집, 이용, 보호에 관한 규정을 포함합니다.<br>
-            서비스 이용 규칙: 서비스를 이용함에 있어서의 규칙과 제한사항을 설명합니다.<br>
-            계약의 성립 및 해지: 이용자와 서비스 제공자 간의 계약 성립 및 해지에 관한 조항을 포함합니다.<br>
-            책임 제한과 면항 조항: 서비스 제공자의 책임 한계와 면책 조항을 설명합니다.<br>
-            약관의 변경: 서비스 제공자가 약관을 어떤 경우에 변경할 수 있는지에 대한 조항을 담고 있습니다.</p><br><br>
+        <div class="reservation_list" style="background-color:#f8f9fa; border-radius:20px; padding: 10px;">
+            <div style="padding: 5px;text-align:center;">
+            <a style="color:black; padding-left: 10px;"><b>이름&nbsp&nbsp</b><input type="text" class="form-control" th:value="${loginMember.name}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" > </a><br><br>
+            <a style="color:black; padding-left: 10px;"><b> 전화번호</b> <input type="text" class="form-control" th:value="${loginMember.phonenumber}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></a></div><br><br>
+            <a style="color:black; font-size:18px;"> ▶ 약관동의 </a><br> <p style="color:black;">1. 서비스의 목적: 서비스나 웹사이트의 목적을 명확하게 설명합니다.<br>
+            2. 이용자의 권리와 의무: 이용자가 서비스를 이용함에 있어서 지켜야 하는 규정과 서비스 제공자의 의무를 명시합니다.<br>
+            3. 개인정보 처리 방침: 이용자의 개인정보 수집, 이용, 보호에 관한 규정을 포함합니다.<br>
+            4. 서비스 이용 규칙: 서비스를 이용함에 있어서의 규칙과 제한사항을 설명합니다.<br>
+            5. 계약의 성립 및 해지: 이용자와 서비스 제공자 간의 계약 성립 및 해지에 관한 조항을 포함합니다.<br>
+            6. 책임 제한과 면항 조항: 서비스 제공자의 책임 한계와 면책 조항을 설명합니다.<br>
+            7. 약관의 변경: 서비스 제공자가 약관을 어떤 경우에 변경할 수 있는지에 대한 조항을 담고 있습니다.</p><br><br>
 
-            <div style="text-align:center;">
+        </div>
+        <div style="text-align:center;">
             <input type="checkbox" id="agreeCheckbox" style="width:60px;"> 약관 동의  <br></div>
-<!--            <button type="button" onclick="handleAgree()">약관 동의 확인</button>-->
-        </div>
-        </div>
+        <!--            <button type="button" onclick="handleAgree()">약관 동의 확인</button>-->
+    </div>
         <div style="flex: 1; padding: 20px;">
-        <h2>결제내역확인</h2>
+        <h2>결제정보</h2>
         <!-- container -->
         <div class="container" style="margin-top: 20px;">
-            <div class="table-responsive">
-                <table class="table">
-                    <colgroup>
-                        <col style="width: 20%;">
-                        <col style="width: 40%;">
-                        <col style="width: 20%;">
-                        <col style="width: 40%;">
-                    </colgroup>
+            <div class="table-responsive" style="text-align:center; background-color:#f8f9fa; border-radius:20px;" >
+                <table class="table" style="text-align:center; border-radius:20px;">
                     <tbody>
                     <tr>
-                        <td>예약번호</td><td><input type="text" name="ordNo" id="ordNo" placeholder="예약번호" th:value="${ordNo}"></td>
+                        <td><b>예약번호</b></td><td><input type="text" name="ordNo" id="ordNo" placeholder="예약번호" th:value="${ordNo}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                     </tr>
                     <tr>
-                        <td>숙소금액</td><td><input type="text" name="trPricePlain" id="trPricePlain" placeholder="숙소금액" th:value="${param.trPricePlain}"></td>
-                    </tr>
-                    <tr>
-                        <td>숙소명</td><td><input type="text" name="productNm" id="productNm" placeholder="숙소명" th:value="${param.productNm}"></td>
-                    </tr>
-                    <tr>
-                        <td>체크인날짜</td><td><input type="text" name="mercntParam1" id="mercntParam1" placeholder="체크인날짜" th:value="${param.checkInDate}"></td>
-                    </tr>
-                    <tr>
-                        <td>체크아웃날짜</td><td><input type="text" name="mercntParam2" id="mercntParam2" placeholder="체크아웃날짜" th:value="${param.checkOutDate}"></td>
-                    </tr>
+                        <td><b>숙소금액</b></td><td><input type="text" name="trPricePlain" id="trPricePlain" placeholder="숙소금액" th:value="${param.trPricePlain}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
 
+                    </tr>
+                    <tr>
+                        <td><b>숙소명</b></td><td><input type="text" name="productNm" id="productNm" placeholder="숙소명" th:value="${param.productNm}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></td>
+                    </tr>
+                    <tr>
+                        <td><b>체크인날짜</b></td><td><input type="text" name="mercntParam1" id="mercntParam1" placeholder="체크인날짜" th:value="${param.checkInDate}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;"><b>체크아웃날짜</b></td><td><input type="text" name="mercntParam2" id="mercntParam2" placeholder="체크아웃날짜" th:value="${param.checkOutDate}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;" ></td>
+                    </tr>
                     </tbody>
-
-<!--                    mercntParam1 -> 2023-12-12 : 2023-12-15-->
-<!--                    String checkIn = string.split(":")[0]-->
-<!--                    String checkOut = string.split(":")[1]-->
-
                 </table>
             </div>
-        </div>
-        </div>
-    </div>
-        <!-- //container -->
-        <!-- fixed bottom button -->
-        <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayAuth();" style="margin-top: 20px; padding:10px;">결제하기</button></div>
-<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-        <!-- //fixed bottom button -->
-
+            <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayAuth();" style="margin-top: 20px; padding:10px; border-radius:20px;">결제하기</button></div>
 
     <input type="hidden" name="mercntId" id="mercntId" placeholder="가맹점아이디" th:value="${mercntId}">
     <input type="hidden" name="hdInfo" id="hdInfo" value="IA_AUTHPAGE_1.0_1.0" readonly="readonly"><!--    전문정보-->

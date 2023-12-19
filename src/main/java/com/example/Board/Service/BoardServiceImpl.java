@@ -102,6 +102,9 @@ public class BoardServiceImpl implements BoardService{
         if(type.contains("writer")) {
             conditionBuilder.or(qBoard.writer.contains(keyword));
         }
+        if(type.contains("category")) {
+            conditionBuilder.or(qBoard.category.contains(keyword));
+        }
 
         booleanBuilder.and(conditionBuilder);
 
@@ -133,13 +136,6 @@ public class BoardServiceImpl implements BoardService{
         return bno;
     }
 
-    //카테고리별로 해당 게시물 필터링
-    @Override
-    public List<BoardDto> getFilteredBoardList(String category) {
-        List<Board> filteredBoards = boardRepository.findByCategory(category);
-        return filteredBoards.stream()
-                .map(this::EntityToDto)
-                .collect(Collectors.toList());
-    }
+
 
 }
