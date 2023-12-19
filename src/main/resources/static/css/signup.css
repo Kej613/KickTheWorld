@@ -167,6 +167,11 @@ img {
     cursor: pointer;
 }
 
+.check__button:hover {
+    background-color: var(--white-color);
+    color: var(--sig-color);
+}
+
 .signup__input {
     width: 100%;
     background: none;
@@ -192,6 +197,11 @@ img {
     color: var(--white-color);
     font-weight: 500;
     cursor: pointer;
+}
+
+.signup__button:hover{
+    background-color: var(--white-color);
+    color: var(--sig-color);
 }
 
 .signup__register {
@@ -226,7 +236,7 @@ img {
     }
     .signup__form {
         width: 500px;
-        height: 830px;
+        height: 900px;
         padding-inline: 2.5rem;
     }
     .signup__title {

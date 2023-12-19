@@ -633,7 +633,7 @@ input {
 }
 
 .footer__description {
-    font-size: var(--small-font-size);
+    font-size: var(--normal-font-size);
     margin-bottom: var(--mb-2);
 }
 
@@ -652,6 +652,7 @@ input {
 }
 
 .footer__link {
+    font-size: var(--normal-font-size);
     color: var(--text-color);
 }
 
