@@ -196,6 +196,11 @@ img {
     cursor: pointer;
 }
 
+.login__button:hover{
+    background-color: var(--white-color);
+    color: var(--sig-color);
+}
+
 .login__register {
     font-size: var(--small-font-size);
     text-align: center;

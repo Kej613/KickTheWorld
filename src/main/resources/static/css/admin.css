@@ -12,6 +12,7 @@
     --font-weight-normal: 500;
     --font-weight-semi-bold: 600;
     --font-weight-bold: 700;
+    --font-weight-bold: 700;
 }
 
 /* BASE */
@@ -88,7 +89,7 @@ a{
     position: fixed;
     top: 0;
     right: 0;
-    width: 83vw;
+    width: 82vw;
     height: 10vh;
     background: white;
     display: flex;
@@ -107,7 +108,7 @@ a{
     list-style: none;
     display: flex;
     margin: auto;
-    padding: auto;
+    /*padding: auto;*/
     justify-content: center;
     text-align:center;
 }
@@ -121,7 +122,6 @@ a{
     text-decoration: none;
     color: black;
     font-size: var(--font-size-normal);
-    font-weight: var(--font-weight-semi-bold);
 }
 
 .container .content {

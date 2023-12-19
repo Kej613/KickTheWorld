@@ -131,6 +131,10 @@
             height: auto;
             border-radius: 8px;
         }
+
+        ul {
+            padding-left: 0;
+        }
     </style>
 </head>
 <body>
@@ -196,17 +200,16 @@
         <div class="home__container container grid">
         </div>
     </section>
-    <br><br><h2 style="font-size: 25px;font-weight: bold; ">어떤 숙소를 찾고 계신가요? </h2><br>
-
+    <br><h2 style="font-size: 25px;">오늘은 어떤 숙소에서 하루를 보내고 싶으세요? </h2><br>
     <div class="stay_main">
         <form th:action="@{'/main/stays/' + ${stays.number}}" role="form" method="get" th:object="${stays}">
         <div class="side_menu" style="margin-top:30px;">
         <div id="s_left"></div>
         <div id="contents" >
-            <div th:object="${staySearchDto}" style="margin-top:10px; padding: 5px;">
+            <div th:object="${staySearchDto}" style="margin-top:10px; padding: 5px; width:330px;">
                 <a style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>통합 검색 </b></a><br>
                 <div style="display: flex; align-items: center; margin-top:3px;">
-                <select th:field="*{searchBy}" style="width:auto; height: 30px; border-radius: 10px;">
+                <select th:field="*{searchBy}" style="width:auto; height: 30px; border-radius: 10px; margin-right: 3px;">
                     <option value="address">지역</option>
                     <option value="name">숙소명</option>
                     <option value="category" > 숙소유형</option>
@@ -231,9 +234,6 @@
                     <label style="display: inline-block; margin-right: 10px;">
                         캠핑<input type="radio" name="category" value="캠핑" th:checked="${param.category == '캠핑'}" ></label>
 
-                    <button>
-                        <i class="ri-search-line" style="font-size: 1.7rem;"></i>
-                    </button>
                 </div>
 
                 <a href="/kakao" style="background-color: #f8f8ff; padding: 5px; border-radius: 10px; margin-top:20px;"><b>지도로 검색 </b>
@@ -290,13 +290,15 @@
     </section>
 </main>
 
-
 <!-- FOOTER -->
-<footer class="footer section">
+<footer class="footer section" >
     <div class="footer__container container grid">
         <div class="footer__content grid">
             <div class="footer__data">
                 <h3 class="footer__title">Developer</h3>
+                <p class="footer__description" style="color:#5D446F">
+                    Seokyung University<br>Software<br>
+                </p>
                 <div>
                     <a href="https://www.facebook.com/" target="_blank" class="footer__social">
                         <span class="footer__name">김은정</span><i class="ri-github-fill"></i>
@@ -307,6 +309,20 @@
                 </div>
             </div>
 
+            <div class="footer__data">
+                <h3 class="footer__subtitle">About</h3>
+                <ul>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">About Us</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">SKUniv</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Instagram</a>
+                    </li>
+                </ul>
+            </div>
 
             <div class="footer__data">
                 <h3 class="footer__subtitle">Company</h3>
@@ -315,10 +331,25 @@
                         <a href="" class="footer__link">Team</a>
                     </li>
                     <li class="footer__item">
-                        <a href="" class="footer__link">Plan y Pricing</a>
+                        <a href="" class="footer__link">Department</a>
                     </li>
                     <li class="footer__item">
                         <a href="" class="footer__link">Become a member</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__data">
+                <h3 class="footer__subtitle">Support</h3>
+                <ul>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">FAQs</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Support Center</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="" class="footer__link">Contact Us</a>
                     </li>
                 </ul>
             </div>
@@ -329,6 +360,7 @@
         </div>
     </div>
 </footer>
+
 <!-- SWIPER JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -379,7 +411,6 @@
             $(".card-container").append(stayHtml);
         });
     }
-
 
 </script>
 </body>

@@ -101,8 +101,10 @@
             <div class="signup__box">
                 <input type="password" th:field="*{password}" placeholder="비밀번호 입력" required class="signup__input">
                 <i class="ri-lock-2-line"></i>
-                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
+<!--                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>-->
             </div>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"
+            style="color:hsl(163, 90%, 45%); text-align: center;">Incorrect data</p>
 
             <!-- EMAIL -->
             <div class="signup__box">
