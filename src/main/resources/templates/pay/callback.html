@@ -36,6 +36,7 @@
             margin-right:auto;
             color:black;
             background-color: #FFFFFF;
+            text-align:center;
         }
         h1 {
             font-family: 'Pretendard-Regular';
@@ -112,52 +113,53 @@
 <div>
     <form method="post" action="" id="payForm" name="payForm" >
         <div>
-            <h1>결제승인</h1>
+            <h1>결제승인</h1><br>
             <!-- container -->
-            <div class="container">
-                <div class="table-responsive">
-                    <table class="table">
+            <div class="container" style="margin-left:auto; margin-right:auto; text-align:center;">
+                <div class="table-responsive" style="text-align:center; background-color:#f8f9fa; border-radius:20px;" >
+                   <div>
+                    <table class="table" style="text-align:center; border-radius:20px;">
                         <colgroup>
                             <col style="width: 15%;">
                             <col style="width: 35%;">
                             <col style="width: 15%;">
                             <col style="width: 35%;">
                         </colgroup>
-
                         <tbody>
                         <tr>
-                            <td>가맹점아이디</td><td><input type="text" name="mercntId" id="mercntId" placeholder="가맹점아이디" th:value="${mercntId}"></td>
+                            <td>가맹점아이디</td><td><input type="text" name="mercntId" id="mercntId" placeholder="가맹점아이디" th:value="${mercntId}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         <tr>
-                            <td>숙소금액</td><td><input type="text" name="trPrice" id="trPrice" placeholder="숙소금액" th:value="${trPrice}"></td>
+                            <td>숙소금액</td><td><input type="text" name="trPrice" id="trPrice" placeholder="숙소금액" th:value="${trPrice}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         <tr>
-                            <td>결제금액</td><td><input type="text" name="payPrice" id="payPrice" placeholder="결제금액" th:value="${payPrice}"></td>
+                            <td>결제금액</td><td><input type="text" name="payPrice" id="payPrice" placeholder="결제금액" th:value="${payPrice}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         <tr>
-                            <td>예약번호</td><td><input type="text" name="ordNo" id="ordNo" placeholder="예약번호" th:value="${ordNo}"></td>
+                            <td>예약번호</td><td><input type="text" name="ordNo" id="ordNo" placeholder="예약번호" th:value="${ordNo}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         <tr>
-                            <td>승인번호</td><td><input type="text" name="authNo" id="authNo" placeholder="승인번호" th:value="${authNo}"></td>
+                            <td>승인번호</td><td><input type="text" name="authNo" id="authNo" placeholder="승인번호" th:value="${authNo}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         <tr>
-                            <td>거래일자</td><td><input type="text" name="trDay" id="trDay" placeholder="거래일자" th:value="${trDay}"></td>
-                        </tr>
-
-                        <tr>
-                            <td>체크인날짜</td><td><input type="text" name="mercntParam1" id="mercntParam1" placeholder="체크인날짜" th:value="${mercntParam1}"></td>
+                            <td>거래일자</td><td><input type="text" name="trDay" id="trDay" placeholder="거래일자" th:value="${trDay}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         <tr>
-                            <td>체크아웃날짜</td><td><input type="text" name="mercntParam2" id="mercntParam2" placeholder="체크아웃날짜" th:value="${mercntParam2}"></td>
+                            <td>체크인날짜</td><td><input type="text" name="mercntParam1" id="mercntParam1" placeholder="체크인날짜" th:value="${mercntParam1}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
+                        </tr>
+                        <tr>
+                            <td>체크아웃날짜</td><td><input type="text" name="mercntParam2" id="mercntParam2" placeholder="체크아웃날짜" th:value="${mercntParam2}" style="width:300px; height:30px; padding-left:10px;  border:solid 1px #cccccc; border-radius:20px;"></td>
                         </tr>
                         </tbody>
                     </table>
+                   </div>
                 </div>
             </div>
             <!-- //container -->
 
             <!-- fixed bottom button -->
-            <div class="fix_btm_btn"><button type="button" id="send" class="btn btn_lg" onclick="goPayApprov();" style="padding:5px; margin-top:5px; border-radius: 5px;">승인요청</button></div>
+            <div class="fix_btm_btn"> <br>
+                <button type="button" id="send" class="btn btn_lg" onclick="goPayApprov();" style="padding:5px; margin-top:5px; border-radius: 5px;">승인요청</button></div>
             <!-- //fixed bottom button -->
         </div>
         <input type="hidden" name="trTime" id="trTime" placeholder="거래시간" >
