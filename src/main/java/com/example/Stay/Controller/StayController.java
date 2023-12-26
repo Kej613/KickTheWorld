@@ -70,8 +70,8 @@ public class StayController {
     public String stayManage(StaySearchDto staySearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 
-        double rating = 3.5;
-        model.addAttribute("rating", rating);
+//        double rating = 3.5;
+//        model.addAttribute("rating", rating);
 
         Page<StayItemDto> stays = stayService.getStayPage(staySearchDto, pageable);
         model.addAttribute("stays", stays);

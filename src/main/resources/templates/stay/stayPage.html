@@ -252,7 +252,10 @@
                         <img th:src="${stay.imgUrl}" th:alt="${stay.name}" class="rounded-1 repImg" style="width: 500px; height: 300px; border-radius: 20px;" >
                         <p th:text="${stay.name}" class="trip-name" style="font-weight: bold; font-size:20px;padding:10px;"></p>
                         <p th:text="${stay.address}" class="trip-name" style="padding:10px;" ></p>
-                        <div id="rating" data-score=3.5></div>
+                        <!-- 좋아요 버튼 -->
+                        <div style="text-align:right; margin-right:10px;">
+                            <button id="likeButton" style="background-color: #FFFFFF;"><i class="ri-heart-3-fill" style="color:#F86464; font-size: 24px; "></i></button>
+                            <p id="likeCount" th:text="${stay.likeCount}">0</p></div>
                         <p th:text="${#strings.replace(#numbers.formatDecimal(stay.price, 0, 'COMMA', 2, 'POINT'), '.00', '')+'원'}" class="trip-name" style="color: #ee4643; text-align:right; padding:10px;"></p>
                         <div style="text-align:right;">
                         <button th:href="'/admin/stay/'+${stay.id}" type="button" class="btn btn-outline-dark">숙소 둘러보기>></button></div>
