@@ -4,22 +4,12 @@ import com.example.Board.Dto.BoardDto;
 import com.example.Board.Service.BoardService;
 import com.example.Member.entity.Member;
 import com.example.Member.service.MemberService;
-import io.swagger.annotations.Api;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.Board.Dto.PageRequestDTO;
@@ -51,15 +41,11 @@ public class BoardController {
         model.addAttribute("result", boardService.getList(pageRequestDTO));
     }
 
-
-
     //게시물 등록
-    @Operation(summary = "Register Board", description = "Register a new board.")
     @GetMapping("/register")
     public void register() {
     }
 
-    @ApiOperation(value = "게시글 등록", notes = "게시글 등록")
     @Transactional
     @PostMapping("/register")
     public String registerPost(BoardDto dto, RedirectAttributes redirectAttributes) {

@@ -100,11 +100,8 @@ body {
   </nav>
 </header>
 <div>
-<form th:action="@{/board/register}" th:method="post">
-  <div class="form-group">
-    <label>제목</label>
-    <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요">
-  </div>
+
+<form th:action="@{/board/register}" th:method="post" style="background-color:#FFFFFF; padding: 10px;">
   <div class="form-group">
     <label>작성자</label>
     <input type="text" class="form-control" name="writer" th:value="${#authentication.principal.username}" placeholder="작성자를 입력하세요" readonly>
@@ -120,10 +117,15 @@ body {
     </select>
   </div>
   <div class="form-group">
+    <label>제목</label>
+    <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요">
+  </div>
+  <div class="form-group">
     <label>내용</label>
-    <textarea class="form-control" rows="5" name="content"></textarea>
+    <textarea class="form-control" rows="7" name="content"></textarea>
   </div>
   <button type="submit" class="btn btn-outline-dark">글쓰기</button>
+
 </form>
 </div>
 

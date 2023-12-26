@@ -116,5 +116,11 @@ public class PayController {
 		model.addAttribute("payList", payRepo.findPayByMemId(memId));
 		return "pay/list";
 	}
-
+//	@RequestMapping(value = "/payData", method = RequestMethod.GET, produces = "application/json")
+//	@ResponseBody
+//	public List<Pay> getPayData(Model model, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+//		String memId = userDetails.getUsername();
+//		List<Pay> payDataList = payService.findPayByMemId(memId);
+//		return payDataList;
+//	}
 }
